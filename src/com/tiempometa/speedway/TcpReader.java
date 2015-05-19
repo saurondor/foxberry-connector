@@ -12,6 +12,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import com.tiempometa.muestradatos.TagReading;
+
 /**
  * @author Gerardo Tasistro
  * 
@@ -87,6 +89,8 @@ public class TcpReader implements Runnable {
 							String[] dataRows = dataString.split("\\n");
 							for (String string : dataRows) {
 								logger.debug(string);
+								TagReading reading = new TagReading(string);
+								logger.debug(reading);
 							}
 						} else {
 							logger.info("No data");
