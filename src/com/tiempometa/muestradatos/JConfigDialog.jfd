@@ -27,7 +27,12 @@ new FormModel {
 						"gridY": 1
 					} )
 					add( new FormComponent( "javax.swing.JComboBox" ) {
-						name: "comboBox4"
+						name: "conectionTypeComboBox"
+						"model": new javax.swing.DefaultComboBoxModel {
+							selectedItem: "Caja"
+							addElement( "Caja" )
+							addElement( "USB" )
+						}
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 1
@@ -55,10 +60,11 @@ new FormModel {
 						"gridY": 5
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "textField2"
+						name: "readerBoxAddressTextField"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 5
+						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label9"
@@ -68,14 +74,23 @@ new FormModel {
 						"gridY": 7
 					} )
 					add( new FormComponent( "javax.swing.JComboBox" ) {
-						name: "comboBox3"
+						name: "antennaComboBox"
+						"model": new javax.swing.DefaultComboBoxModel {
+							selectedItem: "Todas"
+							addElement( "Todas" )
+							addElement( "Antena 1" )
+							addElement( "Antena 2" )
+							addElement( "Antena 3" )
+							addElement( "Antena 4" )
+						}
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 7
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button4"
-						"text": new FormMessage( null, "JConfigDialog.button4.text" )
+						name: "readerBoxConnectButton"
+						"text": new FormMessage( null, "JConfigDialog.readerBoxConnectButton.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "readerBoxConnectButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
 						"gridY": 7
@@ -103,14 +118,38 @@ new FormModel {
 						"gridY": 11
 					} )
 					add( new FormComponent( "javax.swing.JComboBox" ) {
-						name: "comboBox2"
+						name: "commPortComboBox"
+						"model": new javax.swing.DefaultComboBoxModel {
+							selectedItem: "COM1"
+							addElement( "COM1" )
+							addElement( "COM2" )
+							addElement( "COM3" )
+							addElement( "COM4" )
+							addElement( "COM5" )
+							addElement( "COM6" )
+							addElement( "COM7" )
+							addElement( "COM8" )
+							addElement( "COM9" )
+							addElement( "COM10" )
+							addElement( "COM11" )
+							addElement( "COM12" )
+							addElement( "COM13" )
+							addElement( "COM14" )
+							addElement( "COM15" )
+							addElement( "COM16" )
+							addElement( "COM17" )
+							addElement( "COM18" )
+							addElement( "COM19" )
+							addElement( "COM20" )
+						}
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 11
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button1"
-						"text": new FormMessage( null, "JConfigDialog.button1.text" )
+						name: "usbReaderConnectButton"
+						"text": new FormMessage( null, "JConfigDialog.usbReaderConnectButton.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "usbReaderConnectButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
 						"gridY": 11
@@ -123,13 +162,28 @@ new FormModel {
 					} )
 					add( new FormComponent( "javax.swing.JComboBox" ) {
 						name: "comboBox1"
+						"model": new javax.swing.DefaultComboBoxModel {
+							selectedItem: "NA"
+							addElement( "NA" )
+							addElement( "EU" )
+							addElement( "KR" )
+							addElement( "IN" )
+							addElement( "PRC" )
+							addElement( "EU2" )
+							addElement( "EU3" )
+							addElement( "KR2" )
+							addElement( "AU" )
+							addElement( "NZ" )
+							addElement( "OPEN" )
+						}
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 13
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button2"
-						"text": new FormMessage( null, "JConfigDialog.button2.text" )
+						name: "usbReaderSetRegionButton"
+						"text": new FormMessage( null, "JConfigDialog.usbReaderSetRegionButton.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "usbReaderSetRegionButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
 						"gridY": 13
@@ -157,14 +211,14 @@ new FormModel {
 						"gridY": 17
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "textField1"
+						name: "databaseTextField"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 17
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button3"
-						"text": new FormMessage( null, "JConfigDialog.button3.text" )
+						name: "databaseSelectButton"
+						"text": new FormMessage( null, "JConfigDialog.databaseSelectButton.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
 						"gridY": 17

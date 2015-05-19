@@ -5,6 +5,9 @@ package com.tiempometa.muestradatos;
 
 import java.util.Date;
 
+import com.thingmagic.TagData;
+import com.thingmagic.TagReadData;
+
 /**
  * @author Gerardo Tasistro
  *
@@ -12,6 +15,8 @@ import java.util.Date;
 public class TagReading {
 	public static final String KEEP_ALIVE = "*";
 	
+	
+	private TagReadData tagReadData;
 	private String reader;
 	private String antenna;
 	private String epc;
@@ -24,6 +29,15 @@ public class TagReading {
 	
 	public TagReading() {
 		super();
+	}
+	
+	public TagReading(TagReadData tagReadData) {
+		this.tagReadData = tagReadData;
+		this.epc = tagReadData.epcString();
+		this.peakRssi = tagReadData.getRssi();
+		this.antenna = String.valueOf(tagReadData.getAntenna());
+		this.timeMillis = tagReadData.getTime();
+		this.time = new Date(this.timeMillis);
 	}
 	
 	public TagReading(String data) {
@@ -198,5 +212,6 @@ public class TagReading {
 				+ ", peakRssi=" + peakRssi + ", isKeepAlive()=" + isKeepAlive()
 				+ ", isValid()=" + isValid() + "]";
 	}
+
 
 }

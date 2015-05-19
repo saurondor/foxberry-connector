@@ -3,6 +3,9 @@
  */
 package com.tiempometa.thingmagic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.codec.binary.Hex;
 
 import com.thingmagic.Gen2;
@@ -12,6 +15,8 @@ import com.thingmagic.ReaderException;
 import com.thingmagic.TMConstants;
 import com.thingmagic.TagData;
 import com.thingmagic.TagReadData;
+import com.tiempometa.muestradatos.TagReadListener;
+import com.tiempometa.muestradatos.TagReading;
 
 /**
  * @author Gerardo Tasistro
@@ -19,6 +24,21 @@ import com.thingmagic.TagReadData;
  */
 public class UsbReader implements Runnable {
 	private Reader reader;
+	private List<TagReadListener> listeners = new ArrayList<TagReadListener>();
+	
+	public void addListener(TagReadListener listener) {
+		listeners.add(listener);
+	}
+
+	public void removeListener(TagReadListener listener) {
+		listeners.remove(listener);
+	}
+	
+	public void notifyListeners(List<TagReading> readings) {
+		for (TagReadListener listener : listeners) {
+			listener.handleReadings(readings);
+		}
+	}
 
 	public void getParamters() {
 		String[] parameters = reader.paramList();
@@ -44,13 +64,17 @@ public class UsbReader implements Runnable {
 			System.out.println(region.name());
 		}
 	}
+	
+	public void connectToComm(String commPort) throws ReaderException {
+		connect("tmr:///"+commPort);
+	}
 
 	public void connect(String uri) throws ReaderException {
 		System.out.println("Creating reader with " + uri);
 		reader = Reader.create(uri);
 		reader.connect();
 		System.out.println("Created reader!");
-		getSupportedRegions();
+//		getSupportedRegions();
 		reader.paramSet("/reader/radio/writePower", 1000);
 		reader.paramSet("/reader/radio/readPower", 1000);
 	}
@@ -61,23 +85,27 @@ public class UsbReader implements Runnable {
 			TagReadData[] tagReads;
 			tagReads = reader.read(500);
 			// Print tag reads
+			List<TagReading> readings = new ArrayList<TagReading>();
 			for (TagReadData tr : tagReads) {
+				readings.add(new TagReading(tr));
 				System.out.println(tr.toString());
 				System.out.println(new String(tr.getTIDMemData()));
 				System.out.println(new String(tr.getUserMemData()));
-				TagData target = new TagData(tr.getEPCMemData());
-				try {
-					System.out.println("User data");
-					System.out.println(Hex.encodeHex(reader.readTagMemBytes(
-							target, Gen2.Bank.USER.ordinal(), 0, 32)));
-					System.out.println("TID");
-					System.out.println(Hex.encodeHex(reader.readTagMemBytes(
-							target, Gen2.Bank.TID.ordinal(), 0, 12)));
-				} catch (ReaderCodeException e) {
-
-				}
+				
+//				TagData target = new TagData(tr.getEPCMemData());
+//				try {
+//					System.out.println("User data");
+//					System.out.println(Hex.encodeHex(reader.readTagMemBytes(
+//							target, Gen2.Bank.USER.ordinal(), 0, 32)));
+//					System.out.println("TID");
+//					System.out.println(Hex.encodeHex(reader.readTagMemBytes(
+//							target, Gen2.Bank.TID.ordinal(), 0, 12)));
+//				} catch (ReaderCodeException e) {
+//
+//				}
 				// write(tr);
 			}
+			notifyListeners(readings);
 		}
 	}
 
@@ -111,7 +139,12 @@ public class UsbReader implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		try {
+			read();
+		} catch (ReaderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }
