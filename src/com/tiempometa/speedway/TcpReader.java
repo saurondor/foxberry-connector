@@ -5,6 +5,7 @@ package com.tiempometa.speedway;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -22,7 +23,8 @@ public class TcpReader implements Runnable {
 	private int port = 14150; // use default port
 	private String hostname = "";
 	private Socket readerSocket = null;
-	private InputStream dataStream = null;
+	private InputStream dataInputStream = null;
+	private OutputStream dataOutputStream = null;
 
 	private void openSocket() throws UnknownHostException, IOException {
 		readerSocket = new Socket(hostname, port);
@@ -52,7 +54,8 @@ public class TcpReader implements Runnable {
 	@Override
 	public void run() {
 		try {
-			dataStream = readerSocket.getInputStream();
+			dataInputStream = readerSocket.getInputStream();
+			dataOutputStream = readerSocket.getOutputStream();
 			while (!readerSocket.isClosed()) {
 				logger.info("Socket is open");
 				while (readerSocket.isConnected()) {
@@ -63,10 +66,17 @@ public class TcpReader implements Runnable {
 
 					int dataInStream;
 					try {
-						dataInStream = dataStream.available();
+						dataInStream = dataInputStream.available();
+						if (dataInStream < 0) {
+							logger.warn("Less than 0 bytes available, disconnect?");
+						}
+						logger.info("pinging server");
+						dataOutputStream.write("ping".getBytes());
+						dataOutputStream.flush();
+						logger.info("pinged server!");
 						if (dataInStream > 0) {
 							byte[] b = new byte[dataInStream];
-							dataStream.read(b);
+							dataInputStream.read(b);
 							String dataString = new String(b);
 							if (logger.isDebugEnabled()) {
 								logger.debug("DATA>\n" + dataString + "\nLEN:"
@@ -84,6 +94,14 @@ public class TcpReader implements Runnable {
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+						try {
+							disconnect();
+							connect();
+							dataInputStream = readerSocket.getInputStream();
+							dataOutputStream = readerSocket.getOutputStream();
+						} catch (IOException e2) {
+							e2.printStackTrace();
+						}
 					}
 					try {
 						Thread.sleep(1000);
