@@ -5,7 +5,9 @@ package com.tiempometa.muestradatos;
 
 import java.io.File;
 
+import com.thingmagic.Reader.GpioPin;
 import com.thingmagic.ReaderException;
+import com.thingmagic.TagData;
 import com.tiempometa.thingmagic.UsbReader;
 
 /**
@@ -60,6 +62,16 @@ public class ReaderContext {
 	 */
 	public static void setDatabaseFile(File databaseFile) {
 		ReaderContext.databaseFile = databaseFile;
+	}
+
+	public static byte[] readTagMemBytes(TagData target, int bank, int start,
+			int size) throws ReaderException {
+		return reader.readTagMemBytes(target, bank, start, size);
+	}
+
+	public static void gpoSet(GpioPin[] pins) throws ReaderException {
+		reader.gpoSet(pins);
+		
 	}
 
 }

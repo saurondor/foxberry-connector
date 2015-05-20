@@ -7,6 +7,7 @@ package com.tiempometa.muestradatos;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import com.thingmagic.ReaderException;
 import com.tiempometa.thingmagic.UsbReader;
+import com.tiempometa.timing.dao.JdbcConnector;
 
 /**
  * @author Gerardo Esteban Tasistro Giubetic
@@ -65,6 +67,13 @@ public class JConfigDialog extends JDialog {
 		if (response == JFileChooser.APPROVE_OPTION) {
 			ReaderContext.setDatabaseFile(fc.getSelectedFile());
 			databaseTextField.setText(ReaderContext.getDatabaseFile().getAbsolutePath());
+			try {
+				JdbcConnector.connect(ReaderContext.getDatabaseFile().getAbsolutePath(), null, null);
+				JOptionPane.showMessageDialog(this, "Conexión exitosa", "Conexión a base de datos", JOptionPane.INFORMATION_MESSAGE);
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException | SQLException e1) {
+				JOptionPane.showMessageDialog(this, "Error conectando a la base de datos "+e1.getMessage(),"Error de base de datos", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
@@ -73,8 +82,6 @@ public class JConfigDialog extends JDialog {
 		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
-		label12 = new JLabel();
-		conectionTypeComboBox = new JComboBox<>();
 		label4 = new JLabel();
 		separator3 = new JSeparator();
 		label5 = new JLabel();
@@ -84,23 +91,17 @@ public class JConfigDialog extends JDialog {
 		separator2 = new JSeparator();
 		label8 = new JLabel();
 		readerBoxAddressTextField = new JTextField();
-		label6 = new JLabel();
 		label9 = new JLabel();
 		antennaComboBox = new JComboBox<>();
 		readerBoxConnectButton = new JButton();
-		label10 = new JLabel();
 		label3 = new JLabel();
 		separator1 = new JSeparator();
-		label11 = new JLabel();
 		label2 = new JLabel();
 		commPortComboBox = new JComboBox<>();
 		usbReaderConnectButton = new JButton();
 		label1 = new JLabel();
 		comboBox1 = new JComboBox<>();
 		usbReaderSetRegionButton = new JButton();
-		button1 = new JButton();
-		button2 = new JButton();
-		button3 = new JButton();
 		buttonBar = new JPanel();
 		okButton = new JButton();
 		cancelButton = new JButton();
@@ -124,16 +125,6 @@ public class JConfigDialog extends JDialog {
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(115)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(96)),
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						FormFactory.DEFAULT_COLSPEC
 					},
 					new RowSpec[] {
@@ -153,45 +144,19 @@ public class JConfigDialog extends JDialog {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC
 					}));
-
-				//---- label12 ----
-				label12.setText(bundle.getString("JConfigDialog.label12.text"));
-				label12.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				contentPanel.add(label12, cc.xy(1, 1));
-
-				//---- conectionTypeComboBox ----
-				conectionTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
-					"Caja",
-					"USB"
-				}));
-				contentPanel.add(conectionTypeComboBox, cc.xy(3, 1));
 
 				//---- label4 ----
 				label4.setText(bundle.getString("JConfigDialog.label4.text"));
 				label4.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				contentPanel.add(label4, cc.xy(7, 1));
-				contentPanel.add(separator3, cc.xywh(9, 1, 3, 1));
+				contentPanel.add(label4, cc.xy(1, 1));
+				contentPanel.add(separator3, cc.xywh(3, 1, 3, 1));
 
 				//---- label5 ----
 				label5.setText(bundle.getString("JConfigDialog.label5.text"));
-				contentPanel.add(label5, cc.xy(7, 3));
-				contentPanel.add(databaseTextField, cc.xy(9, 3));
+				contentPanel.add(label5, cc.xy(1, 3));
+				contentPanel.add(databaseTextField, cc.xywh(3, 3, 3, 1));
 
 				//---- databaseSelectButton ----
 				databaseSelectButton.setText(bundle.getString("JConfigDialog.databaseSelectButton.text"));
@@ -201,26 +166,22 @@ public class JConfigDialog extends JDialog {
 						databaseSelectButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(databaseSelectButton, cc.xywh(11, 3, 3, 1));
+				contentPanel.add(databaseSelectButton, cc.xy(5, 5));
 
 				//---- label7 ----
 				label7.setText(bundle.getString("JConfigDialog.label7.text"));
 				label7.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				contentPanel.add(label7, cc.xy(1, 5));
-				contentPanel.add(separator2, cc.xywh(3, 5, 3, 1));
+				contentPanel.add(label7, cc.xy(1, 7));
+				contentPanel.add(separator2, cc.xywh(3, 7, 3, 1));
 
 				//---- label8 ----
 				label8.setText(bundle.getString("JConfigDialog.label8.text"));
-				contentPanel.add(label8, cc.xy(1, 7));
-				contentPanel.add(readerBoxAddressTextField, cc.xywh(3, 7, 3, 1));
-
-				//---- label6 ----
-				label6.setText(bundle.getString("JConfigDialog.label6.text"));
-				contentPanel.add(label6, cc.xy(11, 7));
+				contentPanel.add(label8, cc.xy(1, 9));
+				contentPanel.add(readerBoxAddressTextField, cc.xywh(3, 9, 3, 1));
 
 				//---- label9 ----
 				label9.setText(bundle.getString("JConfigDialog.label9.text"));
-				contentPanel.add(label9, cc.xy(1, 9));
+				contentPanel.add(label9, cc.xy(1, 11));
 
 				//---- antennaComboBox ----
 				antennaComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
@@ -230,7 +191,7 @@ public class JConfigDialog extends JDialog {
 					"Antena 3",
 					"Antena 4"
 				}));
-				contentPanel.add(antennaComboBox, cc.xy(3, 9));
+				contentPanel.add(antennaComboBox, cc.xy(3, 11));
 
 				//---- readerBoxConnectButton ----
 				readerBoxConnectButton.setText(bundle.getString("JConfigDialog.readerBoxConnectButton.text"));
@@ -240,25 +201,17 @@ public class JConfigDialog extends JDialog {
 						readerBoxConnectButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(readerBoxConnectButton, cc.xy(5, 9));
-
-				//---- label10 ----
-				label10.setText(bundle.getString("JConfigDialog.label10.text"));
-				contentPanel.add(label10, cc.xy(11, 9));
+				contentPanel.add(readerBoxConnectButton, cc.xy(5, 11));
 
 				//---- label3 ----
 				label3.setText(bundle.getString("JConfigDialog.label3.text"));
 				label3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				contentPanel.add(label3, cc.xy(1, 11));
-				contentPanel.add(separator1, cc.xywh(3, 11, 3, 1));
-
-				//---- label11 ----
-				label11.setText(bundle.getString("JConfigDialog.label11.text"));
-				contentPanel.add(label11, cc.xy(11, 11));
+				contentPanel.add(label3, cc.xy(1, 13));
+				contentPanel.add(separator1, cc.xywh(3, 13, 3, 1));
 
 				//---- label2 ----
 				label2.setText(bundle.getString("JConfigDialog.label2.text"));
-				contentPanel.add(label2, cc.xy(1, 13));
+				contentPanel.add(label2, cc.xy(1, 15));
 
 				//---- commPortComboBox ----
 				commPortComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
@@ -283,7 +236,7 @@ public class JConfigDialog extends JDialog {
 					"COM19",
 					"COM20"
 				}));
-				contentPanel.add(commPortComboBox, cc.xy(3, 13));
+				contentPanel.add(commPortComboBox, cc.xy(3, 15));
 
 				//---- usbReaderConnectButton ----
 				usbReaderConnectButton.setText(bundle.getString("JConfigDialog.usbReaderConnectButton.text"));
@@ -293,11 +246,11 @@ public class JConfigDialog extends JDialog {
 						usbReaderConnectButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(usbReaderConnectButton, cc.xy(5, 13));
+				contentPanel.add(usbReaderConnectButton, cc.xy(5, 15));
 
 				//---- label1 ----
 				label1.setText(bundle.getString("JConfigDialog.label1.text"));
-				contentPanel.add(label1, cc.xy(1, 15));
+				contentPanel.add(label1, cc.xy(1, 17));
 
 				//---- comboBox1 ----
 				comboBox1.setModel(new DefaultComboBoxModel<>(new String[] {
@@ -313,7 +266,7 @@ public class JConfigDialog extends JDialog {
 					"NZ",
 					"OPEN"
 				}));
-				contentPanel.add(comboBox1, cc.xy(3, 15));
+				contentPanel.add(comboBox1, cc.xy(3, 17));
 
 				//---- usbReaderSetRegionButton ----
 				usbReaderSetRegionButton.setText(bundle.getString("JConfigDialog.usbReaderSetRegionButton.text"));
@@ -323,19 +276,7 @@ public class JConfigDialog extends JDialog {
 						usbReaderSetRegionButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(usbReaderSetRegionButton, cc.xy(5, 15));
-
-				//---- button1 ----
-				button1.setText(bundle.getString("JConfigDialog.button1.text"));
-				contentPanel.add(button1, cc.xy(3, 17));
-
-				//---- button2 ----
-				button2.setText(bundle.getString("JConfigDialog.button2.text"));
-				contentPanel.add(button2, cc.xy(3, 19));
-
-				//---- button3 ----
-				button3.setText(bundle.getString("JConfigDialog.button3.text"));
-				contentPanel.add(button3, cc.xy(3, 21));
+				contentPanel.add(usbReaderSetRegionButton, cc.xy(5, 17));
 			}
 			dialogPane.add(contentPanel, BorderLayout.NORTH);
 
@@ -370,8 +311,6 @@ public class JConfigDialog extends JDialog {
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	private JPanel dialogPane;
 	private JPanel contentPanel;
-	private JLabel label12;
-	private JComboBox<String> conectionTypeComboBox;
 	private JLabel label4;
 	private JSeparator separator3;
 	private JLabel label5;
@@ -381,23 +320,17 @@ public class JConfigDialog extends JDialog {
 	private JSeparator separator2;
 	private JLabel label8;
 	private JTextField readerBoxAddressTextField;
-	private JLabel label6;
 	private JLabel label9;
 	private JComboBox<String> antennaComboBox;
 	private JButton readerBoxConnectButton;
-	private JLabel label10;
 	private JLabel label3;
 	private JSeparator separator1;
-	private JLabel label11;
 	private JLabel label2;
 	private JComboBox<String> commPortComboBox;
 	private JButton usbReaderConnectButton;
 	private JLabel label1;
 	private JComboBox<String> comboBox1;
 	private JButton usbReaderSetRegionButton;
-	private JButton button1;
-	private JButton button2;
-	private JButton button3;
 	private JPanel buttonBar;
 	private JButton okButton;
 	private JButton cancelButton;

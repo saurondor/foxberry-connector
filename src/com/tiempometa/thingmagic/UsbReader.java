@@ -10,6 +10,7 @@ import org.apache.commons.codec.binary.Hex;
 
 import com.thingmagic.Gen2;
 import com.thingmagic.Reader;
+import com.thingmagic.Reader.GpioPin;
 import com.thingmagic.ReaderCodeException;
 import com.thingmagic.ReaderException;
 import com.thingmagic.TMConstants;
@@ -90,6 +91,30 @@ public class UsbReader implements Runnable {
 				reader.paramSet("/reader/region/id", supportedRegions[0]);
 			}
 		}
+		int[] inputList = (int[]) reader.paramGet("/reader/gpio/inputList");
+		System.out.println(inputList.getClass().getCanonicalName());
+		for (int i = 0; i < inputList.length; i++) {
+			int gpioPin = inputList[i];
+			System.out.println("GPIO input " + gpioPin);
+		}
+		int[] outputList = (int[]) reader.paramGet("/reader/gpio/outputList");
+		for (int i = 0; i < outputList.length; i++) {
+			int gpioPin = outputList[i];
+			System.out.println("GPIO input " + gpioPin);
+			Reader.GpioPin[] pins = new Reader.GpioPin[2];
+			pins[0] = new GpioPin(1,true);
+			pins[1] = new GpioPin(2,true);
+			reader.gpoSet(pins);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pins[0] = new GpioPin(1,false);
+			pins[1] = new GpioPin(2,false);
+			reader.gpoSet(pins);
+		}
 		System.out.println("Created reader!");
 		// getSupportedRegions();
 		reader.paramSet("/reader/radio/writePower", 1000);
@@ -98,12 +123,12 @@ public class UsbReader implements Runnable {
 	}
 
 	public void read() throws ReaderException {
-		for (int j = 0; j < 100; j++) {
+		for (int j = 0; j < 1000; j++) {
 			System.out.println("Reading tags");
 			TagReadData[] tagReads;
 			List<TagReading> readings = new ArrayList<TagReading>();
 			if (isConnected()) {
-				tagReads = reader.read(500);
+				tagReads = reader.read(50);
 				// Print tag reads
 				for (TagReadData tr : tagReads) {
 					readings.add(new TagReading(tr));
@@ -168,4 +193,14 @@ public class UsbReader implements Runnable {
 		}
 
 	}
+
+	public byte[] readTagMemBytes(TagData target, int bank, int start, int size)
+			throws ReaderException {
+		return reader.readTagMemBytes(target, bank, start, size);
+	}
+
+	public void gpoSet(GpioPin[] pins) throws ReaderException {
+		reader.gpoSet(pins);
+	}
+
 }
