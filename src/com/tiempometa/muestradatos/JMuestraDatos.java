@@ -46,6 +46,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 	private Integer chipNumber = null;
 	private Integer lastTagCount = 0;
 	private RfidDao rfidDao = new RfidDaoImpl();
+	private Integer tidLength = 12;
 
 	public JMuestraDatos() {
 		initComponents();
@@ -289,8 +290,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				try {
 					tid = String.valueOf(Hex.encodeHex(ReaderContext
 							.readTagMemBytes(target, Gen2.Bank.TID.ordinal(),
-									0, 16)));
-					logger.debug("Got 16 byte TID");
+									0, tidLength)));
+					logger.debug("Got " + tidLength + " byte TID");
 				} catch (Exception e2) {
 					logger.error("Error reading 16 byte TID");
 					e2.printStackTrace();
