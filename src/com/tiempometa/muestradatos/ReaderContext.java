@@ -5,6 +5,7 @@ package com.tiempometa.muestradatos;
 
 import java.io.File;
 
+import com.thingmagic.Gen2.WriteTag;
 import com.thingmagic.Reader.GpioPin;
 import com.thingmagic.ReaderException;
 import com.thingmagic.TagData;
@@ -45,7 +46,7 @@ public class ReaderContext {
 
 	}
 
-	public static void disconnectUsbReader() {
+	public static void disconnectUsbReader() throws ReaderException {
 		reader.disconnect();
 		
 	}
@@ -72,6 +73,10 @@ public class ReaderContext {
 	public static void gpoSet(GpioPin[] pins) throws ReaderException {
 		reader.gpoSet(pins);
 		
+	}
+
+	public static void executeTagOp(WriteTag tagop, TagData target) throws ReaderException {
+		reader.executeTagOp(tagop, target);
 	}
 
 }

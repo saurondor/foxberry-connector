@@ -8,7 +8,7 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-			"$columnSpecs": "default, labelcompgap, default, labelcompgap, 86dlu, labelcompgap, default"
+			"$columnSpecs": "default, labelcompgap, default, labelcompgap, 160dlu, labelcompgap, default"
 			"$rowSpecs": "default, linegap, default, linegap, 27dlu, linegap, default, linegap, default, linegap, default"
 		} ) {
 			name: "this"
@@ -35,7 +35,6 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 7
-				"gridWidth": 3
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label2"
@@ -89,12 +88,13 @@ new FormModel {
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "verifyDataMenuItemActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem3"
-						"text": new FormMessage( null, "JMuestraDatos.menuItem3.text" )
+						name: "readTagsMenuItem"
+						"text": new FormMessage( null, "JMuestraDatos.readTagsMenuItem.text" )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem5"
-						"text": new FormMessage( null, "JMuestraDatos.menuItem5.text" )
+						name: "programTagsMenuItem"
+						"text": new FormMessage( null, "JMuestraDatos.programTagsMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "programTagsMenuItemActionPerformed", true ) )
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {

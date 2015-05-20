@@ -39,17 +39,22 @@ public class JConfigDialog extends JDialog {
 	private void usbReaderConnectButtonActionPerformed(ActionEvent e) {
 		String commPort = (String) commPortComboBox.getSelectedItem();
 		if (ReaderContext.isUsbConnected()) {
-			ReaderContext.disconnectUsbReader();
+			try {
+				ReaderContext.disconnectUsbReader();
+			} catch (ReaderException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			usbReaderConnectButton.setText("Conectar");
 			
 		} else {
 		try {
 			ReaderContext.connectUsbReader(commPort);
+			usbReaderConnectButton.setText("Desconectar");
 		} catch (ReaderException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		usbReaderConnectButton.setText("Desconectar");
 		}
 	}
 

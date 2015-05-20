@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.codec.binary.Hex;
 
 import com.thingmagic.Gen2;
+import com.thingmagic.Gen2.WriteTag;
 import com.thingmagic.Reader;
 import com.thingmagic.Reader.GpioPin;
 import com.thingmagic.ReaderCodeException;
@@ -98,10 +99,10 @@ public class UsbReader implements Runnable {
 			System.out.println("GPIO input " + gpioPin);
 		}
 		int[] outputList = (int[]) reader.paramGet("/reader/gpio/outputList");
+		Reader.GpioPin[] pins = new Reader.GpioPin[2];
 		for (int i = 0; i < outputList.length; i++) {
 			int gpioPin = outputList[i];
 			System.out.println("GPIO input " + gpioPin);
-			Reader.GpioPin[] pins = new Reader.GpioPin[2];
 			pins[0] = new GpioPin(1,true);
 			pins[1] = new GpioPin(2,true);
 			reader.gpoSet(pins);
@@ -124,11 +125,15 @@ public class UsbReader implements Runnable {
 
 	public void read() throws ReaderException {
 		for (int j = 0; j < 1000; j++) {
-			System.out.println("Reading tags");
 			TagReadData[] tagReads;
 			List<TagReading> readings = new ArrayList<TagReading>();
+			Reader.GpioPin[] pins = new Reader.GpioPin[1];
 			if (isConnected()) {
+				pins[0] = new GpioPin(1,true);
+				reader.gpoSet(pins);
 				tagReads = reader.read(50);
+				pins[0] = new GpioPin(1,false);
+				reader.gpoSet(pins);
 				// Print tag reads
 				for (TagReadData tr : tagReads) {
 					readings.add(new TagReading(tr));
@@ -166,7 +171,11 @@ public class UsbReader implements Runnable {
 		System.out.println("Wrote tag!");
 	}
 
-	public void disconnect() {
+	public void disconnect() throws ReaderException {
+		Reader.GpioPin[] pins = new Reader.GpioPin[2];
+		pins[0] = new GpioPin(1,false);
+		pins[1] = new GpioPin(2,false);
+		reader.gpoSet(pins);
 		connected = false;
 		reader.destroy();
 	}
@@ -201,6 +210,11 @@ public class UsbReader implements Runnable {
 
 	public void gpoSet(GpioPin[] pins) throws ReaderException {
 		reader.gpoSet(pins);
+	}
+
+	public void executeTagOp(WriteTag tagop, TagData target) throws ReaderException {
+		reader.executeTagOp(tagop, target);
+		
 	}
 
 }
