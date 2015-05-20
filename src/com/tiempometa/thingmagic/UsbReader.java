@@ -26,7 +26,7 @@ import com.tiempometa.muestradatos.TagReading;
  * 
  */
 public class UsbReader implements Runnable {
-	
+
 	private static final Logger logger = Logger.getLogger(UsbReader.class);
 	private Reader reader = null;
 	private List<TagReadListener> listeners = new ArrayList<TagReadListener>();
@@ -98,21 +98,21 @@ public class UsbReader implements Runnable {
 		int[] inputList = (int[]) reader.paramGet("/reader/gpio/inputList");
 		for (int i = 0; i < inputList.length; i++) {
 			int gpioPin = inputList[i];
+			logger.info("Supported input pin " + gpioPin);
 		}
 		int[] outputList = (int[]) reader.paramGet("/reader/gpio/outputList");
 		Reader.GpioPin[] pins = new Reader.GpioPin[2];
 		for (int i = 0; i < outputList.length; i++) {
-			int gpioPin = outputList[i];
-			pins[0] = new GpioPin(1,true);
-			pins[1] = new GpioPin(2,true);
+			pins[0] = new GpioPin(1, true);
+			pins[1] = new GpioPin(2, true);
 			reader.gpoSet(pins);
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			pins[0] = new GpioPin(1,false);
-			pins[1] = new GpioPin(2,false);
+			pins[0] = new GpioPin(1, false);
+			pins[1] = new GpioPin(2, false);
 			reader.gpoSet(pins);
 		}
 		logger.info("Created reader!");
@@ -126,10 +126,10 @@ public class UsbReader implements Runnable {
 			List<TagReading> readings = new ArrayList<TagReading>();
 			Reader.GpioPin[] pins = new Reader.GpioPin[1];
 			if (isConnected()) {
-				pins[0] = new GpioPin(1,true);
+				pins[0] = new GpioPin(1, true);
 				reader.gpoSet(pins);
 				tagReads = reader.read(50);
-				pins[0] = new GpioPin(1,false);
+				pins[0] = new GpioPin(1, false);
 				reader.gpoSet(pins);
 				// Print tag reads
 				for (TagReadData tr : tagReads) {
@@ -154,8 +154,8 @@ public class UsbReader implements Runnable {
 
 	public void disconnect() throws ReaderException {
 		Reader.GpioPin[] pins = new Reader.GpioPin[2];
-		pins[0] = new GpioPin(1,false);
-		pins[1] = new GpioPin(2,false);
+		pins[0] = new GpioPin(1, false);
+		pins[1] = new GpioPin(2, false);
 		reader.gpoSet(pins);
 		connected = false;
 		reader.destroy();
@@ -187,12 +187,17 @@ public class UsbReader implements Runnable {
 			throws ReaderException {
 		return reader.readTagMemBytes(target, bank, start, size);
 	}
+	
+	public GpioPin[] gpoGet() throws ReaderException {
+		return reader.gpiGet();
+	}
 
 	public void gpoSet(GpioPin[] pins) throws ReaderException {
 		reader.gpoSet(pins);
 	}
 
-	public void executeTagOp(WriteTag tagop, TagData target) throws ReaderException {
-		reader.executeTagOp(tagop, target);	
+	public void executeTagOp(WriteTag tagop, TagData target)
+			throws ReaderException {
+		reader.executeTagOp(tagop, target);
 	}
 }

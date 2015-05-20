@@ -74,6 +74,19 @@ public class ReaderContext {
 		reader.gpoSet(pins);
 		
 	}
+	
+	public static GpioPin[] getGpo() throws ReaderException {
+		return reader.gpoGet();
+	}
+	
+	public static boolean getGpo(int gpi) throws ReaderException {
+		GpioPin[] pins = getGpo();
+		if (gpi < pins.length) {
+			return pins[gpi].high;
+		} else {
+			throw new IndexOutOfBoundsException("Pin id beyond available inputs.");
+		}
+	}
 
 	public static void executeTagOp(WriteTag tagop, TagData target) throws ReaderException {
 		reader.executeTagOp(tagop, target);

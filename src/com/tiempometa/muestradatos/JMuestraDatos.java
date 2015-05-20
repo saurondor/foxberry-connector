@@ -15,6 +15,7 @@ import javax.swing.*;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
+import org.llrp.ltk.generated.parameters.GPOWriteData;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
@@ -277,6 +278,19 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 	@Override
 	public void handleReadings(List<TagReading> readings) {
 		logger.debug("Last tag count = " + lastTagCount);
+		GpioPin[] pins;
+		try {
+			pins = ReaderContext.getGpo();
+			for (int i = 0; i < pins.length; i++) {
+				GpioPin gpioPin = pins[i];
+				logger.info("Input pin " + gpioPin);
+				logger.info("high " + gpioPin.high);
+				logger.info("output " + gpioPin.output);
+			}
+		} catch (ReaderException e4) {
+			// TODO Auto-generated catch block
+			e4.printStackTrace();
+		}
 		if ((readings.size() == 1) && (lastTagCount != 1)) {
 			logger.info("New tag in field");
 			TagReading tagReading = readings.get(0);
