@@ -23,9 +23,10 @@ import com.tiempometa.muestradatos.TagReading;
  * 
  */
 public class UsbReader implements Runnable {
-	private Reader reader;
+	private Reader reader = null;
 	private List<TagReadListener> listeners = new ArrayList<TagReadListener>();
-	
+	private boolean connected = false;
+
 	public void addListener(TagReadListener listener) {
 		listeners.add(listener);
 	}
@@ -33,7 +34,7 @@ public class UsbReader implements Runnable {
 	public void removeListener(TagReadListener listener) {
 		listeners.remove(listener);
 	}
-	
+
 	public void notifyListeners(List<TagReading> readings) {
 		for (TagReadListener listener : listeners) {
 			listener.handleReadings(readings);
@@ -57,53 +58,72 @@ public class UsbReader implements Runnable {
 		}
 	}
 
+	public boolean isConnected() {
+		return connected;
+	}
+
 	public void getSupportedRegions() throws ReaderException {
-		Reader.Region[] supportedRegions = (Reader.Region[]) reader.paramGet(TMConstants.TMR_PARAM_REGION_SUPPORTEDREGIONS);
+		Reader.Region[] supportedRegions = (Reader.Region[]) reader
+				.paramGet(TMConstants.TMR_PARAM_REGION_SUPPORTEDREGIONS);
 		for (int i = 0; i < supportedRegions.length; i++) {
 			Reader.Region region = supportedRegions[i];
 			System.out.println(region.name());
 		}
 	}
-	
+
 	public void connectToComm(String commPort) throws ReaderException {
-		connect("tmr:///"+commPort);
+		connect("tmr:///" + commPort);
 	}
 
 	public void connect(String uri) throws ReaderException {
 		System.out.println("Creating reader with " + uri);
 		reader = Reader.create(uri);
 		reader.connect();
+		connected = true;
+		if (Reader.Region.UNSPEC == (Reader.Region) reader
+				.paramGet("/reader/region/id")) {
+			Reader.Region[] supportedRegions = (Reader.Region[]) reader
+					.paramGet(TMConstants.TMR_PARAM_REGION_SUPPORTEDREGIONS);
+			if (supportedRegions.length < 1) {
+				// throw new Exception("Reader doesn't support any regions");
+			} else {
+				reader.paramSet("/reader/region/id", supportedRegions[0]);
+			}
+		}
 		System.out.println("Created reader!");
-//		getSupportedRegions();
+		// getSupportedRegions();
 		reader.paramSet("/reader/radio/writePower", 1000);
 		reader.paramSet("/reader/radio/readPower", 1000);
+
 	}
 
 	public void read() throws ReaderException {
 		for (int j = 0; j < 100; j++) {
 			System.out.println("Reading tags");
 			TagReadData[] tagReads;
-			tagReads = reader.read(500);
-			// Print tag reads
 			List<TagReading> readings = new ArrayList<TagReading>();
-			for (TagReadData tr : tagReads) {
-				readings.add(new TagReading(tr));
-				System.out.println(tr.toString());
-				System.out.println(new String(tr.getTIDMemData()));
-				System.out.println(new String(tr.getUserMemData()));
-				
-//				TagData target = new TagData(tr.getEPCMemData());
-//				try {
-//					System.out.println("User data");
-//					System.out.println(Hex.encodeHex(reader.readTagMemBytes(
-//							target, Gen2.Bank.USER.ordinal(), 0, 32)));
-//					System.out.println("TID");
-//					System.out.println(Hex.encodeHex(reader.readTagMemBytes(
-//							target, Gen2.Bank.TID.ordinal(), 0, 12)));
-//				} catch (ReaderCodeException e) {
-//
-//				}
-				// write(tr);
+			if (isConnected()) {
+				tagReads = reader.read(500);
+				// Print tag reads
+				for (TagReadData tr : tagReads) {
+					readings.add(new TagReading(tr));
+					System.out.println(tr.toString());
+					System.out.println(new String(tr.getTIDMemData()));
+					System.out.println(new String(tr.getUserMemData()));
+
+					// TagData target = new TagData(tr.getEPCMemData());
+					// try {
+					// System.out.println("User data");
+					// System.out.println(Hex.encodeHex(reader.readTagMemBytes(
+					// target, Gen2.Bank.USER.ordinal(), 0, 32)));
+					// System.out.println("TID");
+					// System.out.println(Hex.encodeHex(reader.readTagMemBytes(
+					// target, Gen2.Bank.TID.ordinal(), 0, 12)));
+					// } catch (ReaderCodeException e) {
+					//
+					// }
+					// write(tr);
+				}
 			}
 			notifyListeners(readings);
 		}
@@ -122,6 +142,7 @@ public class UsbReader implements Runnable {
 	}
 
 	public void disconnect() {
+		connected = false;
 		reader.destroy();
 	}
 

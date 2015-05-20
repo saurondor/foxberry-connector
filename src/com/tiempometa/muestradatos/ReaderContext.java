@@ -3,6 +3,8 @@
  */
 package com.tiempometa.muestradatos;
 
+import java.io.File;
+
 import com.thingmagic.ReaderException;
 import com.tiempometa.thingmagic.UsbReader;
 
@@ -14,10 +16,14 @@ public class ReaderContext {
 
 	private static UsbReader reader = new UsbReader();
 	private static Thread workerThread;
+	private static File databaseFile;
+	
+	public static boolean isUsbConnected() {
+		return reader.isConnected();
+	}
 
 	public static void connectUsbReader(String commPort) throws ReaderException {
 		reader.connectToComm(commPort);
-		startReading();
 	}
 	
 	public static void addReadingListener(TagReadListener listener) {
@@ -35,6 +41,25 @@ public class ReaderContext {
 
 	public static void stopReading() {
 
+	}
+
+	public static void disconnectUsbReader() {
+		reader.disconnect();
+		
+	}
+
+	/**
+	 * @return the databaseFile
+	 */
+	public static File getDatabaseFile() {
+		return databaseFile;
+	}
+
+	/**
+	 * @param databaseFile the databaseFile to set
+	 */
+	public static void setDatabaseFile(File databaseFile) {
+		ReaderContext.databaseFile = databaseFile;
 	}
 
 }

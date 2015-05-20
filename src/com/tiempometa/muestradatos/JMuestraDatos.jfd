@@ -9,7 +9,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 			"$columnSpecs": "default, labelcompgap, default, labelcompgap, 86dlu, labelcompgap, default"
-			"$rowSpecs": "default, linegap, default, linegap, 27dlu, linegap, 89dlu, linegap, default"
+			"$rowSpecs": "default, linegap, default, linegap, 27dlu, linegap, default, linegap, 89dlu, linegap, default"
 		} ) {
 			name: "this"
 			"title": new FormMessage( null, "JMuestraDatos.this.title" )
@@ -29,6 +29,12 @@ new FormModel {
 				"gridX": 3
 				"gridY": 5
 				"gridWidth": 3
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "powerLevel"
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 3
+				"gridY": 7
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

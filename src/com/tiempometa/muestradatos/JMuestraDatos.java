@@ -66,6 +66,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		configButton = new JButton();
 		textPane1 = new JTextField();
+		powerLevel = new JTextField();
 		CellConstraints cc = new CellConstraints();
 
 		//======== this ========
@@ -89,6 +90,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				FormFactory.LINE_GAP_ROWSPEC,
 				new RowSpec(Sizes.dluY(27)),
 				FormFactory.LINE_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.LINE_GAP_ROWSPEC,
 				new RowSpec(Sizes.dluY(89)),
 				FormFactory.LINE_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC
@@ -104,6 +107,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		});
 		contentPane.add(configButton, cc.xy(3, 3));
 		contentPane.add(textPane1, cc.xywh(3, 5, 3, 1));
+		contentPane.add(powerLevel, cc.xy(3, 7));
 		setSize(400, 300);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
@@ -113,6 +117,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 	// //GEN-BEGIN:variables
 	private JButton configButton;
 	private JTextField textPane1;
+	private JTextField powerLevel;
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
 	@Override
@@ -121,6 +126,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		for (TagReading tagReading : readings) {
 			logger.info("Got EPC " + tagReading.getEpc());
 			textPane1.setText(tagReading.getEpc());
+			powerLevel.setText(String.valueOf(tagReading.getPeakRssi()));
 		}
 	}
 }
