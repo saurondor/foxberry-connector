@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.log4j.Logger;
 
 import com.thingmagic.Gen2;
 import com.thingmagic.Gen2.WriteTag;
@@ -25,6 +26,8 @@ import com.tiempometa.muestradatos.TagReading;
  * 
  */
 public class UsbReader implements Runnable {
+	
+	private static final Logger logger = Logger.getLogger(UsbReader.class);
 	private Reader reader = null;
 	private List<TagReadListener> listeners = new ArrayList<TagReadListener>();
 	private boolean connected = false;
@@ -46,10 +49,10 @@ public class UsbReader implements Runnable {
 	public void getParamters() {
 		String[] parameters = reader.paramList();
 		for (int i = 0; i < parameters.length; i++) {
-			System.out.println("Parameter " + parameters[i]);
+			logger.debug("Parameter " + parameters[i]);
 			try {
-				System.out.println("Value " + reader.paramGet(parameters[i]));
-				System.out.println("Value "
+				logger.debug("Value " + reader.paramGet(parameters[i]));
+				logger.debug("Value "
 						+ reader.paramGet(parameters[i]).getClass()
 								.getCanonicalName());
 			} catch (ReaderCodeException e) {
@@ -69,7 +72,7 @@ public class UsbReader implements Runnable {
 				.paramGet(TMConstants.TMR_PARAM_REGION_SUPPORTEDREGIONS);
 		for (int i = 0; i < supportedRegions.length; i++) {
 			Reader.Region region = supportedRegions[i];
-			System.out.println(region.name());
+			logger.debug(region.name());
 		}
 	}
 
@@ -78,7 +81,7 @@ public class UsbReader implements Runnable {
 	}
 
 	public void connect(String uri) throws ReaderException {
-		System.out.println("Creating reader with " + uri);
+		logger.info("Creating reader with " + uri);
 		reader = Reader.create(uri);
 		reader.connect();
 		connected = true;
@@ -93,7 +96,6 @@ public class UsbReader implements Runnable {
 			}
 		}
 		int[] inputList = (int[]) reader.paramGet("/reader/gpio/inputList");
-		System.out.println(inputList.getClass().getCanonicalName());
 		for (int i = 0; i < inputList.length; i++) {
 			int gpioPin = inputList[i];
 			System.out.println("GPIO input " + gpioPin);
@@ -102,25 +104,21 @@ public class UsbReader implements Runnable {
 		Reader.GpioPin[] pins = new Reader.GpioPin[2];
 		for (int i = 0; i < outputList.length; i++) {
 			int gpioPin = outputList[i];
-			System.out.println("GPIO input " + gpioPin);
 			pins[0] = new GpioPin(1,true);
 			pins[1] = new GpioPin(2,true);
 			reader.gpoSet(pins);
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			pins[0] = new GpioPin(1,false);
 			pins[1] = new GpioPin(2,false);
 			reader.gpoSet(pins);
 		}
-		System.out.println("Created reader!");
-		// getSupportedRegions();
+		logger.info("Created reader!");
 		reader.paramSet("/reader/radio/writePower", 1000);
 		reader.paramSet("/reader/radio/readPower", 1000);
-
 	}
 
 	public void read() throws ReaderException {
@@ -137,22 +135,6 @@ public class UsbReader implements Runnable {
 				// Print tag reads
 				for (TagReadData tr : tagReads) {
 					readings.add(new TagReading(tr));
-					System.out.println(tr.toString());
-					System.out.println(new String(tr.getTIDMemData()));
-					System.out.println(new String(tr.getUserMemData()));
-
-					// TagData target = new TagData(tr.getEPCMemData());
-					// try {
-					// System.out.println("User data");
-					// System.out.println(Hex.encodeHex(reader.readTagMemBytes(
-					// target, Gen2.Bank.USER.ordinal(), 0, 32)));
-					// System.out.println("TID");
-					// System.out.println(Hex.encodeHex(reader.readTagMemBytes(
-					// target, Gen2.Bank.TID.ordinal(), 0, 12)));
-					// } catch (ReaderCodeException e) {
-					//
-					// }
-					// write(tr);
 				}
 			}
 			notifyListeners(readings);
@@ -165,10 +147,10 @@ public class UsbReader implements Runnable {
 				(byte) 0xAB, (byte) 0xCD, (byte) 0xEF, (byte) 0x01,
 				(byte) 0x23, (byte) 0x45, (byte) 0x67, });
 		Gen2.WriteTag tagop = new Gen2.WriteTag(epc);
-		System.out.println("Requesting write EPC...");
+		logger.debug("Requesting write EPC...");
 		TagData target = new TagData(data.getEPCMemData());
 		reader.executeTagOp(tagop, target);
-		System.out.println("Wrote tag!");
+		logger.debug("Wrote tag!");
 	}
 
 	public void disconnect() throws ReaderException {
@@ -200,7 +182,6 @@ public class UsbReader implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public byte[] readTagMemBytes(TagData target, int bank, int start, int size)
@@ -213,8 +194,6 @@ public class UsbReader implements Runnable {
 	}
 
 	public void executeTagOp(WriteTag tagop, TagData target) throws ReaderException {
-		reader.executeTagOp(tagop, target);
-		
+		reader.executeTagOp(tagop, target);	
 	}
-
 }
