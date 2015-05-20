@@ -98,7 +98,6 @@ public class UsbReader implements Runnable {
 		int[] inputList = (int[]) reader.paramGet("/reader/gpio/inputList");
 		for (int i = 0; i < inputList.length; i++) {
 			int gpioPin = inputList[i];
-			System.out.println("GPIO input " + gpioPin);
 		}
 		int[] outputList = (int[]) reader.paramGet("/reader/gpio/outputList");
 		Reader.GpioPin[] pins = new Reader.GpioPin[2];

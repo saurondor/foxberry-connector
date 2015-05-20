@@ -26,14 +26,46 @@ public class JConfigDialog extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 2477824460530549287L;
+	private boolean databaseConnected = false;
+
 	public JConfigDialog(Frame owner) {
 		super(owner);
 		initComponents();
+		setReaders();
 	}
 
 	public JConfigDialog(Dialog owner) {
 		super(owner);
 		initComponents();
+		setReaders();
+	}
+
+	private void setReaders() {
+		if (databaseConnected) {
+			enableReaders();
+		} else {
+			disableReaders();
+		}
+	}
+
+	private void disableReaders() {
+		readerBoxAddressTextField.setEnabled(false);
+		antennaComboBox.setEnabled(false);
+		readerBoxConnectButton.setEnabled(false);
+		commPortComboBox.setEnabled(false);
+		usbReaderConnectButton.setEnabled(false);
+		usbReaderSetRegionButton.setEnabled(false);
+		regionComboBox.setEnabled(false);
+	}
+
+	private void enableReaders() {
+		readerBoxAddressTextField.setEnabled(true);
+		antennaComboBox.setEnabled(true);
+		readerBoxConnectButton.setEnabled(true);
+		commPortComboBox.setEnabled(true);
+		usbReaderConnectButton.setEnabled(true);
+		usbReaderSetRegionButton.setEnabled(true);
+		regionComboBox.setEnabled(true);
 	}
 
 	private void usbReaderConnectButtonActionPerformed(ActionEvent e) {
@@ -46,15 +78,15 @@ public class JConfigDialog extends JDialog {
 				e1.printStackTrace();
 			}
 			usbReaderConnectButton.setText("Conectar");
-			
+
 		} else {
-		try {
-			ReaderContext.connectUsbReader(commPort);
-			usbReaderConnectButton.setText("Desconectar");
-		} catch (ReaderException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			try {
+				ReaderContext.connectUsbReader(commPort);
+				usbReaderConnectButton.setText("Desconectar");
+			} catch (ReaderException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
@@ -71,19 +103,40 @@ public class JConfigDialog extends JDialog {
 		int response = fc.showOpenDialog(this);
 		if (response == JFileChooser.APPROVE_OPTION) {
 			ReaderContext.setDatabaseFile(fc.getSelectedFile());
-			databaseTextField.setText(ReaderContext.getDatabaseFile().getAbsolutePath());
+			databaseTextField.setText(ReaderContext.getDatabaseFile()
+					.getAbsolutePath());
 			try {
-				JdbcConnector.connect(ReaderContext.getDatabaseFile().getAbsolutePath(), null, null);
-				JOptionPane.showMessageDialog(this, "Conexión exitosa", "Conexión a base de datos", JOptionPane.INFORMATION_MESSAGE);
+				JdbcConnector.connect(ReaderContext.getDatabaseFile()
+						.getAbsolutePath(), null, null);
+				JOptionPane.showMessageDialog(this, "Conexión exitosa",
+						"Conexión a base de datos",
+						JOptionPane.INFORMATION_MESSAGE);
+				databaseConnected = true;
 			} catch (InstantiationException | IllegalAccessException
 					| ClassNotFoundException | SQLException e1) {
-				JOptionPane.showMessageDialog(this, "Error conectando a la base de datos "+e1.getMessage(),"Error de base de datos", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(
+						this,
+						"Error conectando a la base de datos "
+								+ e1.getMessage(), "Error de base de datos",
+						JOptionPane.ERROR_MESSAGE);
+				databaseConnected = true;
 			}
 		}
+		setReaders();
+	}
+
+	private void cancelButtonActionPerformed(ActionEvent e) {
+		this.dispose();
+	}
+
+	private void okButtonActionPerformed(ActionEvent e) {
+		// TODO implement save settings button
+		this.dispose();
 	}
 
 	private void initComponents() {
-		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+		// JFormDesigner - Component initialization - DO NOT MODIFY
+		// //GEN-BEGIN:initComponents
 		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
@@ -105,7 +158,7 @@ public class JConfigDialog extends JDialog {
 		commPortComboBox = new JComboBox<>();
 		usbReaderConnectButton = new JButton();
 		label1 = new JLabel();
-		comboBox1 = new JComboBox<>();
+		regionComboBox = new JComboBox<>();
 		usbReaderSetRegionButton = new JButton();
 		buttonBar = new JPanel();
 		okButton = new JButton();
@@ -130,7 +183,7 @@ public class JConfigDialog extends JDialog {
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(115)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC
+						new ColumnSpec(Sizes.dluX(73))
 					},
 					new RowSpec[] {
 						FormFactory.DEFAULT_ROWSPEC,
@@ -257,8 +310,8 @@ public class JConfigDialog extends JDialog {
 				label1.setText(bundle.getString("JConfigDialog.label1.text"));
 				contentPanel.add(label1, cc.xy(1, 17));
 
-				//---- comboBox1 ----
-				comboBox1.setModel(new DefaultComboBoxModel<>(new String[] {
+				//---- regionComboBox ----
+				regionComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
 					"NA",
 					"EU",
 					"KR",
@@ -271,7 +324,7 @@ public class JConfigDialog extends JDialog {
 					"NZ",
 					"OPEN"
 				}));
-				contentPanel.add(comboBox1, cc.xy(3, 17));
+				contentPanel.add(regionComboBox, cc.xy(3, 17));
 
 				//---- usbReaderSetRegionButton ----
 				usbReaderSetRegionButton.setText(bundle.getString("JConfigDialog.usbReaderSetRegionButton.text"));
@@ -299,10 +352,22 @@ public class JConfigDialog extends JDialog {
 
 				//---- okButton ----
 				okButton.setText("OK");
+				okButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						okButtonActionPerformed(e);
+					}
+				});
 				buttonBar.add(okButton, cc.xy(2, 1));
 
 				//---- cancelButton ----
 				cancelButton.setText("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						cancelButtonActionPerformed(e);
+					}
+				});
 				buttonBar.add(cancelButton, cc.xy(4, 1));
 			}
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
@@ -310,10 +375,11 @@ public class JConfigDialog extends JDialog {
 		contentPane.add(dialogPane, BorderLayout.CENTER);
 		pack();
 		setLocationRelativeTo(getOwner());
-		// JFormDesigner - End of component initialization  //GEN-END:initComponents
+		// //GEN-END:initComponents
 	}
 
-	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
+	// JFormDesigner - Variables declaration - DO NOT MODIFY
+	// //GEN-BEGIN:variables
 	private JPanel dialogPane;
 	private JPanel contentPanel;
 	private JLabel label4;
@@ -334,10 +400,10 @@ public class JConfigDialog extends JDialog {
 	private JComboBox<String> commPortComboBox;
 	private JButton usbReaderConnectButton;
 	private JLabel label1;
-	private JComboBox<String> comboBox1;
+	private JComboBox<String> regionComboBox;
 	private JButton usbReaderSetRegionButton;
 	private JPanel buttonBar;
 	private JButton okButton;
 	private JButton cancelButton;
-	// JFormDesigner - End of variables declaration  //GEN-END:variables
+	// JFormDesigner - End of variables declaration //GEN-END:variables
 }

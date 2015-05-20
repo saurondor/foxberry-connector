@@ -44,6 +44,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 
 	private String mode = null;
 	private Integer chipNumber = null;
+	private Integer lastTagCount = 0;
+	private RfidDao rfidDao = new RfidDaoImpl();
 
 	public JMuestraDatos() {
 		initComponents();
@@ -75,8 +77,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 
 	private void configButtonActionPerformed(ActionEvent e) {
 		// TODO add your code here
-		JConfigDialog configDialog = new JConfigDialog(this);
-		configDialog.setVisible(true);
 	}
 
 	private void verifyDataMenuItemActionPerformed(ActionEvent e) {
@@ -101,6 +101,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		}
 	}
 
+	private void configMenuItemActionPerformed(ActionEvent e) {
+		JConfigDialog configDialog = new JConfigDialog(this);
+		configDialog.setVisible(true);
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -108,14 +113,13 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				.getBundle("com.tiempometa.muestradatos.muestradatos");
 		menuBar1 = new JMenuBar();
 		menu1 = new JMenu();
-		menuItem1 = new JMenuItem();
+		configMenuItem = new JMenuItem();
 		menuItem2 = new JMenuItem();
 		menu2 = new JMenu();
 		verifyDataMenuItem = new JMenuItem();
 		readTagsMenuItem = new JMenuItem();
 		programTagsMenuItem = new JMenuItem();
 		menu3 = new JMenu();
-		configButton = new JButton();
 		label1 = new JLabel();
 		epcTextField = new JTextField();
 		label2 = new JLabel();
@@ -136,8 +140,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				new ColumnSpec(Sizes.dluX(160)),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC }, new RowSpec[] {
-				FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
 				new RowSpec(Sizes.dluY(27)), FormFactory.LINE_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
@@ -150,10 +152,16 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 			{
 				menu1.setText(bundle.getString("JMuestraDatos.menu1.text"));
 
-				// ---- menuItem1 ----
-				menuItem1.setText(bundle
-						.getString("JMuestraDatos.menuItem1.text"));
-				menu1.add(menuItem1);
+				// ---- configMenuItem ----
+				configMenuItem.setText(bundle
+						.getString("JMuestraDatos.configMenuItem.text"));
+				configMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						configMenuItemActionPerformed(e);
+					}
+				});
+				menu1.add(configMenuItem);
 				menu1.addSeparator();
 
 				// ---- menuItem2 ----
@@ -204,31 +212,20 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		}
 		setJMenuBar(menuBar1);
 
-		// ---- configButton ----
-		configButton.setText(bundle
-				.getString("JMuestraDatos.configButton.text"));
-		configButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				configButtonActionPerformed(e);
-			}
-		});
-		contentPane.add(configButton, cc.xy(3, 3));
-
 		// ---- label1 ----
 		label1.setText(bundle.getString("JMuestraDatos.label1.text"));
-		contentPane.add(label1, cc.xy(3, 7));
-		contentPane.add(epcTextField, cc.xy(5, 7));
+		contentPane.add(label1, cc.xy(3, 3));
+		contentPane.add(epcTextField, cc.xy(5, 3));
 
 		// ---- label2 ----
 		label2.setText(bundle.getString("JMuestraDatos.label2.text"));
-		contentPane.add(label2, cc.xy(3, 9));
-		contentPane.add(rssiTextField, cc.xy(5, 9));
+		contentPane.add(label2, cc.xy(3, 5));
+		contentPane.add(rssiTextField, cc.xy(5, 5));
 
 		// ---- label3 ----
 		label3.setText(bundle.getString("JMuestraDatos.label3.text"));
-		contentPane.add(label3, cc.xy(3, 11));
-		contentPane.add(tidTextField, cc.xy(5, 11));
+		contentPane.add(label3, cc.xy(3, 7));
+		contentPane.add(tidTextField, cc.xy(5, 7));
 		setSize(425, 335);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
@@ -238,14 +235,13 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 	// //GEN-BEGIN:variables
 	private JMenuBar menuBar1;
 	private JMenu menu1;
-	private JMenuItem menuItem1;
+	private JMenuItem configMenuItem;
 	private JMenuItem menuItem2;
 	private JMenu menu2;
 	private JMenuItem verifyDataMenuItem;
 	private JMenuItem readTagsMenuItem;
 	private JMenuItem programTagsMenuItem;
 	private JMenu menu3;
-	private JButton configButton;
 	private JLabel label1;
 	private JTextField epcTextField;
 	private JLabel label2;
@@ -255,34 +251,46 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
+	private void redLedOn() {
+		Reader.GpioPin[] pins = new Reader.GpioPin[1];
+		pins[0] = new GpioPin(2, true);
+		try {
+			ReaderContext.gpoSet(pins);
+		} catch (ReaderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void redLedOff() {
+		Reader.GpioPin[] pins = new Reader.GpioPin[1];
+		pins[0] = new GpioPin(2, false);
+		try {
+			ReaderContext.gpoSet(pins);
+		} catch (ReaderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public void handleReadings(List<TagReading> readings) {
-		// logger.info("Handling readings " + readings.size());
-		for (TagReading tagReading : readings) {
-			Reader.GpioPin[] pins = new Reader.GpioPin[1];
-			pins[0] = new GpioPin(2, true);
-			try {
-				ReaderContext.gpoSet(pins);
-			} catch (ReaderException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		logger.debug("Last tag count = " + lastTagCount);
+		if ((readings.size() == 1) && (lastTagCount != 1)) {
+			logger.info("New tag in field");
+			TagReading tagReading = readings.get(0);
 			logger.info("Got EPC " + tagReading.getEpc());
 			epcTextField.setText(tagReading.getEpc());
 			rssiTextField.setText(String.valueOf(tagReading.getPeakRssi()));
-			RfidDao rfidDao = new RfidDaoImpl();
 			String tid = null;
 			String userData = null;
 			TagData target = new TagData(tagReading.getEpc());
-			logger.info(tagReading.getClass().getCanonicalName());
 			try {
-				// userData =
-				// String.valueOf(Hex.encodeHex(ReaderContext.readTagMemBytes(
-				// target, Gen2.Bank.USER.ordinal(), 0, 32)));
 				try {
 					tid = String.valueOf(Hex.encodeHex(ReaderContext
 							.readTagMemBytes(target, Gen2.Bank.TID.ordinal(),
 									0, 16)));
+					logger.debug("Got 16 byte TID");
 				} catch (Exception e2) {
 					logger.error("Error reading 16 byte TID");
 					e2.printStackTrace();
@@ -290,6 +298,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 						tid = String.valueOf(Hex.encodeHex(ReaderContext
 								.readTagMemBytes(target,
 										Gen2.Bank.TID.ordinal(), 0, 12)));
+						logger.debug("Got 12 byte TID");
 					} catch (ReaderCodeException e3) {
 						logger.error("Error reading 12 byte TID");
 						throw e3;
@@ -297,18 +306,12 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				}
 				tidTextField.setText(tid);
 			} catch (ReaderCodeException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-//				tidTextField.setText("");
-
 			} catch (ReaderException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-//				tidTextField.setText("");	
 			}
 			if (mode.equals(MODE_VERIFY)) {
 				logger.info("Verify with EPC " + tagReading.getEpc());
-
 			}
 			if (mode.equals(MODE_READ)) {
 				Rfid rfid = new Rfid(null, null, chipNumber.toString(),
@@ -323,10 +326,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				}
 			}
 			if (mode.equals(MODE_PROGRAM)) {
-				Gen2.TagData epc = new Gen2.TagData(new byte[] { (byte) 0xE1,
-						(byte) 0x23, (byte) 0x45, (byte) 0x67, (byte) 0x89,
-						(byte) 0xAB, (byte) 0xCD, (byte) 0xEF, (byte) 0x01,
-						(byte) 0x23, (byte) 0x45, (byte) 0x67, });
+				redLedOn();
+				Gen2.TagData epc = null;
 				byte[] epcBytes = null;
 				try {
 					Rfid rfid = rfidDao.fetchByChipNumber(chipNumber);
@@ -352,6 +353,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				try {
 					ReaderContext.executeTagOp(tagop, target);
 					System.out.println("Wrote tag!");
+					redLedOff();
 				} catch (ReaderException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -363,13 +365,10 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			pins[0] = new GpioPin(2, false);
-			try {
-				ReaderContext.gpoSet(pins);
-			} catch (ReaderException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		} else {
+
 		}
+		lastTagCount = readings.size();
+
 	}
 }
