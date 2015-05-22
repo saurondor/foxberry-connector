@@ -1,0 +1,133 @@
+JFDML JFormDesigner: "5.1.2.0.134" Java: "1.7.0_67" encoding: "UTF-8"
+
+new FormModel {
+	"i18n.autoExternalize": true
+	"i18n.bundlePackage": "com.tiempometa.muestradatos"
+	"i18n.bundleName": "muestradatos"
+	"i18n.keyPrefix": "JUserDataFrame"
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
+			"$columnSpecs": "50dlu, labelcompgap, default, labelcompgap, 221dlu, labelcompgap, 176dlu, labelcompgap, 228dlu"
+			"$rowSpecs": "23dlu, linegap, 179dlu, linegap, 13dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+		} ) {
+			name: "this"
+			"title": new FormMessage( null, "JUserDataFrame.this.title" )
+			"defaultCloseOperation": 2
+			"$sizePolicy": 1
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "bibLabel"
+				"text": new FormMessage( null, "JUserDataFrame.bibLabel.text" )
+				"font": new java.awt.Font( "Tahoma", 0, 120 )
+				"foreground": sfield java.awt.Color red
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 9
+				"gridY": 3
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": new FormMessage( null, "JUserDataFrame.label1.text" )
+				"font": &Font0 new java.awt.Font( "Tahoma", 1, 48 )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 3
+				"gridY": 7
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "nameLabel"
+				"text": new FormMessage( null, "JUserDataFrame.nameLabel.text" )
+				"font": &Font1 new java.awt.Font( "Tahoma", 0, 48 )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 7
+				"gridWidth": 3
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": new FormMessage( null, "JUserDataFrame.label2.text" )
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 3
+				"gridY": 9
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "birthdateLabel"
+				"text": new FormMessage( null, "JUserDataFrame.birthdateLabel.text" )
+				"font": #Font1
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 9
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": new FormMessage( null, "JUserDataFrame.label3.text" )
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 3
+				"gridY": 11
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "genderLabel"
+				"text": new FormMessage( null, "JUserDataFrame.genderLabel.text" )
+				"font": #Font1
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 11
+				"gridWidth": 3
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": new FormMessage( null, "JUserDataFrame.label4.text" )
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 3
+				"gridY": 13
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "distanceLabel"
+				"text": new FormMessage( null, "JUserDataFrame.distanceLabel.text" )
+				"font": #Font1
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 13
+				"gridWidth": 3
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label5"
+				"text": new FormMessage( null, "JUserDataFrame.label5.text" )
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 3
+				"gridY": 15
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "categoryLabel"
+				"text": new FormMessage( null, "JUserDataFrame.categoryLabel.text" )
+				"font": #Font1
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 15
+				"gridWidth": 3
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label6"
+				"text": new FormMessage( null, "JUserDataFrame.label6.text" )
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 3
+				"gridY": 17
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "colorLabel"
+				"text": new FormMessage( null, "JUserDataFrame.colorLabel.text" )
+				"font": #Font1
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 17
+				"gridWidth": 3
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 1200, 800 )
+		} )
+	}
+}

@@ -26,8 +26,19 @@ import com.thingmagic.ReaderCodeException;
 import com.thingmagic.ReaderException;
 import com.thingmagic.TagData;
 import com.thingmagic.Reader.GpioPin;
+import com.tiempometa.timing.dao.CategoriesDao;
+import com.tiempometa.timing.dao.ParticipantRegistrationDao;
+import com.tiempometa.timing.dao.ParticipantsDao;
+import com.tiempometa.timing.dao.RegistrationDao;
 import com.tiempometa.timing.dao.RfidDao;
+import com.tiempometa.timing.dao.access.CategoriesDaoImpl;
+import com.tiempometa.timing.dao.access.ParticipantRegistrationDaoImpl;
+import com.tiempometa.timing.dao.access.ParticipantsDaoImpl;
+import com.tiempometa.timing.dao.access.RegistrationDaoImpl;
 import com.tiempometa.timing.dao.access.RfidDaoImpl;
+import com.tiempometa.timing.models.Categories;
+import com.tiempometa.timing.models.Participants;
+import com.tiempometa.timing.models.Registration;
 import com.tiempometa.timing.models.Rfid;
 
 /**
@@ -47,7 +58,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 	private Integer chipNumber = null;
 	private Integer lastTagCount = 0;
 	private RfidDao rfidDao = new RfidDaoImpl();
+	private RegistrationDao registrationDao = new RegistrationDaoImpl();
+	private ParticipantsDao participantDao = new ParticipantsDaoImpl();
+	private CategoriesDao categoryDao = new CategoriesDaoImpl();
 	private Integer tidLength = 12;
+	private UserDisplayPanel userDisplayPanel = null;
 
 	public JMuestraDatos() {
 		initComponents();
@@ -273,6 +288,46 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void verifyTag(TagReading reading) {
+		if (userDisplayPanel == null) {
+
+		} else {
+			Integer chipNumber = null;
+			try {
+				List<Rfid> rfids = rfidDao.findByRfid(reading.getEpc());
+				if (rfids.size() == 1) {
+					Rfid rfid = rfids.get(0);
+					chipNumber = rfid.getChipNumber();
+					Registration registration = registrationDao.findByChipNumber(chipNumber);
+					if (registration == null) {
+						
+					} else {
+						Participants participant = participantDao.findById(registration.getParticipantId());
+//						Categories category = categoryDao.findById();
+						Categories category = null;
+						if (participant == null) {
+							userDisplayPanel.setParticipant(participant, registration, rfid, category);
+						} else {
+							
+						}
+					}
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	private void readTag() {
+
+	}
+
+	private void programTag() {
+
 	}
 
 	@Override
