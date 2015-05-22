@@ -123,6 +123,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		configDialog.setVisible(true);
 	}
 
+	private void menuItem2ActionPerformed(ActionEvent e) {
+		this.dispose();
+	}
+
+	private void aboutUsMenuItemActionPerformed(ActionEvent e) {
+		JAboutUs aboutUs = new JAboutUs(this);
+		aboutUs.setVisible(true);
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -131,12 +140,13 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		menuBar1 = new JMenuBar();
 		menu1 = new JMenu();
 		configMenuItem = new JMenuItem();
-		menuItem2 = new JMenuItem();
+		exitMenuItem = new JMenuItem();
 		menu2 = new JMenu();
 		verifyDataMenuItem = new JMenuItem();
 		readTagsMenuItem = new JMenuItem();
 		programTagsMenuItem = new JMenuItem();
 		menu3 = new JMenu();
+		aboutUsMenuItem = new JMenuItem();
 		label1 = new JLabel();
 		epcTextField = new JTextField();
 		label2 = new JLabel();
@@ -181,10 +191,16 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				menu1.add(configMenuItem);
 				menu1.addSeparator();
 
-				// ---- menuItem2 ----
-				menuItem2.setText(bundle
-						.getString("JMuestraDatos.menuItem2.text"));
-				menu1.add(menuItem2);
+				// ---- exitMenuItem ----
+				exitMenuItem.setText(bundle
+						.getString("JMuestraDatos.exitMenuItem.text"));
+				exitMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						menuItem2ActionPerformed(e);
+					}
+				});
+				menu1.add(exitMenuItem);
 			}
 			menuBar1.add(menu1);
 
@@ -224,6 +240,17 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 			// ======== menu3 ========
 			{
 				menu3.setText(bundle.getString("JMuestraDatos.menu3.text"));
+
+				// ---- aboutUsMenuItem ----
+				aboutUsMenuItem.setText(bundle
+						.getString("JMuestraDatos.aboutUsMenuItem.text"));
+				aboutUsMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						aboutUsMenuItemActionPerformed(e);
+					}
+				});
+				menu3.add(aboutUsMenuItem);
 			}
 			menuBar1.add(menu3);
 		}
@@ -253,12 +280,13 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 	private JMenuBar menuBar1;
 	private JMenu menu1;
 	private JMenuItem configMenuItem;
-	private JMenuItem menuItem2;
+	private JMenuItem exitMenuItem;
 	private JMenu menu2;
 	private JMenuItem verifyDataMenuItem;
 	private JMenuItem readTagsMenuItem;
 	private JMenuItem programTagsMenuItem;
 	private JMenu menu3;
+	private JMenuItem aboutUsMenuItem;
 	private JLabel label1;
 	private JTextField epcTextField;
 	private JLabel label2;
@@ -300,17 +328,20 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				if (rfids.size() == 1) {
 					Rfid rfid = rfids.get(0);
 					chipNumber = rfid.getChipNumber();
-					Registration registration = registrationDao.findByChipNumber(chipNumber);
+					Registration registration = registrationDao
+							.findByChipNumber(chipNumber);
 					if (registration == null) {
-						
+
 					} else {
-						Participants participant = participantDao.findById(registration.getParticipantId());
-//						Categories category = categoryDao.findById();
+						Participants participant = participantDao
+								.findById(registration.getParticipantId());
+						// Categories category = categoryDao.findById();
 						Categories category = null;
 						if (participant == null) {
-							userDisplayPanel.setParticipant(participant, registration, rfid, category);
+							userDisplayPanel.setParticipant(participant,
+									registration, rfid, category);
 						} else {
-							
+
 						}
 					}
 				}

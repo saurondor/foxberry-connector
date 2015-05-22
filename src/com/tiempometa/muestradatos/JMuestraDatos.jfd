@@ -68,8 +68,9 @@ new FormModel {
 						name: "separator1"
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem2"
-						"text": new FormMessage( null, "JMuestraDatos.menuItem2.text" )
+						name: "exitMenuItem"
+						"text": new FormMessage( null, "JMuestraDatos.exitMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "menuItem2ActionPerformed", true ) )
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
@@ -93,6 +94,11 @@ new FormModel {
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "menu3"
 					"text": new FormMessage( null, "JMuestraDatos.menu3.text" )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "aboutUsMenuItem"
+						"text": new FormMessage( null, "JMuestraDatos.aboutUsMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "aboutUsMenuItemActionPerformed", true ) )
+					} )
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {
