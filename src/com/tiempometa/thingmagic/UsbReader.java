@@ -75,6 +75,20 @@ public class UsbReader implements Runnable {
 			logger.debug(region.name());
 		}
 	}
+	
+	public boolean setRegion(String regionName) throws ReaderException {
+		Reader.Region[] supportedRegions = (Reader.Region[]) reader
+				.paramGet(TMConstants.TMR_PARAM_REGION_SUPPORTEDREGIONS);
+		boolean regionSet = false;
+		for (int i = 0; i < supportedRegions.length; i++) {
+			Reader.Region region = supportedRegions[i];
+			if (region.name().equals(regionName)) {
+				reader.paramSet("/reader/region/id", region);
+				regionSet = true;
+			}
+		}
+		return regionSet;
+	}
 
 	public void connectToComm(String commPort) throws ReaderException {
 		connect("tmr:///" + commPort);

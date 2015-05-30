@@ -24,6 +24,10 @@ public class ReaderContext {
 	public static boolean isUsbConnected() {
 		return reader.isConnected();
 	}
+	
+	public static boolean setRegion(String regionName) throws ReaderException {
+		return reader.setRegion(regionName);
+	}
 
 	public static void connectUsbReader(String commPort) throws ReaderException {
 		reader.connectToComm(commPort);
