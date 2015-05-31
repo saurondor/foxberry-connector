@@ -5,15 +5,29 @@
 package com.tiempometa.muestradatos;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 import javax.swing.*;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
+import com.thingmagic.ReaderException;
+import com.tiempometa.timing.dao.CategoriesDao;
+import com.tiempometa.timing.dao.ParticipantsDao;
+import com.tiempometa.timing.dao.RegistrationDao;
+import com.tiempometa.timing.dao.RfidDao;
+import com.tiempometa.timing.dao.access.CategoriesDaoImpl;
+import com.tiempometa.timing.dao.access.ParticipantsDaoImpl;
+import com.tiempometa.timing.dao.access.RegistrationDaoImpl;
+import com.tiempometa.timing.dao.access.RfidDaoImpl;
 import com.tiempometa.timing.models.Categories;
-import com.tiempometa.timing.models.ParticipantRegistration;
 import com.tiempometa.timing.models.Participants;
 import com.tiempometa.timing.models.Registration;
 import com.tiempometa.timing.models.Rfid;
@@ -21,16 +35,75 @@ import com.tiempometa.timing.models.Rfid;
 /**
  * @author Gerardo Esteban Tasistro Giubetic
  */
-public class JUserDataFrame extends JFrame implements UserDisplayPanel {
+public class JUserDataFrame extends JFrame implements TagReadListener {
 	/**
 	 * 
 	 */
+	private static final Logger logger = Logger.getLogger(JUserDataFrame.class);
 	private static final long serialVersionUID = 3467103545852213612L;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private RfidDao rfidDao = new RfidDaoImpl();
+	private RegistrationDao registrationDao = new RegistrationDaoImpl();
+	private ParticipantsDao participantDao = new ParticipantsDaoImpl();
+	private CategoriesDao categoryDao = new CategoriesDaoImpl();
 
 	public JUserDataFrame() {
 		initComponents();
 		clearData();
+		this.addWindowListener(new WindowAdapter() {
+
+			public void windowClosing(WindowEvent we) {
+				int response = JOptionPane
+						.showConfirmDialog(
+								null,
+								"Esta ventana solo se puede cerrar desde el menú de la aplicación",
+								"Cerrar Ventana", JOptionPane.WARNING_MESSAGE);
+			}
+		});
+	}
+
+	public void showTagInfo(TagReading reading) {
+		Integer chipNumber = null;
+		try {
+			List<Rfid> rfids = rfidDao.findByRfid(reading.getTid());
+			if (rfids.size() == 1) {
+				Rfid rfid = rfids.get(0);
+				chipNumber = rfid.getChipNumber();
+				Registration registration = registrationDao
+						.findByChipNumber(chipNumber);
+				if (registration == null) {
+					clearData();
+					bibLabel.setText(rfid.getBib());
+				} else {
+					Participants participant = participantDao
+							.findById(registration.getParticipantId());
+					// Categories category = categoryDao.findById();
+					Categories category = null;
+					if (participant == null) {
+						clearData();
+					} else {
+						bibLabel.setText(rfid.getBib());
+						nameLabel.setText(participant.getFirstName() + " "
+								+ participant.getLastName() + " "
+								+ participant.getMiddleName());
+						birthdateLabel.setText(dateFormat.format(participant
+								.getBirthDate()));
+						genderLabel.setText("");
+						distanceLabel.setText("");
+//						categoryLabel.setText(category.getTitle());
+//						colorLabel.setText(category.getExtra1());
+
+					}
+				}
+			} else {
+				clearData();
+				noData();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	private void initComponents() {
@@ -55,18 +128,23 @@ public class JUserDataFrame extends JFrame implements UserDisplayPanel {
 
 		// ======== this ========
 		setTitle(bundle.getString("JUserDataFrame.this.title"));
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		setUndecorated(true);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new FormLayout(new ColumnSpec[] {
-				new ColumnSpec(Sizes.dluX(50)),
+				new ColumnSpec(ColumnSpec.FILL, Sizes.dluX(50),
+						FormSpec.DEFAULT_GROW),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(Sizes.dluX(221)),
+				new ColumnSpec(Sizes.dluX(74)),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(Sizes.dluX(176)),
+				new ColumnSpec(ColumnSpec.FILL, Sizes.dluX(176),
+						FormSpec.DEFAULT_GROW),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(Sizes.dluX(228)) }, new RowSpec[] {
+				new ColumnSpec(Sizes.dluX(228)),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				new ColumnSpec(Sizes.dluX(21)) }, new RowSpec[] {
 				new RowSpec(Sizes.dluY(23)), FormFactory.LINE_GAP_ROWSPEC,
 				new RowSpec(Sizes.dluY(179)), FormFactory.LINE_GAP_ROWSPEC,
 				new RowSpec(Sizes.dluY(13)), FormFactory.LINE_GAP_ROWSPEC,
@@ -91,7 +169,7 @@ public class JUserDataFrame extends JFrame implements UserDisplayPanel {
 		// ---- nameLabel ----
 		nameLabel.setText(bundle.getString("JUserDataFrame.nameLabel.text"));
 		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
-		contentPane.add(nameLabel, cc.xywh(5, 7, 3, 1));
+		contentPane.add(nameLabel, cc.xywh(5, 7, 7, 1));
 
 		// ---- label2 ----
 		label2.setText(bundle.getString("JUserDataFrame.label2.text"));
@@ -102,7 +180,7 @@ public class JUserDataFrame extends JFrame implements UserDisplayPanel {
 		birthdateLabel.setText(bundle
 				.getString("JUserDataFrame.birthdateLabel.text"));
 		birthdateLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
-		contentPane.add(birthdateLabel, cc.xy(5, 9));
+		contentPane.add(birthdateLabel, cc.xywh(5, 9, 5, 1));
 
 		// ---- label3 ----
 		label3.setText(bundle.getString("JUserDataFrame.label3.text"));
@@ -135,7 +213,7 @@ public class JUserDataFrame extends JFrame implements UserDisplayPanel {
 		categoryLabel.setText(bundle
 				.getString("JUserDataFrame.categoryLabel.text"));
 		categoryLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
-		contentPane.add(categoryLabel, cc.xywh(5, 15, 3, 1));
+		contentPane.add(categoryLabel, cc.xywh(5, 15, 5, 1));
 
 		// ---- label6 ----
 		label6.setText(bundle.getString("JUserDataFrame.label6.text"));
@@ -146,36 +224,13 @@ public class JUserDataFrame extends JFrame implements UserDisplayPanel {
 		colorLabel.setText(bundle.getString("JUserDataFrame.colorLabel.text"));
 		colorLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
 		contentPane.add(colorLabel, cc.xywh(5, 17, 3, 1));
-		setSize(1200, 800);
+		setSize(1380, 800);
 		setLocationRelativeTo(getOwner());
-		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
 
-	@Override
-	public ParticipantRegistration getParticipant() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setParticipant(Participants participant,
-			Registration registration, Rfid rfid, Categories category) {
-		clearData();
-		nameLabel
-				.setText(participant.getFirstName() + " "
-						+ participant.getLastName() + " "
-						+ participant.getMiddleName());
-		birthdateLabel.setText(dateFormat.format(participant.getBirthDate()));
-		genderLabel.setText("");
-		distanceLabel.setText("");
-		categoryLabel.setText(category.getTitle());
-		colorLabel.setText(category.getExtra1());
-		
-
-	}
-
 	private void clearData() {
+		bibLabel.setText("");
 		nameLabel.setText("");
 		birthdateLabel.setText("");
 		genderLabel.setText("");
@@ -200,5 +255,39 @@ public class JUserDataFrame extends JFrame implements UserDisplayPanel {
 	private JLabel categoryLabel;
 	private JLabel label6;
 	private JLabel colorLabel;
+
 	// JFormDesigner - End of variables declaration //GEN-END:variables
+
+	@Override
+	public void handleReadings(List<TagReading> readings) {
+		if (readings.size() > 0) {
+			if (readings.size() == 1) {
+				for (TagReading tagReading : readings) {
+					if (tagReading.getTid() == null) {
+						try {
+							tagReading.setTid(ReaderContext.readTid(
+									tagReading.getEpc(), 12));
+							if (logger.isDebugEnabled()) {
+								logger.debug("Got tag " + tagReading.getEpc()
+										+ " - " + tagReading.getTid());
+							}
+							showTagInfo(tagReading);
+
+						} catch (ReaderException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			} else {
+			}
+		} else {
+		}
+
+	}
+
+	private void noData() {
+		nameLabel.setText("No Data");
+
+	}
 }

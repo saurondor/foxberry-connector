@@ -8,13 +8,14 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-			"$columnSpecs": "50dlu, labelcompgap, default, labelcompgap, 221dlu, labelcompgap, 176dlu, labelcompgap, 228dlu"
+			"$columnSpecs": "50dlu:grow, labelcompgap, default, labelcompgap, 74dlu, labelcompgap, 176dlu:grow, labelcompgap, 228dlu, labelcompgap, 21dlu"
 			"$rowSpecs": "23dlu, linegap, 179dlu, linegap, 13dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 		} ) {
 			name: "this"
 			"title": new FormMessage( null, "JUserDataFrame.this.title" )
-			"defaultCloseOperation": 2
+			"defaultCloseOperation": 0
 			"$sizePolicy": 1
+			"undecorated": true
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "bibLabel"
 				"text": new FormMessage( null, "JUserDataFrame.bibLabel.text" )
@@ -39,7 +40,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 7
-				"gridWidth": 3
+				"gridWidth": 7
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label2"
@@ -56,6 +57,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 9
+				"gridWidth": 5
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label3"
@@ -106,7 +108,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 15
-				"gridWidth": 3
+				"gridWidth": 5
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label6"
@@ -127,7 +129,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 1200, 800 )
+			"size": new java.awt.Dimension( 1380, 800 )
 		} )
 	}
 }
