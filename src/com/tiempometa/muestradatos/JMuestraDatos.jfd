@@ -84,6 +84,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "readTagsMenuItem"
 						"text": new FormMessage( null, "JMuestraDatos.readTagsMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "readTagsMenuItemActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "programTagsMenuItem"

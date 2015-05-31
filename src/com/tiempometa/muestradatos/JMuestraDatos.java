@@ -66,7 +66,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 
 	public JMuestraDatos() {
 		initComponents();
-		ReaderContext.addReadingListener(this);
+		// ReaderContext.addReadingListener(this);
 	}
 
 	/**
@@ -130,6 +130,19 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 	private void aboutUsMenuItemActionPerformed(ActionEvent e) {
 		JAboutUs aboutUs = new JAboutUs(this);
 		aboutUs.setVisible(true);
+	}
+
+	private void readTagsMenuItemActionPerformed(ActionEvent e) {
+		JReadTags readTag = new JReadTags(this, true);
+		readTag.setVisible(true);
+		// mode = MODE_READ;
+		// chipNumber = 1;
+		// try {
+		// ReaderContext.startReading();
+		// } catch (ReaderException e1) {
+		// // TODO Auto-generated catch block
+		// e1.printStackTrace();
+		// }
 	}
 
 	private void initComponents() {
@@ -222,6 +235,12 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				// ---- readTagsMenuItem ----
 				readTagsMenuItem.setText(bundle
 						.getString("JMuestraDatos.readTagsMenuItem.text"));
+				readTagsMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						readTagsMenuItemActionPerformed(e);
+					}
+				});
 				menu2.add(readTagsMenuItem);
 
 				// ---- programTagsMenuItem ----
@@ -363,15 +382,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 
 	@Override
 	public void handleReadings(List<TagReading> readings) {
-		logger.debug("Last tag count = " + lastTagCount);
+		// logger.debug("Last tag count = " + lastTagCount);
 		GpioPin[] pins;
 		try {
 			pins = ReaderContext.getGpo();
 			for (int i = 0; i < pins.length; i++) {
 				GpioPin gpioPin = pins[i];
-				logger.info("Input pin " + gpioPin);
-				logger.info("high " + gpioPin.high);
-				logger.info("output " + gpioPin.output);
+				// logger.info("Input pin " + gpioPin);
+				// logger.info("high " + gpioPin.high);
+				// logger.info("output " + gpioPin.output);
 			}
 		} catch (ReaderException e4) {
 			// TODO Auto-generated catch block
@@ -385,79 +404,61 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 			rssiTextField.setText(String.valueOf(tagReading.getPeakRssi()));
 			String tid = null;
 			String userData = null;
-			TagData target = new TagData(tagReading.getEpc());
 			try {
-				try {
-					tid = String.valueOf(Hex.encodeHex(ReaderContext
-							.readTagMemBytes(target, Gen2.Bank.TID.ordinal(),
-									0, tidLength)));
-					logger.debug("Got " + tidLength + " byte TID");
-				} catch (Exception e2) {
-					logger.error("Error reading 16 byte TID");
-					e2.printStackTrace();
+				tid = ReaderContext.readTid(tagReading.getEpc(), 12);
+			} catch (ReaderException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			if (mode != null) {
+				if (mode.equals(MODE_VERIFY)) {
+					logger.info("Verify with EPC " + tagReading.getEpc());
+				}
+				if (mode.equals(MODE_READ)) {
+					Rfid rfid = new Rfid(null, null, chipNumber.toString(),
+							tagReading.getEpc(), Rfid.STATUS_NOT_ASSIGNED,
+							Rfid.PAYMENT_STATUS_UNPAID,
+							Rfid.TOKEN_STATUS_AVAILABLE, tid, chipNumber);
 					try {
-						tid = String.valueOf(Hex.encodeHex(ReaderContext
-								.readTagMemBytes(target,
-										Gen2.Bank.TID.ordinal(), 0, 12)));
-						logger.debug("Got 12 byte TID");
-					} catch (ReaderCodeException e3) {
-						logger.error("Error reading 12 byte TID");
-						throw e3;
+						rfidDao.save(rfid);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
-				tidTextField.setText(tid);
-			} catch (ReaderCodeException e) {
-				e.printStackTrace();
-			} catch (ReaderException e) {
-				e.printStackTrace();
-			}
-			if (mode.equals(MODE_VERIFY)) {
-				logger.info("Verify with EPC " + tagReading.getEpc());
-			}
-			if (mode.equals(MODE_READ)) {
-				Rfid rfid = new Rfid(null, null, chipNumber.toString(),
-						tagReading.getEpc(), Rfid.STATUS_NOT_ASSIGNED,
-						Rfid.PAYMENT_STATUS_UNPAID,
-						Rfid.TOKEN_STATUS_AVAILABLE, tid, chipNumber);
-				try {
-					rfidDao.save(rfid);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if (mode.equals(MODE_PROGRAM)) {
-				redLedOn();
-				Gen2.TagData epc = null;
-				byte[] epcBytes = null;
-				try {
-					Rfid rfid = rfidDao.fetchByChipNumber(chipNumber);
-					if (rfid == null) {
-						logger.warn("No such rfid chipnumber:" + chipNumber);
-					} else {
-						chipNumber = chipNumber + 1;
-						logger.info("Programming rfid tag "
-								+ rfid.getRfidString());
-						epcBytes = Hex.decodeHex(rfid.getRfidString()
-								.toCharArray());
-						epc = new Gen2.TagData(epcBytes);
+				if (mode.equals(MODE_PROGRAM)) {
+					redLedOn();
+					Gen2.TagData epc = null;
+					byte[] epcBytes = null;
+					try {
+						Rfid rfid = rfidDao.fetchByChipNumber(chipNumber);
+						if (rfid == null) {
+							logger.warn("No such rfid chipnumber:" + chipNumber);
+						} else {
+							chipNumber = chipNumber + 1;
+							logger.info("Programming rfid tag "
+									+ rfid.getRfidString());
+							epcBytes = Hex.decodeHex(rfid.getRfidString()
+									.toCharArray());
+							epc = new Gen2.TagData(epcBytes);
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (DecoderException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (DecoderException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println("Requesting write EPC...");
-				Gen2.WriteTag tagop = new Gen2.WriteTag(epc);
-				try {
-					ReaderContext.executeTagOp(tagop, target);
-					System.out.println("Wrote tag!");
-					redLedOff();
-				} catch (ReaderException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println("Requesting write EPC...");
+					Gen2.WriteTag tagop = new Gen2.WriteTag(epc);
+					// try {
+					// // ReaderContext.executeTagOp(tagop, target);
+					// System.out.println("Wrote tag!");
+					// redLedOff();
+					// } catch (ReaderException e) {
+					// // TODO Auto-generated catch block
+					// e.printStackTrace();
+					// }
 				}
 			}
 			try {

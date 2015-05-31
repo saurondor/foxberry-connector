@@ -31,6 +31,13 @@ public class UsbReader implements Runnable {
 	private Reader reader = null;
 	private List<TagReadListener> listeners = new ArrayList<TagReadListener>();
 	private boolean connected = false;
+	private boolean doReadings = false;
+
+	public void stop() {
+		synchronized (this) {
+			doReadings = false;
+		}
+	}
 
 	public void addListener(TagReadListener listener) {
 		listeners.add(listener);
@@ -75,7 +82,7 @@ public class UsbReader implements Runnable {
 			logger.debug(region.name());
 		}
 	}
-	
+
 	public boolean setRegion(String regionName) throws ReaderException {
 		Reader.Region[] supportedRegions = (Reader.Region[]) reader
 				.paramGet(TMConstants.TMR_PARAM_REGION_SUPPORTEDREGIONS);
@@ -135,7 +142,9 @@ public class UsbReader implements Runnable {
 	}
 
 	public void read() throws ReaderException {
-		for (int j = 0; j < 1000; j++) {
+		doReadings = true;
+		boolean read = true;
+		do {
 			TagReadData[] tagReads;
 			List<TagReading> readings = new ArrayList<TagReading>();
 			Reader.GpioPin[] pins = new Reader.GpioPin[1];
@@ -151,7 +160,10 @@ public class UsbReader implements Runnable {
 				}
 			}
 			notifyListeners(readings);
-		}
+			synchronized (this) {
+				read = doReadings;
+			}
+		} while (read);
 	}
 
 	public void write(TagReadData data) throws ReaderException {
@@ -201,7 +213,7 @@ public class UsbReader implements Runnable {
 			throws ReaderException {
 		return reader.readTagMemBytes(target, bank, start, size);
 	}
-	
+
 	public GpioPin[] gpoGet() throws ReaderException {
 		return reader.gpiGet();
 	}
