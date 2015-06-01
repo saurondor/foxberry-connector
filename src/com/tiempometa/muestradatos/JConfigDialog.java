@@ -7,6 +7,7 @@ package com.tiempometa.muestradatos;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -56,6 +57,8 @@ public class JConfigDialog extends JDialog {
 		usbReaderConnectButton.setEnabled(false);
 		usbReaderSetRegionButton.setEnabled(false);
 		regionComboBox.setEnabled(false);
+		readerTypeComboBox.setEnabled(false);
+		readerComboBox.setEnabled(false);
 	}
 
 	private void enableReaders() {
@@ -66,6 +69,8 @@ public class JConfigDialog extends JDialog {
 		usbReaderConnectButton.setEnabled(true);
 		usbReaderSetRegionButton.setEnabled(true);
 		regionComboBox.setEnabled(true);
+		readerTypeComboBox.setEnabled(true);
+		readerComboBox.setEnabled((readerTypeComboBox.getSelectedIndex() == 0));
 	}
 
 	private void usbReaderConnectButtonActionPerformed(ActionEvent e) {
@@ -123,7 +128,27 @@ public class JConfigDialog extends JDialog {
 	}
 
 	private void readerBoxConnectButtonActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		if (readerTypeComboBox.getSelectedIndex() == 0) {
+			try {
+				ReaderContext.connectFoxberry(readerBoxAddressTextField.getText(), null, null, null);
+			} catch (UnknownHostException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} else {
+			try {
+				ReaderContext.connectSpeedway(readerBoxAddressTextField.getText(), null, null);
+			} catch (UnknownHostException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	private void databaseSelectButtonActionPerformed(ActionEvent e) {
@@ -164,11 +189,20 @@ public class JConfigDialog extends JDialog {
 		this.dispose();
 	}
 
+	private void readerTypeComboBoxItemStateChanged(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+			if (readerTypeComboBox.getSelectedIndex() == 0) {
+				readerComboBox.setEnabled(true);
+			} else {
+				readerComboBox.setEnabled(false);
+			}
+		}
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle
-				.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		label4 = new JLabel();
@@ -180,6 +214,10 @@ public class JConfigDialog extends JDialog {
 		separator2 = new JSeparator();
 		label8 = new JLabel();
 		readerBoxAddressTextField = new JTextField();
+		label6 = new JLabel();
+		readerTypeComboBox = new JComboBox<>();
+		label10 = new JLabel();
+		readerComboBox = new JComboBox<>();
 		label9 = new JLabel();
 		antennaComboBox = new JComboBox<>();
 		readerBoxConnectButton = new JButton();
@@ -196,24 +234,29 @@ public class JConfigDialog extends JDialog {
 		cancelButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
-		// ======== this ========
+		//======== this ========
 		setTitle(bundle.getString("JConfigDialog.this.title"));
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
-		// ======== dialogPane ========
+		//======== dialogPane ========
 		{
 			dialogPane.setBorder(Borders.DIALOG_BORDER);
 			dialogPane.setLayout(new BorderLayout());
 
-			// ======== contentPanel ========
+			//======== contentPanel ========
 			{
-				contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
+				contentPanel.setLayout(new FormLayout(
+					new ColumnSpec[] {
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(115)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(73)) }, new RowSpec[] {
+						new ColumnSpec(Sizes.dluX(73)),
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC
+					},
+					new RowSpec[] {
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
@@ -230,22 +273,26 @@ public class JConfigDialog extends JDialog {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC }));
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
-				// ---- label4 ----
+				//---- label4 ----
 				label4.setText(bundle.getString("JConfigDialog.label4.text"));
 				label4.setFont(new Font("Tahoma", Font.PLAIN, 18));
 				contentPanel.add(label4, cc.xy(1, 1));
 				contentPanel.add(separator3, cc.xywh(3, 1, 3, 1));
 
-				// ---- label5 ----
+				//---- label5 ----
 				label5.setText(bundle.getString("JConfigDialog.label5.text"));
 				contentPanel.add(label5, cc.xy(1, 3));
 				contentPanel.add(databaseTextField, cc.xywh(3, 3, 3, 1));
 
-				// ---- databaseSelectButton ----
-				databaseSelectButton.setText(bundle
-						.getString("JConfigDialog.databaseSelectButton.text"));
+				//---- databaseSelectButton ----
+				databaseSelectButton.setText(bundle.getString("JConfigDialog.databaseSelectButton.text"));
 				databaseSelectButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -254,105 +301,159 @@ public class JConfigDialog extends JDialog {
 				});
 				contentPanel.add(databaseSelectButton, cc.xy(5, 5));
 
-				// ---- label7 ----
+				//---- label7 ----
 				label7.setText(bundle.getString("JConfigDialog.label7.text"));
 				label7.setFont(new Font("Tahoma", Font.PLAIN, 18));
 				contentPanel.add(label7, cc.xy(1, 7));
 				contentPanel.add(separator2, cc.xywh(3, 7, 3, 1));
 
-				// ---- label8 ----
+				//---- label8 ----
 				label8.setText(bundle.getString("JConfigDialog.label8.text"));
 				contentPanel.add(label8, cc.xy(1, 9));
-				contentPanel
-						.add(readerBoxAddressTextField, cc.xywh(3, 9, 3, 1));
+				contentPanel.add(readerBoxAddressTextField, cc.xywh(3, 9, 3, 1));
 
-				// ---- label9 ----
+				//---- label6 ----
+				label6.setText(bundle.getString("JConfigDialog.label6.text"));
+				contentPanel.add(label6, cc.xy(1, 11));
+
+				//---- readerTypeComboBox ----
+				readerTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
+					"Foxberry",
+					"Speedway"
+				}));
+				readerTypeComboBox.addItemListener(new ItemListener() {
+					@Override
+					public void itemStateChanged(ItemEvent e) {
+						readerTypeComboBoxItemStateChanged(e);
+					}
+				});
+				contentPanel.add(readerTypeComboBox, cc.xywh(3, 11, 3, 1));
+
+				//---- label10 ----
+				label10.setText(bundle.getString("JConfigDialog.label10.text"));
+				contentPanel.add(label10, cc.xy(1, 13));
+
+				//---- readerComboBox ----
+				readerComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
+					"Lector 1",
+					"Lector 2"
+				}));
+				contentPanel.add(readerComboBox, cc.xywh(3, 13, 3, 1));
+
+				//---- label9 ----
 				label9.setText(bundle.getString("JConfigDialog.label9.text"));
-				contentPanel.add(label9, cc.xy(1, 11));
+				contentPanel.add(label9, cc.xy(1, 15));
 
-				// ---- antennaComboBox ----
-				antennaComboBox.setModel(new DefaultComboBoxModel<>(
-						new String[] { "Todas", "Antena 1", "Antena 2",
-								"Antena 3", "Antena 4" }));
-				contentPanel.add(antennaComboBox, cc.xy(3, 11));
+				//---- antennaComboBox ----
+				antennaComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
+					"Todas",
+					"Antena 1",
+					"Antena 2",
+					"Antena 3",
+					"Antena 4"
+				}));
+				contentPanel.add(antennaComboBox, cc.xy(3, 15));
 
-				// ---- readerBoxConnectButton ----
-				readerBoxConnectButton
-						.setText(bundle
-								.getString("JConfigDialog.readerBoxConnectButton.text"));
+				//---- readerBoxConnectButton ----
+				readerBoxConnectButton.setText(bundle.getString("JConfigDialog.readerBoxConnectButton.text"));
 				readerBoxConnectButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						readerBoxConnectButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(readerBoxConnectButton, cc.xy(5, 11));
+				contentPanel.add(readerBoxConnectButton, cc.xy(5, 15));
 
-				// ---- label3 ----
+				//---- label3 ----
 				label3.setText(bundle.getString("JConfigDialog.label3.text"));
 				label3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				contentPanel.add(label3, cc.xy(1, 13));
-				contentPanel.add(separator1, cc.xywh(3, 13, 3, 1));
+				contentPanel.add(label3, cc.xy(1, 17));
+				contentPanel.add(separator1, cc.xywh(3, 17, 3, 1));
 
-				// ---- label2 ----
+				//---- label2 ----
 				label2.setText(bundle.getString("JConfigDialog.label2.text"));
-				contentPanel.add(label2, cc.xy(1, 15));
+				contentPanel.add(label2, cc.xy(1, 19));
 
-				// ---- commPortComboBox ----
-				commPortComboBox.setModel(new DefaultComboBoxModel<>(
-						new String[] { "COM1", "COM2", "COM3", "COM4", "COM5",
-								"COM6", "COM7", "COM8", "COM9", "COM10",
-								"COM11", "COM12", "COM13", "COM14", "COM15",
-								"COM16", "COM17", "COM18", "COM19", "COM20" }));
-				contentPanel.add(commPortComboBox, cc.xy(3, 15));
+				//---- commPortComboBox ----
+				commPortComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
+					"COM1",
+					"COM2",
+					"COM3",
+					"COM4",
+					"COM5",
+					"COM6",
+					"COM7",
+					"COM8",
+					"COM9",
+					"COM10",
+					"COM11",
+					"COM12",
+					"COM13",
+					"COM14",
+					"COM15",
+					"COM16",
+					"COM17",
+					"COM18",
+					"COM19",
+					"COM20"
+				}));
+				contentPanel.add(commPortComboBox, cc.xy(3, 19));
 
-				// ---- usbReaderConnectButton ----
-				usbReaderConnectButton
-						.setText(bundle
-								.getString("JConfigDialog.usbReaderConnectButton.text"));
+				//---- usbReaderConnectButton ----
+				usbReaderConnectButton.setText(bundle.getString("JConfigDialog.usbReaderConnectButton.text"));
 				usbReaderConnectButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						usbReaderConnectButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(usbReaderConnectButton, cc.xy(5, 15));
+				contentPanel.add(usbReaderConnectButton, cc.xy(5, 19));
 
-				// ---- label1 ----
+				//---- label1 ----
 				label1.setText(bundle.getString("JConfigDialog.label1.text"));
-				contentPanel.add(label1, cc.xy(1, 17));
+				contentPanel.add(label1, cc.xy(1, 21));
 
-				// ---- regionComboBox ----
-				regionComboBox.setModel(new DefaultComboBoxModel<>(
-						new String[] { "NA", "EU", "KR", "IN", "PRC", "EU2",
-								"EU3", "KR2", "AU", "NZ", "OPEN" }));
-				contentPanel.add(regionComboBox, cc.xy(3, 17));
+				//---- regionComboBox ----
+				regionComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
+					"NA",
+					"EU",
+					"KR",
+					"IN",
+					"PRC",
+					"EU2",
+					"EU3",
+					"KR2",
+					"AU",
+					"NZ",
+					"OPEN"
+				}));
+				contentPanel.add(regionComboBox, cc.xy(3, 21));
 
-				// ---- usbReaderSetRegionButton ----
-				usbReaderSetRegionButton
-						.setText(bundle
-								.getString("JConfigDialog.usbReaderSetRegionButton.text"));
-				usbReaderSetRegionButton
-						.addActionListener(new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								usbReaderSetRegionButtonActionPerformed(e);
-							}
-						});
-				contentPanel.add(usbReaderSetRegionButton, cc.xy(5, 17));
+				//---- usbReaderSetRegionButton ----
+				usbReaderSetRegionButton.setText(bundle.getString("JConfigDialog.usbReaderSetRegionButton.text"));
+				usbReaderSetRegionButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						usbReaderSetRegionButtonActionPerformed(e);
+					}
+				});
+				contentPanel.add(usbReaderSetRegionButton, cc.xy(5, 21));
 			}
 			dialogPane.add(contentPanel, BorderLayout.NORTH);
 
-			// ======== buttonBar ========
+			//======== buttonBar ========
 			{
 				buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
-				buttonBar.setLayout(new FormLayout(new ColumnSpec[] {
-						FormFactory.GLUE_COLSPEC, FormFactory.BUTTON_COLSPEC,
+				buttonBar.setLayout(new FormLayout(
+					new ColumnSpec[] {
+						FormFactory.GLUE_COLSPEC,
+						FormFactory.BUTTON_COLSPEC,
 						FormFactory.RELATED_GAP_COLSPEC,
-						FormFactory.BUTTON_COLSPEC }, RowSpec
-						.decodeSpecs("pref")));
+						FormFactory.BUTTON_COLSPEC
+					},
+					RowSpec.decodeSpecs("pref")));
 
-				// ---- okButton ----
+				//---- okButton ----
 				okButton.setText("OK");
 				okButton.addActionListener(new ActionListener() {
 					@Override
@@ -362,7 +463,7 @@ public class JConfigDialog extends JDialog {
 				});
 				buttonBar.add(okButton, cc.xy(2, 1));
 
-				// ---- cancelButton ----
+				//---- cancelButton ----
 				cancelButton.setText("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					@Override
@@ -393,6 +494,10 @@ public class JConfigDialog extends JDialog {
 	private JSeparator separator2;
 	private JLabel label8;
 	private JTextField readerBoxAddressTextField;
+	private JLabel label6;
+	private JComboBox<String> readerTypeComboBox;
+	private JLabel label10;
+	private JComboBox<String> readerComboBox;
 	private JLabel label9;
 	private JComboBox<String> antennaComboBox;
 	private JButton readerBoxConnectButton;

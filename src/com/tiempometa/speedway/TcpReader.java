@@ -8,10 +8,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.tiempometa.muestradatos.ReaderStatusListener;
+import com.tiempometa.muestradatos.TagReadListener;
 import com.tiempometa.muestradatos.TagReading;
 
 /**
@@ -27,19 +31,27 @@ public class TcpReader implements Runnable {
 	private Socket readerSocket = null;
 	private InputStream dataInputStream = null;
 	private OutputStream dataOutputStream = null;
+	private List<TagReadListener> listeners = new ArrayList<TagReadListener>();
+	private List<ReaderStatusListener> statusListeners = new ArrayList<ReaderStatusListener>();
+	private String preferredAntenna = null;
+	private boolean doReadings = false;
 
 	private void openSocket() throws UnknownHostException, IOException {
+		logger.info("Connecting to " + hostname + " - " + port);
 		readerSocket = new Socket(hostname, port);
+		notifyConnected();
 	}
 
 	public void connect() throws UnknownHostException, IOException {
 		openSocket();
+		notifyConnected();
 	}
 
 	public void connect(String hostname) throws UnknownHostException,
 			IOException {
 		this.hostname = hostname;
 		openSocket();
+		notifyConnected();
 	}
 
 	public void connect(String hostname, Integer port)
@@ -47,10 +59,12 @@ public class TcpReader implements Runnable {
 		this.hostname = hostname;
 		this.port = port;
 		openSocket();
+		notifyConnected();
 	}
 
 	public void disconnect() throws IOException {
 		readerSocket.close();
+		notifyDisconnected();
 	}
 
 	@Override
@@ -58,7 +72,11 @@ public class TcpReader implements Runnable {
 		try {
 			dataInputStream = readerSocket.getInputStream();
 			dataOutputStream = readerSocket.getOutputStream();
-			while (!readerSocket.isClosed()) {
+			boolean read = true;
+			while ((read) & (!readerSocket.isClosed())) {
+				synchronized (this) {
+					read = doReadings;
+				}
 				logger.info("Socket is open");
 				while (readerSocket.isConnected()) {
 					if (readerSocket.isClosed()) {
@@ -91,6 +109,9 @@ public class TcpReader implements Runnable {
 								logger.debug(string);
 								TagReading reading = new TagReading(string);
 								logger.debug(reading);
+								List<TagReading> readings = new ArrayList<TagReading>();
+								readings.add(reading);
+								notifyListeners(readings);
 							}
 						} else {
 							logger.info("No data");
@@ -122,4 +143,68 @@ public class TcpReader implements Runnable {
 
 	}
 
+	public void connect(String hostName, Integer port, String preferredAntenna)
+			throws UnknownHostException, IOException {
+		this.hostname = hostName;
+		if (port != null) {
+			this.port = port;
+		}
+		this.preferredAntenna = preferredAntenna;
+		openSocket();
+
+	}
+
+	public void addListener(TagReadListener listener) {
+		listeners.add(listener);
+
+	}
+
+	public void removeListener(TagReadListener listener) {
+		listeners.remove(listener);
+
+	}
+
+	private void notifyListeners(List<TagReading> readings) {
+		for (TagReadListener listener : listeners) {
+			listener.handleReadings(readings);
+		}
+	}
+
+	public void addReaderStatusListener(ReaderStatusListener listener) {
+		statusListeners.add(listener);
+	}
+
+	public void removeReaderStatusListener(ReaderStatusListener listener) {
+		statusListeners.remove(listener);
+	}
+
+	private void notifyConnected() {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.tcpConnected();
+		}
+	}
+
+	private void notifyDisconnected() {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.tcpDisconnected();
+		}
+	}
+
+	private void notifyStartedReading() {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.startedReading();
+		}
+	}
+
+	private void notifyStoppedReading() {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.stoppedReading();
+		}
+	}
+
+	public void stop() {
+		synchronized (this) {
+			doReadings = false;
+		}
+	}
 }

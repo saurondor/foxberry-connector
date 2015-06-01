@@ -476,7 +476,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 	@Override
 	public void connected() {
-		readerPortLabel.setText("Conectado");
+		readerPortLabel.setText("Conectado USB");
 		readingModeMenu.setEnabled(true);
 
 	}
@@ -516,5 +516,19 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	public void updatedWritePower(Integer writePower) {
 		writePowerLevel.setText(writePower.toString());
 
+	}
+
+	@Override
+	public void tcpConnected() {
+		readerPortLabel.setText("Conectado TCP");
+		readingModeMenu.setEnabled(true);
+		
+	}
+
+	@Override
+	public void tcpDisconnected() {
+		readerPortLabel.setText("Conectado");
+		readingModeMenu.setEnabled(true);
+		
 	}
 }

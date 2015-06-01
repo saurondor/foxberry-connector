@@ -97,8 +97,8 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 								.getBirthDate()));
 						genderLabel.setText("");
 						distanceLabel.setText("");
-//						categoryLabel.setText(category.getTitle());
-//						colorLabel.setText(category.getExtra1());
+						// categoryLabel.setText(category.getTitle());
+						// colorLabel.setText(category.getExtra1());
 
 					}
 				}
@@ -277,20 +277,24 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 		if (readings.size() > 0) {
 			if (readings.size() == 1) {
 				for (TagReading tagReading : readings) {
-					if (tagReading.getTid() == null) {
-						try {
-							tagReading.setTid(ReaderContext.readTid(
-									tagReading.getEpc(), 12));
-							if (logger.isDebugEnabled()) {
-								logger.debug("Got tag " + tagReading.getEpc()
-										+ " - " + tagReading.getTid());
+					if (tagReading.isKeepAlive()) {
+						logger.debug("Keep alive tag read");
+					} else {
+						if (tagReading.getTid() == null) {
+							try {
+								tagReading.setTid(ReaderContext.readTid(
+										tagReading.getEpc(), 12));
+								if (logger.isDebugEnabled()) {
+									logger.debug("Got tag "
+											+ tagReading.getEpc() + " - "
+											+ tagReading.getTid());
+								}
+							} catch (ReaderException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-							showTagInfo(tagReading);
-
-						} catch (ReaderException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
 						}
+						showTagInfo(tagReading);
 					}
 				}
 			} else {
