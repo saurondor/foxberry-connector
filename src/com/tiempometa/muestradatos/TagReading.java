@@ -213,5 +213,19 @@ public class TagReading {
 				+ ", isValid()=" + isValid() + "]";
 	}
 
+	/**
+	 * @return the tagReadData
+	 */
+	public TagReadData getTagReadData() {
+		return tagReadData;
+	}
+
+	/**
+	 * @param tagReadData the tagReadData to set
+	 */
+	public void setTagReadData(TagReadData tagReadData) {
+		this.tagReadData = tagReadData;
+	}
+
 
 }

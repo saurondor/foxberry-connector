@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
 import com.jgoodies.forms.factories.*;
@@ -223,6 +224,18 @@ public class JReadTags extends JDialog implements TagReadListener {
 				statusLabel.setBackground(Color.cyan);
 				statusLabel.setText("Leyendo tag");
 				for (TagReading tagReading : readings) {
+					logger.info("Tag data dump");
+					logger.info(tagReading.getTagReadData().getTag().epcString());
+					logger.info(String.valueOf(tagReading.getTagReadData().getData().length));
+					logger.info(Hex.encodeHexString(tagReading.getTagReadData().getData()));
+					logger.info(String.valueOf(tagReading.getTagReadData().getEPCMemData().length));
+					logger.info(Hex.encodeHexString(tagReading.getTagReadData().getEPCMemData()));
+					logger.info(String.valueOf(tagReading.getTagReadData().getTIDMemData().length));
+					logger.info(Hex.encodeHexString(tagReading.getTagReadData().getTIDMemData()));
+					logger.info(String.valueOf(tagReading.getTagReadData().getReservedMemData().length));
+					logger.info(Hex.encodeHexString(tagReading.getTagReadData().getReservedMemData()));
+					logger.info(String.valueOf(tagReading.getTagReadData().getUserMemData().length));
+					logger.info(Hex.encodeHexString(tagReading.getTagReadData().getUserMemData()));
 					if (tagReading.getTid() == null) {
 						try {
 							tagReading.setTid(ReaderContext.readTid(

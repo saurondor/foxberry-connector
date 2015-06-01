@@ -4,6 +4,7 @@
 package com.tiempometa.thingmagic;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +13,18 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
 import com.thingmagic.Gen2;
+import com.thingmagic.Gen2.Bank;
 import com.thingmagic.Gen2.WriteTag;
 import com.thingmagic.Reader;
 import com.thingmagic.Reader.GpioPin;
 import com.thingmagic.ReaderCodeException;
 import com.thingmagic.ReaderException;
+import com.thingmagic.SimpleReadPlan;
 import com.thingmagic.TMConstants;
 import com.thingmagic.TagData;
+import com.thingmagic.TagFilter;
+import com.thingmagic.TagOp;
+import com.thingmagic.TagProtocol;
 import com.thingmagic.TagReadData;
 import com.tiempometa.muestradatos.ReaderStatusListener;
 import com.tiempometa.muestradatos.TagReadListener;
@@ -37,6 +43,9 @@ public class UsbReader implements Runnable {
 	private Map<String, String> regionMap = new HashMap<String, String>();
 	private boolean connected = false;
 	private boolean doReadings = false;
+	private Integer minPower = null;
+	private Integer maxPower = null;
+	private int[] portList = null;
 
 	public UsbReader() {
 		super();
@@ -217,6 +226,18 @@ public class UsbReader implements Runnable {
 		}
 		notifyConnected();
 		logger.info("Created reader!");
+		logger.info("Max power");
+		maxPower = (Integer) reader.paramGet("/reader/radio/powerMax");
+		logger.info(maxPower);
+		logger.info("Min power");
+		minPower = (Integer) reader.paramGet("/reader/radio/powerMin");
+		logger.info(reader.paramGet("/reader/radio/powerMin"));
+		portList = (int[]) reader.paramGet("/reader/antenna/portList");
+		logger.info("Antenna port list:");
+		for (int i = 0; i < portList.length; i++) {
+			int j = portList[i];
+			logger.info(j);
+		}
 		reader.paramSet("/reader/radio/writePower", 1000);
 		notifyWritePower(1000);
 		reader.paramSet("/reader/radio/readPower", 1000);
