@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
+import java.util.Timer;
 
 import javax.swing.*;
 
@@ -64,6 +65,19 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 						"¿Seguro que deseas cerrar la aplicación?",
 						"Cerrar Programa", JOptionPane.WARNING_MESSAGE);
 				if (response == JOptionPane.YES_OPTION) {
+					ReaderContext.stopReading();
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						ReaderContext.disconnectUsbReader();
+					} catch (ReaderException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					System.exit(0);
 				}
 			}
