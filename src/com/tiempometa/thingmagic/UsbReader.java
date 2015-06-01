@@ -40,21 +40,21 @@ public class UsbReader implements Runnable {
 
 	public UsbReader() {
 		super();
-		regionMap.put("NA","North America/FCC");
-		regionMap.put("EU","European Union");
-		regionMap.put("EU2","European Union - Rev 2");
-		regionMap.put("EU3","European Union - Rev 3");
-		regionMap.put("KR","Korea");
-		regionMap.put("KR2","Korea Rev");
-		regionMap.put("PRC","China");
-		regionMap.put("PRC2","China 840MHz");
-		regionMap.put("IN","India");
-		regionMap.put("JP","Japan");
-		regionMap.put("AU","Australia");
-		regionMap.put("NZ","New Zealand");
-		regionMap.put("OPEN","No region restrictions enforced");
-		regionMap.put("NONE","No region Specified");
-		regionMap.put("MANUFACTURING","Manufacturing Unrestricted");
+		regionMap.put("NA", "North America/FCC");
+		regionMap.put("EU", "European Union");
+		regionMap.put("EU2", "European Union - Rev 2");
+		regionMap.put("EU3", "European Union - Rev 3");
+		regionMap.put("KR", "Korea");
+		regionMap.put("KR2", "Korea Rev");
+		regionMap.put("PRC", "China");
+		regionMap.put("PRC2", "China 840MHz");
+		regionMap.put("IN", "India");
+		regionMap.put("JP", "Japan");
+		regionMap.put("AU", "Australia");
+		regionMap.put("NZ", "New Zealand");
+		regionMap.put("OPEN", "No region restrictions enforced");
+		regionMap.put("NONE", "No region Specified");
+		regionMap.put("MANUFACTURING", "Manufacturing Unrestricted");
 	}
 
 	public void stop() {
@@ -263,13 +263,17 @@ public class UsbReader implements Runnable {
 	}
 
 	public void disconnect() throws ReaderException {
-		Reader.GpioPin[] pins = new Reader.GpioPin[2];
-		pins[0] = new GpioPin(1, false);
-		pins[1] = new GpioPin(2, false);
-		reader.gpoSet(pins);
-		connected = false;
-		notifyDisconnected();
-		reader.destroy();
+		if (reader == null) {
+			// TODO handle disconnect on null reader
+		} else {
+			Reader.GpioPin[] pins = new Reader.GpioPin[2];
+			pins[0] = new GpioPin(1, false);
+			pins[1] = new GpioPin(2, false);
+			reader.gpoSet(pins);
+			connected = false;
+			notifyDisconnected();
+			reader.destroy();
+		}
 	}
 
 	public static void main(String argv[]) {

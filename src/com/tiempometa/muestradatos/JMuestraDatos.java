@@ -141,7 +141,25 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	}
 
 	private void menuItem2ActionPerformed(ActionEvent e) {
-		this.dispose();
+		int response = JOptionPane.showConfirmDialog(null,
+				"¿Seguro que deseas cerrar la aplicación?", "Cerrar Programa",
+				JOptionPane.WARNING_MESSAGE);
+		if (response == JOptionPane.YES_OPTION) {
+			ReaderContext.stopReading();
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				ReaderContext.disconnectUsbReader();
+			} catch (ReaderException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			this.dispose();
+		}
 	}
 
 	private void aboutUsMenuItemActionPerformed(ActionEvent e) {
@@ -431,28 +449,28 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 	@Override
 	public void handleReadings(List<TagReading> readings) {
-			// try {
-			// // Rfid rfid = rfidDao.fetchByChipNumber(chipNumber);
-			// // if (rfid == null) {
-			// // logger.warn("No such rfid chipnumber:" + chipNumber);
-			// // } else {
-			// // chipNumber = chipNumber + 1;
-			// // logger.info("Programming rfid tag "
-			// // + rfid.getRfidString());
-			// // epcBytes = Hex.decodeHex(rfid.getRfidString()
-			// // .toCharArray());
-			// // epc = new Gen2.TagData(epcBytes);
-			// // }
-			// } catch (SQLException e1) {
-			// // TODO Auto-generated catch block
-			// e1.printStackTrace();
-			// } catch (DecoderException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-//			System.out.println("Requesting write EPC...");
-//			Gen2.WriteTag tagop = new Gen2.WriteTag(epc);
-//		}
+		// try {
+		// // Rfid rfid = rfidDao.fetchByChipNumber(chipNumber);
+		// // if (rfid == null) {
+		// // logger.warn("No such rfid chipnumber:" + chipNumber);
+		// // } else {
+		// // chipNumber = chipNumber + 1;
+		// // logger.info("Programming rfid tag "
+		// // + rfid.getRfidString());
+		// // epcBytes = Hex.decodeHex(rfid.getRfidString()
+		// // .toCharArray());
+		// // epc = new Gen2.TagData(epcBytes);
+		// // }
+		// } catch (SQLException e1) {
+		// // TODO Auto-generated catch block
+		// e1.printStackTrace();
+		// } catch (DecoderException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// System.out.println("Requesting write EPC...");
+		// Gen2.WriteTag tagop = new Gen2.WriteTag(epc);
+		// }
 
 	}
 
