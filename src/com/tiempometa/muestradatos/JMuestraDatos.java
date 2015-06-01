@@ -44,7 +44,8 @@ import com.tiempometa.timing.models.Rfid;
 /**
  * @author Gerardo Esteban Tasistro Giubetic
  */
-public class JMuestraDatos extends JFrame implements TagReadListener {
+public class JMuestraDatos extends JFrame implements TagReadListener,
+		ReaderStatusListener {
 	/**
 	 * 
 	 */
@@ -67,6 +68,14 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 				}
 			}
 		});
+		readerPortLabel.setText("");
+		readerStatusLabel.setText("Desconectado");
+		readPowerLabel.setText("0");
+		writePowerLevel.setText("0");
+		regionLabel.setText("");
+		rssiLevelLabel.setText("ND");
+		ReaderContext.addReadingListener(this);
+		ReaderContext.addReaderStatusListener(this);
 	}
 
 	/**
@@ -147,7 +156,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		menu1 = new JMenu();
 		configMenuItem = new JMenuItem();
 		exitMenuItem = new JMenuItem();
-		menu2 = new JMenu();
+		readingModeMenu = new JMenu();
 		verifyDataMenuItem = new JMenuItem();
 		readTagsMenuItem = new JMenuItem();
 		programTagsMenuItem = new JMenuItem();
@@ -157,11 +166,17 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		label1 = new JLabel();
 		label9 = new JLabel();
 		label3 = new JLabel();
+		readerPortLabel = new JLabel();
 		label4 = new JLabel();
+		readerStatusLabel = new JLabel();
 		label2 = new JLabel();
+		rssiLevelLabel = new JLabel();
 		label5 = new JLabel();
+		regionLabel = new JLabel();
 		label6 = new JLabel();
+		readPowerLabel = new JLabel();
 		label7 = new JLabel();
+		writePowerLevel = new JLabel();
 		CellConstraints cc = new CellConstraints();
 
 		//======== this ========
@@ -228,9 +243,10 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 			}
 			menuBar1.add(menu1);
 
-			//======== menu2 ========
+			//======== readingModeMenu ========
 			{
-				menu2.setText(bundle.getString("JMuestraDatos.menu2.text"));
+				readingModeMenu.setText(bundle.getString("JMuestraDatos.readingModeMenu.text"));
+				readingModeMenu.setEnabled(false);
 
 				//---- verifyDataMenuItem ----
 				verifyDataMenuItem.setText(bundle.getString("JMuestraDatos.verifyDataMenuItem.text"));
@@ -240,7 +256,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 						verifyDataMenuItemActionPerformed(e);
 					}
 				});
-				menu2.add(verifyDataMenuItem);
+				readingModeMenu.add(verifyDataMenuItem);
 
 				//---- readTagsMenuItem ----
 				readTagsMenuItem.setText(bundle.getString("JMuestraDatos.readTagsMenuItem.text"));
@@ -250,7 +266,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 						readTagsMenuItemActionPerformed(e);
 					}
 				});
-				menu2.add(readTagsMenuItem);
+				readingModeMenu.add(readTagsMenuItem);
 
 				//---- programTagsMenuItem ----
 				programTagsMenuItem.setText(bundle.getString("JMuestraDatos.programTagsMenuItem.text"));
@@ -260,9 +276,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 						programTagsMenuItemActionPerformed(e);
 					}
 				});
-				menu2.add(programTagsMenuItem);
+				readingModeMenu.add(programTagsMenuItem);
 			}
-			menuBar1.add(menu2);
+			menuBar1.add(readingModeMenu);
 
 			//======== menu3 ========
 			{
@@ -300,25 +316,49 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 		label3.setText(bundle.getString("JMuestraDatos.label3.text"));
 		contentPane.add(label3, cc.xy(3, 9));
 
+		//---- readerPortLabel ----
+		readerPortLabel.setText(bundle.getString("JMuestraDatos.readerPortLabel.text"));
+		contentPane.add(readerPortLabel, cc.xy(5, 9));
+
 		//---- label4 ----
 		label4.setText(bundle.getString("JMuestraDatos.label4.text"));
 		contentPane.add(label4, cc.xy(3, 11));
+
+		//---- readerStatusLabel ----
+		readerStatusLabel.setText(bundle.getString("JMuestraDatos.readerStatusLabel.text"));
+		contentPane.add(readerStatusLabel, cc.xy(5, 11));
 
 		//---- label2 ----
 		label2.setText(bundle.getString("JMuestraDatos.label2.text"));
 		contentPane.add(label2, cc.xy(3, 13));
 
+		//---- rssiLevelLabel ----
+		rssiLevelLabel.setText(bundle.getString("JMuestraDatos.rssiLevelLabel.text"));
+		contentPane.add(rssiLevelLabel, cc.xy(5, 13));
+
 		//---- label5 ----
 		label5.setText(bundle.getString("JMuestraDatos.label5.text"));
 		contentPane.add(label5, cc.xy(3, 15));
+
+		//---- regionLabel ----
+		regionLabel.setText(bundle.getString("JMuestraDatos.regionLabel.text"));
+		contentPane.add(regionLabel, cc.xy(5, 15));
 
 		//---- label6 ----
 		label6.setText(bundle.getString("JMuestraDatos.label6.text"));
 		contentPane.add(label6, cc.xy(3, 17));
 
+		//---- readPowerLabel ----
+		readPowerLabel.setText(bundle.getString("JMuestraDatos.readPowerLabel.text"));
+		contentPane.add(readPowerLabel, cc.xy(5, 17));
+
 		//---- label7 ----
 		label7.setText(bundle.getString("JMuestraDatos.label7.text"));
 		contentPane.add(label7, cc.xy(3, 19));
+
+		//---- writePowerLevel ----
+		writePowerLevel.setText(bundle.getString("JMuestraDatos.writePowerLevel.text"));
+		contentPane.add(writePowerLevel, cc.xy(5, 19));
 		setSize(425, 335);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
@@ -330,7 +370,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 	private JMenu menu1;
 	private JMenuItem configMenuItem;
 	private JMenuItem exitMenuItem;
-	private JMenu menu2;
+	private JMenu readingModeMenu;
 	private JMenuItem verifyDataMenuItem;
 	private JMenuItem readTagsMenuItem;
 	private JMenuItem programTagsMenuItem;
@@ -340,11 +380,17 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 	private JLabel label1;
 	private JLabel label9;
 	private JLabel label3;
+	private JLabel readerPortLabel;
 	private JLabel label4;
+	private JLabel readerStatusLabel;
 	private JLabel label2;
+	private JLabel rssiLevelLabel;
 	private JLabel label5;
+	private JLabel regionLabel;
 	private JLabel label6;
+	private JLabel readPowerLabel;
 	private JLabel label7;
+	private JLabel writePowerLevel;
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
 	private void redLedOn() {
@@ -371,35 +417,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 
 	@Override
 	public void handleReadings(List<TagReading> readings) {
-		// logger.debug("Last tag count = " + lastTagCount);
-		GpioPin[] pins;
-		try {
-			pins = ReaderContext.getGpo();
-			for (int i = 0; i < pins.length; i++) {
-				GpioPin gpioPin = pins[i];
-				// logger.info("Input pin " + gpioPin);
-				// logger.info("high " + gpioPin.high);
-				// logger.info("output " + gpioPin.output);
-			}
-		} catch (ReaderException e4) {
-			// TODO Auto-generated catch block
-			e4.printStackTrace();
-		}
-		if ((readings.size() == 1) && (lastTagCount != 1)) {
-			logger.info("New tag in field");
-			TagReading tagReading = readings.get(0);
-			logger.info("Got EPC " + tagReading.getEpc());
-			String tid = null;
-			String userData = null;
-			try {
-				tid = ReaderContext.readTid(tagReading.getEpc(), 12);
-			} catch (ReaderException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-			redLedOn();
-			Gen2.TagData epc = null;
-			byte[] epcBytes = null;
 			// try {
 			// // Rfid rfid = rfidDao.fetchByChipNumber(chipNumber);
 			// // if (rfid == null) {
@@ -419,24 +436,53 @@ public class JMuestraDatos extends JFrame implements TagReadListener {
 			// // TODO Auto-generated catch block
 			// e.printStackTrace();
 			// }
-			System.out.println("Requesting write EPC...");
-			Gen2.WriteTag tagop = new Gen2.WriteTag(epc);
-			// try {
-			// // ReaderContext.executeTagOp(tagop, target);
-			// System.out.println("Wrote tag!");
-			// redLedOff();
-			// } catch (ReaderException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		lastTagCount = readings.size();
+//			System.out.println("Requesting write EPC...");
+//			Gen2.WriteTag tagop = new Gen2.WriteTag(epc);
+//		}
+
+	}
+
+	@Override
+	public void connected() {
+		readerPortLabel.setText("Conectado");
+		readingModeMenu.setEnabled(true);
+
+	}
+
+	@Override
+	public void disconnected() {
+		readerPortLabel.setText("Desconectado");
+		readingModeMenu.setEnabled(false);
+
+	}
+
+	@Override
+	public void startedReading() {
+		readerStatusLabel.setText("Leyendo");
+
+	}
+
+	@Override
+	public void stoppedReading() {
+		readerStatusLabel.setText("No leyendo");
+
+	}
+
+	@Override
+	public void updatedRegion(String regionName) {
+		regionLabel.setText(regionName);
+
+	}
+
+	@Override
+	public void updatedReadPower(Integer readPower) {
+		readPowerLabel.setText(readPower.toString());
+
+	}
+
+	@Override
+	public void updatedWritePower(Integer writePower) {
+		writePowerLevel.setText(writePower.toString());
 
 	}
 }

@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
+import com.thingmagic.Reader;
 import com.thingmagic.ReaderException;
 import com.tiempometa.timing.dao.CategoriesDao;
 import com.tiempometa.timing.dao.ParticipantsDao;
@@ -67,6 +68,12 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 		try {
 			List<Rfid> rfids = rfidDao.findByRfid(reading.getTid());
 			if (rfids.size() == 1) {
+				try {
+					ReaderContext.setRedOn();
+				} catch (ReaderException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Rfid rfid = rfids.get(0);
 				chipNumber = rfid.getChipNumber();
 				Registration registration = registrationDao
@@ -94,6 +101,13 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 //						colorLabel.setText(category.getExtra1());
 
 					}
+				}
+				try {
+					Thread.sleep(1000);
+					ReaderContext.setRedOff();
+				} catch (ReaderException | InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			} else {
 				clearData();

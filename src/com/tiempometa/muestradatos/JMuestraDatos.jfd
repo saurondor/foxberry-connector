@@ -46,10 +46,24 @@ new FormModel {
 				"gridY": 9
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "readerPortLabel"
+				"text": new FormMessage( null, "JMuestraDatos.readerPortLabel.text" )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 9
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label4"
 				"text": new FormMessage( null, "JMuestraDatos.label4.text" )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 3
+				"gridY": 11
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "readerStatusLabel"
+				"text": new FormMessage( null, "JMuestraDatos.readerStatusLabel.text" )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
 				"gridY": 11
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -60,10 +74,24 @@ new FormModel {
 				"gridY": 13
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "rssiLevelLabel"
+				"text": new FormMessage( null, "JMuestraDatos.rssiLevelLabel.text" )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 13
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label5"
 				"text": new FormMessage( null, "JMuestraDatos.label5.text" )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 3
+				"gridY": 15
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "regionLabel"
+				"text": new FormMessage( null, "JMuestraDatos.regionLabel.text" )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
 				"gridY": 15
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -74,10 +102,24 @@ new FormModel {
 				"gridY": 17
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "readPowerLabel"
+				"text": new FormMessage( null, "JMuestraDatos.readPowerLabel.text" )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
+				"gridY": 17
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label7"
 				"text": new FormMessage( null, "JMuestraDatos.label7.text" )
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 3
+				"gridY": 19
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "writePowerLevel"
+				"text": new FormMessage( null, "JMuestraDatos.writePowerLevel.text" )
+			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+				"gridX": 5
 				"gridY": 19
 			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
@@ -100,8 +142,9 @@ new FormModel {
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
-					name: "menu2"
-					"text": new FormMessage( null, "JMuestraDatos.menu2.text" )
+					name: "readingModeMenu"
+					"text": new FormMessage( null, "JMuestraDatos.readingModeMenu.text" )
+					"enabled": false
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "verifyDataMenuItem"
 						"text": new FormMessage( null, "JMuestraDatos.verifyDataMenuItem.text" )

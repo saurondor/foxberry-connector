@@ -38,6 +38,10 @@ public class ReaderContext {
 	public static void connectUsbReader(String commPort) throws ReaderException {
 		reader.connectToComm(commPort);
 	}
+	
+	public static void addReaderStatusListener(ReaderStatusListener listener) {
+		reader.addReaderStatusListener(listener);
+	}
 
 	public static void addReadingListener(TagReadListener listener) {
 		reader.addListener(listener);
@@ -84,6 +88,30 @@ public class ReaderContext {
 	public static void gpoSet(GpioPin[] pins) throws ReaderException {
 		reader.gpoSet(pins);
 
+	}
+	
+	public static void setRedOn() throws ReaderException {
+		GpioPin[] pins = new GpioPin[1];
+		pins[0] = new GpioPin(2, true);
+		reader.gpoSet(pins);
+	}
+	
+	public static void setRedOff() throws ReaderException {
+		GpioPin[] pins = new GpioPin[1];
+		pins[0] = new GpioPin(2, false);
+		reader.gpoSet(pins);
+	}
+	
+	public static void setOrangeOn() throws ReaderException {
+		GpioPin[] pins = new GpioPin[1];
+		pins[0] = new GpioPin(1, true);
+		reader.gpoSet(pins);
+	}
+	
+	public static void setOrangeOff() throws ReaderException {
+		GpioPin[] pins = new GpioPin[1];
+		pins[0] = new GpioPin(1, false);
+		reader.gpoSet(pins);
 	}
 
 	public static GpioPin[] getGpo() throws ReaderException {

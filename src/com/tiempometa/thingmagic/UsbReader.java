@@ -4,7 +4,9 @@
 package com.tiempometa.thingmagic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
@@ -18,6 +20,7 @@ import com.thingmagic.ReaderException;
 import com.thingmagic.TMConstants;
 import com.thingmagic.TagData;
 import com.thingmagic.TagReadData;
+import com.tiempometa.muestradatos.ReaderStatusListener;
 import com.tiempometa.muestradatos.TagReadListener;
 import com.tiempometa.muestradatos.TagReading;
 
@@ -30,8 +33,29 @@ public class UsbReader implements Runnable {
 	private static final Logger logger = Logger.getLogger(UsbReader.class);
 	private Reader reader = null;
 	private List<TagReadListener> listeners = new ArrayList<TagReadListener>();
+	private List<ReaderStatusListener> statusListeners = new ArrayList<ReaderStatusListener>();
+	private Map<String, String> regionMap = new HashMap<String, String>();
 	private boolean connected = false;
 	private boolean doReadings = false;
+
+	public UsbReader() {
+		super();
+		regionMap.put("NA","North America/FCC");
+		regionMap.put("EU","European Union");
+		regionMap.put("EU2","European Union - Rev 2");
+		regionMap.put("EU3","European Union - Rev 3");
+		regionMap.put("KR","Korea");
+		regionMap.put("KR2","Korea Rev");
+		regionMap.put("PRC","China");
+		regionMap.put("PRC2","China 840MHz");
+		regionMap.put("IN","India");
+		regionMap.put("JP","Japan");
+		regionMap.put("AU","Australia");
+		regionMap.put("NZ","New Zealand");
+		regionMap.put("OPEN","No region restrictions enforced");
+		regionMap.put("NONE","No region Specified");
+		regionMap.put("MANUFACTURING","Manufacturing Unrestricted");
+	}
 
 	public void stop() {
 		synchronized (this) {
@@ -47,9 +71,63 @@ public class UsbReader implements Runnable {
 		listeners.remove(listener);
 	}
 
-	public void notifyListeners(List<TagReading> readings) {
+	private void notifyListeners(List<TagReading> readings) {
 		for (TagReadListener listener : listeners) {
 			listener.handleReadings(readings);
+		}
+	}
+
+	public void addReaderStatusListener(ReaderStatusListener listener) {
+		statusListeners.add(listener);
+	}
+
+	public void removeReaderStatusListener(ReaderStatusListener listener) {
+		statusListeners.remove(listener);
+	}
+
+	private void notifyRegionUpdated(String regionName) {
+		for (ReaderStatusListener listener : statusListeners) {
+			String region = regionMap.get(regionName);
+			if (region == null) {
+				region = "No especificada";
+			}
+			listener.updatedRegion(region);
+		}
+	}
+
+	private void notifyWritePower(Integer powerLevel) {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.updatedWritePower(powerLevel);
+		}
+	}
+
+	private void notifyReadPower(Integer powerLevel) {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.updatedReadPower(powerLevel);
+		}
+	}
+
+	private void notifyConnected() {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.connected();
+		}
+	}
+
+	private void notifyDisconnected() {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.disconnected();
+		}
+	}
+
+	private void notifyStartedReading() {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.startedReading();
+		}
+	}
+
+	private void notifyStoppedReading() {
+		for (ReaderStatusListener listener : statusListeners) {
+			listener.stoppedReading();
 		}
 	}
 
@@ -92,6 +170,7 @@ public class UsbReader implements Runnable {
 			if (region.name().equals(regionName)) {
 				reader.paramSet("/reader/region/id", region);
 				regionSet = true;
+				notifyRegionUpdated(regionName);
 			}
 		}
 		return regionSet;
@@ -136,14 +215,18 @@ public class UsbReader implements Runnable {
 			pins[1] = new GpioPin(2, false);
 			reader.gpoSet(pins);
 		}
+		notifyConnected();
 		logger.info("Created reader!");
 		reader.paramSet("/reader/radio/writePower", 1000);
+		notifyWritePower(1000);
 		reader.paramSet("/reader/radio/readPower", 1000);
+		notifyReadPower(1000);
 	}
 
 	public void read() throws ReaderException {
 		doReadings = true;
 		boolean read = true;
+		notifyStartedReading();
 		do {
 			TagReadData[] tagReads;
 			List<TagReading> readings = new ArrayList<TagReading>();
@@ -164,6 +247,7 @@ public class UsbReader implements Runnable {
 				read = doReadings;
 			}
 		} while (read);
+		notifyStoppedReading();
 	}
 
 	public void write(TagReadData data) throws ReaderException {
@@ -184,6 +268,7 @@ public class UsbReader implements Runnable {
 		pins[1] = new GpioPin(2, false);
 		reader.gpoSet(pins);
 		connected = false;
+		notifyDisconnected();
 		reader.destroy();
 	}
 
