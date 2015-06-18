@@ -1,6 +1,6 @@
-/**
- * 
- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package com.tiempometa.speedway;
 
 import java.io.BufferedReader;
@@ -16,8 +16,10 @@ import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 
 /**
- * @author Gerardo Tasistro
- *
+ * @author Gerardo Tasistro gtasistro@tiempometa.com
+ * Copyright 2015 Gerardo Tasistro
+ * Licensed un the Mozilla Public License, v. 2.0
+ * 
  */
 public class TcpReaderTest {
 	private static final Logger logger = Logger.getLogger(TcpReaderTest.class);

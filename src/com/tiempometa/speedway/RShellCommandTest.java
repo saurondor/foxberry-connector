@@ -1,6 +1,6 @@
-/**
- * 
- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package com.tiempometa.speedway;
 
 import java.io.IOException;
@@ -12,7 +12,9 @@ import com.tiempometa.speedway.commands.RShellCommand;
 import com.tiempometa.speedway.commands.SetTime;
 
 /**
- * @author Gerardo Tasistro
+ * @author Gerardo Tasistro gtasistro@tiempometa.com
+ * Copyright 2015 Gerardo Tasistro
+ * Licensed un the Mozilla Public License, v. 2.0
  * 
  */
 public class RShellCommandTest {

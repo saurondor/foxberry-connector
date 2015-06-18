@@ -1,6 +1,9 @@
 /*
  * Created by JFormDesigner on Tue May 19 08:27:31 CDT 2015
  */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 package com.tiempometa.muestradatos;
 
@@ -20,7 +23,10 @@ import com.tiempometa.thingmagic.UsbReader;
 import com.tiempometa.timing.dao.JdbcConnector;
 
 /**
- * @author Gerardo Esteban Tasistro Giubetic
+ * @author Gerardo Tasistro gtasistro@tiempometa.com
+ * Copyright 2015 Gerardo Tasistro
+ * Licensed un the Mozilla Public License, v. 2.0
+ * 
  */
 public class JConfigDialog extends JDialog {
 	/**
@@ -47,6 +53,21 @@ public class JConfigDialog extends JDialog {
 		} else {
 			disableReaders();
 		}
+	}
+	
+	private void disableTcpFields() {
+		readerBoxAddressTextField.setEnabled(false);
+		antennaComboBox.setEnabled(false);
+		readerBoxConnectButton.setEnabled(false);
+		readerTypeComboBox.setEnabled(false);
+		readerComboBox.setEnabled(false);
+	}
+	
+	private void disableUsbFields() {
+		commPortComboBox.setEnabled(false);
+		usbReaderConnectButton.setEnabled(false);
+		usbReaderSetRegionButton.setEnabled(false);
+		regionComboBox.setEnabled(false);
 	}
 
 	private void disableReaders() {
@@ -79,11 +100,12 @@ public class JConfigDialog extends JDialog {
 			try {
 				ReaderContext.disconnectUsbReader();
 			} catch (ReaderException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "No se pudo desconectar el lector.",
+						"Desconexión al lector USB",
+						JOptionPane.ERROR_MESSAGE);
 			}
 			usbReaderConnectButton.setText("Conectar");
-
+enableReaders();
 		} else {
 			try {
 				ReaderContext.connectUsbReader(commPort);
@@ -91,6 +113,9 @@ public class JConfigDialog extends JDialog {
 						"Conexión al lector USB",
 						JOptionPane.INFORMATION_MESSAGE);
 				usbReaderConnectButton.setText("Desconectar");
+				String regionName = (String) regionComboBox.getSelectedItem();
+				setRegion(regionName);
+				disableTcpFields();
 			} catch (ReaderException e1) {
 				JOptionPane.showMessageDialog(this,
 						"No se pudo conectar al lector. " + e1.getMessage(),
@@ -103,6 +128,10 @@ public class JConfigDialog extends JDialog {
 
 	private void usbReaderSetRegionButtonActionPerformed(ActionEvent e) {
 		String regionName = (String) regionComboBox.getSelectedItem();
+		setRegion(regionName);
+	}
+
+	private void setRegion(String regionName) {
 		try {
 			if (ReaderContext.setRegion(regionName)) {
 
@@ -131,6 +160,7 @@ public class JConfigDialog extends JDialog {
 		if (readerTypeComboBox.getSelectedIndex() == 0) {
 			try {
 				ReaderContext.connectFoxberry(readerBoxAddressTextField.getText(), null, null, null);
+				disableUsbFields();
 			} catch (UnknownHostException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -141,6 +171,7 @@ public class JConfigDialog extends JDialog {
 		} else {
 			try {
 				ReaderContext.connectSpeedway(readerBoxAddressTextField.getText(), null, null);
+				disableUsbFields();
 			} catch (UnknownHostException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -185,7 +216,6 @@ public class JConfigDialog extends JDialog {
 	}
 
 	private void okButtonActionPerformed(ActionEvent e) {
-		// TODO implement save settings button
 		this.dispose();
 	}
 

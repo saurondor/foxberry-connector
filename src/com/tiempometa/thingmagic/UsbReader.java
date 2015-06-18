@@ -1,6 +1,6 @@
-/**
- * 
- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package com.tiempometa.thingmagic;
 
 import java.util.ArrayList;
@@ -31,7 +31,9 @@ import com.tiempometa.muestradatos.TagReadListener;
 import com.tiempometa.muestradatos.TagReading;
 
 /**
- * @author Gerardo Tasistro
+ * @author Gerardo Tasistro gtasistro@tiempometa.com
+ * Copyright 2015 Gerardo Tasistro
+ * Licensed un the Mozilla Public License, v. 2.0
  * 
  */
 public class UsbReader implements Runnable {
@@ -66,6 +68,10 @@ public class UsbReader implements Runnable {
 		regionMap.put("MANUFACTURING", "Manufacturing Unrestricted");
 	}
 
+	public boolean isReading() {
+		return doReadings;
+	}
+	
 	public void stop() {
 		synchronized (this) {
 			doReadings = false;

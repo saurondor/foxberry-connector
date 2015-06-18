@@ -1,6 +1,9 @@
 /**
  * 
  */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package com.tiempometa.muestradatos;
 
 import java.io.File;
@@ -22,7 +25,9 @@ import com.tiempometa.speedway.TcpReader;
 import com.tiempometa.thingmagic.UsbReader;
 
 /**
- * @author Gerardo Tasistro
+ * @author Gerardo Tasistro gtasistro@tiempometa.com
+ * Copyright 2015 Gerardo Tasistro
+ * Licensed un the Mozilla Public License, v. 2.0
  * 
  */
 public class ReaderContext {
@@ -69,6 +74,10 @@ public class ReaderContext {
 	public static void disconnectFoxberry() throws IOException {
 		foxberryReader.disconnect();
 		readerType = null;
+	}
+
+	public static boolean isUsbReading() {
+		return reader.isReading();
 	}
 
 	public static boolean isUsbConnected() {
@@ -122,18 +131,20 @@ public class ReaderContext {
 	}
 
 	public static void stopReading() {
-		switch (readerType) {
-		case ReaderContext.USB_READER:
-			reader.stop();
-			break;
-		case ReaderContext.SPEEDWAY_READER:
-			speedwayReader.stop();
-			break;
-		case ReaderContext.FOXBERRY_READER:
-			foxberryReader.stop();
-			break;
-		default:
-			break;
+		if (readerType != null) {
+			switch (readerType) {
+			case ReaderContext.USB_READER:
+				reader.stop();
+				break;
+			case ReaderContext.SPEEDWAY_READER:
+				speedwayReader.stop();
+				break;
+			case ReaderContext.FOXBERRY_READER:
+				foxberryReader.stop();
+				break;
+			default:
+				break;
+			}
 		}
 	}
 

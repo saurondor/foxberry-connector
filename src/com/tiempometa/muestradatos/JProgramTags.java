@@ -1,6 +1,9 @@
 /*
  * Created by JFormDesigner on Sat May 30 17:22:50 CDT 2015
  */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 package com.tiempometa.muestradatos;
 
@@ -11,7 +14,10 @@ import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 
 /**
- * @author Gerardo Esteban Tasistro Giubetic
+ * @author Gerardo Tasistro gtasistro@tiempometa.com
+ * Copyright 2015 Gerardo Tasistro
+ * Licensed un the Mozilla Public License, v. 2.0
+ * 
  */
 public class JProgramTags extends JFrame {
 	public JProgramTags() {

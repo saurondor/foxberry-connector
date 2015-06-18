@@ -1,6 +1,9 @@
 /*
  * Created by JFormDesigner on Wed May 20 15:38:17 CDT 2015
  */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 package com.tiempometa.muestradatos;
 
@@ -34,7 +37,10 @@ import com.tiempometa.timing.models.Registration;
 import com.tiempometa.timing.models.Rfid;
 
 /**
- * @author Gerardo Esteban Tasistro Giubetic
+ * @author Gerardo Tasistro gtasistro@tiempometa.com
+ * Copyright 2015 Gerardo Tasistro
+ * Licensed un the Mozilla Public License, v. 2.0
+ * 
  */
 public class JUserDataFrame extends JFrame implements TagReadListener {
 	/**
