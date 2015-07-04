@@ -160,11 +160,14 @@ public class JReadTags extends JDialog implements TagReadListener {
 		}
 	}
 
+	private void closeButtonActionPerformed(ActionEvent e) {
+		// TODO add your code here
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle
-				.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		label2 = new JLabel();
@@ -173,42 +176,46 @@ public class JReadTags extends JDialog implements TagReadListener {
 		bibLabel = new JLabel();
 		scrollPane1 = new JScrollPane();
 		tagReadTable = new JTable();
-		deleteSelectedButton = new JButton();
-		deleteReadButton = new JButton();
-		deleteAllButton = new JButton();
+		label1 = new JLabel();
+		dataToStoreComboBox = new JComboBox<>();
+		allowDuplicateBibsCheckBox = new JCheckBox();
+		startReadingButton = new JButton();
 		label3 = new JLabel();
 		tidTextField = new JTextField();
 		label4 = new JLabel();
 		epcTextField = new JTextField();
-		label1 = new JLabel();
-		comboBox1 = new JComboBox<>();
-		allowDuplicateBibsCheckBox = new JCheckBox();
-		startReadingButton = new JButton();
+		deleteSelectedButton = new JButton();
+		deleteReadButton = new JButton();
+		deleteAllButton = new JButton();
 		buttonBar = new JPanel();
-		okButton = new JButton();
+		closeButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
-		// ======== this ========
+		//======== this ========
 		setTitle(bundle.getString("JReadTags.this.title"));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setResizable(false);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
-		// ======== dialogPane ========
+		//======== dialogPane ========
 		{
 			dialogPane.setBorder(Borders.DIALOG_BORDER);
 			dialogPane.setLayout(new BorderLayout());
 
-			// ======== contentPanel ========
+			//======== contentPanel ========
 			{
-				contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
+				contentPanel.setLayout(new FormLayout(
+					new ColumnSpec[] {
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(85)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(143)) }, new RowSpec[] {
+						new ColumnSpec(Sizes.dluX(143))
+					},
+					new RowSpec[] {
 						new RowSpec(Sizes.dluY(17)),
 						FormFactory.LINE_GAP_ROWSPEC,
 						new RowSpec(Sizes.dluY(20)),
@@ -233,125 +240,129 @@ public class JReadTags extends JDialog implements TagReadListener {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC }));
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
-				// ---- label2 ----
+				//---- label2 ----
 				label2.setText(bundle.getString("JReadTags.label2.text"));
 				label2.setFont(new Font("Tahoma", Font.PLAIN, 36));
 				contentPanel.add(label2, cc.xy(3, 5));
 
-				// ---- nextBibTextField ----
+				//---- nextBibTextField ----
 				nextBibTextField.setFont(new Font("Tahoma", Font.PLAIN, 36));
 				nextBibTextField.setHorizontalAlignment(SwingConstants.RIGHT);
-				nextBibTextField.setText(bundle
-						.getString("JReadTags.nextBibTextField.text"));
+				nextBibTextField.setText(bundle.getString("JReadTags.nextBibTextField.text"));
 				contentPanel.add(nextBibTextField, cc.xy(5, 5));
 
-				// ---- statusLabel ----
-				statusLabel.setText(bundle
-						.getString("JReadTags.statusLabel.text"));
+				//---- statusLabel ----
+				statusLabel.setText(bundle.getString("JReadTags.statusLabel.text"));
 				statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				statusLabel.setBackground(Color.yellow);
 				statusLabel.setOpaque(true);
 				statusLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 				contentPanel.add(statusLabel, cc.xywh(7, 3, 1, 5));
 
-				// ---- bibLabel ----
+				//---- bibLabel ----
 				bibLabel.setForeground(Color.red);
 				bibLabel.setFont(new Font("Tahoma", Font.BOLD, 36));
 				bibLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPanel.add(bibLabel, cc.xy(7, 9));
 
-				// ======== scrollPane1 ========
+				//======== scrollPane1 ========
 				{
 					scrollPane1.setViewportView(tagReadTable);
 				}
 				contentPanel.add(scrollPane1, cc.xywh(3, 11, 5, 1));
 
-				// ---- deleteSelectedButton ----
-				deleteSelectedButton.setText(bundle
-						.getString("JReadTags.deleteSelectedButton.text"));
-				deleteSelectedButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						deleteSelectedButtonActionPerformed(e);
-					}
-				});
-				contentPanel.add(deleteSelectedButton, cc.xy(7, 13));
-
-				// ---- deleteReadButton ----
-				deleteReadButton.setText(bundle
-						.getString("JReadTags.deleteReadButton.text"));
-				deleteReadButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						deleteReadButtonActionPerformed(e);
-					}
-				});
-				contentPanel.add(deleteReadButton, cc.xy(7, 15));
-
-				// ---- deleteAllButton ----
-				deleteAllButton.setText(bundle
-						.getString("JReadTags.deleteAllButton.text"));
-				deleteAllButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						deleteAllButtonActionPerformed(e);
-					}
-				});
-				contentPanel.add(deleteAllButton, cc.xy(7, 17));
-
-				// ---- label3 ----
-				label3.setText(bundle.getString("JReadTags.label3.text"));
-				label3.setHorizontalAlignment(SwingConstants.RIGHT);
-				contentPanel.add(label3, cc.xy(3, 19));
-				contentPanel.add(tidTextField, cc.xywh(5, 19, 3, 1));
-
-				// ---- label4 ----
-				label4.setText(bundle.getString("JReadTags.label4.text"));
-				label4.setHorizontalAlignment(SwingConstants.RIGHT);
-				contentPanel.add(label4, cc.xy(3, 21));
-				contentPanel.add(epcTextField, cc.xywh(5, 21, 3, 1));
-
-				// ---- label1 ----
+				//---- label1 ----
 				label1.setText(bundle.getString("JReadTags.label1.text"));
 				label1.setHorizontalAlignment(SwingConstants.RIGHT);
-				contentPanel.add(label1, cc.xy(3, 23));
+				contentPanel.add(label1, cc.xy(3, 13));
 
-				// ---- comboBox1 ----
-				comboBox1.setModel(new DefaultComboBoxModel<>(new String[] {
-						"TID", "EPC" }));
-				contentPanel.add(comboBox1, cc.xy(5, 23));
+				//---- dataToStoreComboBox ----
+				dataToStoreComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
+					"EPC",
+					"TID"
+				}));
+				contentPanel.add(dataToStoreComboBox, cc.xy(5, 13));
 
-				// ---- allowDuplicateBibsCheckBox ----
-				allowDuplicateBibsCheckBox
-						.setText(bundle
-								.getString("JReadTags.allowDuplicateBibsCheckBox.text"));
-				contentPanel.add(allowDuplicateBibsCheckBox, cc.xy(7, 23));
+				//---- allowDuplicateBibsCheckBox ----
+				allowDuplicateBibsCheckBox.setText(bundle.getString("JReadTags.allowDuplicateBibsCheckBox.text"));
+				contentPanel.add(allowDuplicateBibsCheckBox, cc.xy(7, 13));
 
-				// ---- startReadingButton ----
-				startReadingButton.setText(bundle
-						.getString("JReadTags.startReadingButton.text"));
+				//---- startReadingButton ----
+				startReadingButton.setText(bundle.getString("JReadTags.startReadingButton.text"));
 				startReadingButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						startReadingButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(startReadingButton, cc.xy(7, 25));
+				contentPanel.add(startReadingButton, cc.xywh(3, 15, 5, 1));
+
+				//---- label3 ----
+				label3.setText(bundle.getString("JReadTags.label3.text"));
+				label3.setHorizontalAlignment(SwingConstants.RIGHT);
+				contentPanel.add(label3, cc.xy(3, 17));
+				contentPanel.add(tidTextField, cc.xywh(5, 17, 3, 1));
+
+				//---- label4 ----
+				label4.setText(bundle.getString("JReadTags.label4.text"));
+				label4.setHorizontalAlignment(SwingConstants.RIGHT);
+				contentPanel.add(label4, cc.xy(3, 19));
+				contentPanel.add(epcTextField, cc.xywh(5, 19, 3, 1));
+
+				//---- deleteSelectedButton ----
+				deleteSelectedButton.setText(bundle.getString("JReadTags.deleteSelectedButton.text"));
+				deleteSelectedButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						deleteSelectedButtonActionPerformed(e);
+					}
+				});
+				contentPanel.add(deleteSelectedButton, cc.xy(3, 21));
+
+				//---- deleteReadButton ----
+				deleteReadButton.setText(bundle.getString("JReadTags.deleteReadButton.text"));
+				deleteReadButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						deleteReadButtonActionPerformed(e);
+					}
+				});
+				contentPanel.add(deleteReadButton, cc.xy(3, 23));
+
+				//---- deleteAllButton ----
+				deleteAllButton.setText(bundle.getString("JReadTags.deleteAllButton.text"));
+				deleteAllButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						deleteAllButtonActionPerformed(e);
+					}
+				});
+				contentPanel.add(deleteAllButton, cc.xy(3, 25));
 			}
 			dialogPane.add(contentPanel, BorderLayout.CENTER);
 
-			// ======== buttonBar ========
+			//======== buttonBar ========
 			{
 				buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
-				buttonBar.setLayout(new FormLayout(new ColumnSpec[] {
-						FormFactory.GLUE_COLSPEC, FormFactory.BUTTON_COLSPEC },
-						RowSpec.decodeSpecs("pref")));
+				buttonBar.setLayout(new FormLayout(
+					new ColumnSpec[] {
+						FormFactory.GLUE_COLSPEC,
+						FormFactory.BUTTON_COLSPEC
+					},
+					RowSpec.decodeSpecs("pref")));
 
-				// ---- okButton ----
-				okButton.setText("OK");
-				buttonBar.add(okButton, cc.xy(2, 1));
+				//---- closeButton ----
+				closeButton.setText("Cerrar");
+				closeButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						closeButtonActionPerformed(e);
+					}
+				});
+				buttonBar.add(closeButton, cc.xy(2, 1));
 			}
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
@@ -371,20 +382,19 @@ public class JReadTags extends JDialog implements TagReadListener {
 	private JLabel bibLabel;
 	private JScrollPane scrollPane1;
 	private JTable tagReadTable;
-	private JButton deleteSelectedButton;
-	private JButton deleteReadButton;
-	private JButton deleteAllButton;
+	private JLabel label1;
+	private JComboBox<String> dataToStoreComboBox;
+	private JCheckBox allowDuplicateBibsCheckBox;
+	private JButton startReadingButton;
 	private JLabel label3;
 	private JTextField tidTextField;
 	private JLabel label4;
 	private JTextField epcTextField;
-	private JLabel label1;
-	private JComboBox<String> comboBox1;
-	private JCheckBox allowDuplicateBibsCheckBox;
-	private JButton startReadingButton;
+	private JButton deleteSelectedButton;
+	private JButton deleteReadButton;
+	private JButton deleteAllButton;
 	private JPanel buttonBar;
-	private JButton okButton;
-
+	private JButton closeButton;
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 	@Override
 	public void handleReadings(List<TagReading> readings) {
@@ -430,7 +440,17 @@ public class JReadTags extends JDialog implements TagReadListener {
 								statusLabel.setText("Tag leido");
 								tidTextField.setText(tagReading.getTid());
 								epcTextField.setText(tagReading.getEpc());
-								String rfidString = tagReading.getTid();
+								String rfidString = null;
+								switch (dataToStoreComboBox.getSelectedIndex()) {
+								case 0:
+									rfidString = tagReading.getEpc();
+									break;
+								case 1:
+									rfidString = tagReading.getTid();
+									break;
+								default:
+									break;
+								}
 								List<Rfid> rfids = rfidDao
 										.findByRfid(rfidString);
 								if (rfids.size() == 0) {

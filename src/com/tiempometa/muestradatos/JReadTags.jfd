@@ -11,6 +11,7 @@ new FormModel {
 			name: "this"
 			"title": new FormMessage( null, "JReadTags.this.title" )
 			"defaultCloseOperation": 2
+			"resizable": false
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 				name: "dialogPane"
 				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
@@ -67,29 +68,40 @@ new FormModel {
 						"gridY": 11
 						"gridWidth": 5
 					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "deleteSelectedButton"
-						"text": new FormMessage( null, "JReadTags.deleteSelectedButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteSelectedButtonActionPerformed", true ) )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label1"
+						"text": new FormMessage( null, "JReadTags.label1.text" )
+						"horizontalAlignment": 4
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 3
+						"gridY": 13
+					} )
+					add( new FormComponent( "javax.swing.JComboBox" ) {
+						name: "dataToStoreComboBox"
+						"model": new javax.swing.DefaultComboBoxModel {
+							selectedItem: "EPC"
+							addElement( "EPC" )
+							addElement( "TID" )
+						}
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 5
+						"gridY": 13
+					} )
+					add( new FormComponent( "javax.swing.JCheckBox" ) {
+						name: "allowDuplicateBibsCheckBox"
+						"text": new FormMessage( null, "JReadTags.allowDuplicateBibsCheckBox.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 7
 						"gridY": 13
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "deleteReadButton"
-						"text": new FormMessage( null, "JReadTags.deleteReadButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteReadButtonActionPerformed", true ) )
+						name: "startReadingButton"
+						"text": new FormMessage( null, "JReadTags.startReadingButton.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "startReadingButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 7
+						"gridX": 3
 						"gridY": 15
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "deleteAllButton"
-						"text": new FormMessage( null, "JReadTags.deleteAllButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteAllButtonActionPerformed", true ) )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 7
-						"gridY": 17
+						"gridWidth": 5
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label3"
@@ -97,13 +109,13 @@ new FormModel {
 						"horizontalAlignment": 4
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 19
+						"gridY": 17
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "tidTextField"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
-						"gridY": 19
+						"gridY": 17
 						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
@@ -112,47 +124,37 @@ new FormModel {
 						"horizontalAlignment": 4
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 21
+						"gridY": 19
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "epcTextField"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
-						"gridY": 21
+						"gridY": 19
 						"gridWidth": 3
 					} )
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label1"
-						"text": new FormMessage( null, "JReadTags.label1.text" )
-						"horizontalAlignment": 4
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "deleteSelectedButton"
+						"text": new FormMessage( null, "JReadTags.deleteSelectedButton.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteSelectedButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 3
+						"gridY": 21
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "deleteReadButton"
+						"text": new FormMessage( null, "JReadTags.deleteReadButton.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteReadButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 23
 					} )
-					add( new FormComponent( "javax.swing.JComboBox" ) {
-						name: "comboBox1"
-						"model": new javax.swing.DefaultComboBoxModel {
-							selectedItem: "TID"
-							addElement( "TID" )
-							addElement( "EPC" )
-						}
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
-						"gridY": 23
-					} )
-					add( new FormComponent( "javax.swing.JCheckBox" ) {
-						name: "allowDuplicateBibsCheckBox"
-						"text": new FormMessage( null, "JReadTags.allowDuplicateBibsCheckBox.text" )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 7
-						"gridY": 23
-					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "startReadingButton"
-						"text": new FormMessage( null, "JReadTags.startReadingButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "startReadingButtonActionPerformed", true ) )
+						name: "deleteAllButton"
+						"text": new FormMessage( null, "JReadTags.deleteAllButton.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteAllButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 7
+						"gridX": 3
 						"gridY": 25
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
@@ -165,8 +167,9 @@ new FormModel {
 					name: "buttonBar"
 					"border": sfield com.jgoodies.forms.factories.Borders BUTTON_BAR_GAP_BORDER
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "okButton"
-						"text": "OK"
+						name: "closeButton"
+						"text": "Cerrar"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "closeButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 2
 						"gridY": 1
@@ -179,7 +182,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 710, 485 )
+			"size": new java.awt.Dimension( 710, 525 )
 		} )
 	}
 }
