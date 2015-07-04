@@ -21,7 +21,7 @@ import ch.ethz.ssh2.StreamGobbler;
 /**
  * @author Gerardo Tasistro gtasistro@tiempometa.com
  * Copyright 2015 Gerardo Tasistro
- * Licensed un the Mozilla Public License, v. 2.0
+ * Licensed under the Mozilla Public License, v. 2.0
  * 
  */
 public abstract class RShellCommand {

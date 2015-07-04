@@ -16,7 +16,7 @@ import com.jgoodies.forms.layout.*;
 /**
  * @author Gerardo Tasistro gtasistro@tiempometa.com
  * Copyright 2015 Gerardo Tasistro
- * Licensed un the Mozilla Public License, v. 2.0
+ * Licensed under the Mozilla Public License, v. 2.0
  * 
  */
 public class JProgramTags extends JFrame {
