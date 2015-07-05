@@ -16,6 +16,8 @@ import java.util.*;
 
 import javax.swing.*;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import com.thingmagic.ReaderException;
@@ -33,6 +35,7 @@ public class JConfigDialog extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 2477824460530549287L;
+	private static final Logger logger = Logger.getLogger(JConfigDialog.class);
 	private boolean databaseConnected = false;
 
 	public JConfigDialog(Frame owner) {
@@ -159,6 +162,7 @@ enableReaders();
 	private void readerBoxConnectButtonActionPerformed(ActionEvent e) {
 		if (readerTypeComboBox.getSelectedIndex() == 0) {
 			try {
+				logger.info("Connecting to foxberry");
 				ReaderContext.connectFoxberry(readerBoxAddressTextField.getText(), null, null, null);
 				disableUsbFields();
 			} catch (UnknownHostException e1) {
@@ -170,6 +174,7 @@ enableReaders();
 			}
 		} else {
 			try {
+				logger.info("Connecting to speedway");
 				ReaderContext.connectSpeedway(readerBoxAddressTextField.getText(), null, null);
 				disableUsbFields();
 			} catch (UnknownHostException e1) {

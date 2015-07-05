@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -27,7 +28,7 @@ public class FoxberryReader implements Runnable {
 
 	private static final Logger logger = Logger.getLogger(FoxberryReader.class);
 
-	private int port = 10200; // use default port
+	private int port = 10201; // use default port
 	private String hostname = "";
 	private Socket readerSocket = null;
 	private InputStream dataInputStream = null;
@@ -46,8 +47,20 @@ public class FoxberryReader implements Runnable {
 		}
 		this.preferredAntenna = preferredAntenna;
 		this.preferredReader = preferredReader;
+		logger.info("Opening socket");
 		openSocket();
+		logger.info("Socket opened");
 		notifyConnected();
+		logger.info("Notify successful connect");
+	}
+	
+	private void connect() throws UnknownHostException, IOException {
+		logger.info("Opening socket");
+		openSocket();
+		logger.info("Socket opened");
+		notifyConnected();
+		logger.info("Notify successful connect");
+		
 	}
 
 	private void openSocket() throws UnknownHostException, IOException {
@@ -110,12 +123,76 @@ public class FoxberryReader implements Runnable {
 
 	@Override
 	public void run() {
-		boolean read = true;
-		while (read) {
-			synchronized (this) {
-				read = doReadings;
-			}
+		try {
+			dataInputStream = readerSocket.getInputStream();
+			dataOutputStream = readerSocket.getOutputStream();
+			boolean read = true;
+			while ((read) & (!readerSocket.isClosed())) {
+				synchronized (this) {
+					read = doReadings;
+				}
+				logger.info("Socket is open");
+				while (readerSocket.isConnected()) {
+					if (readerSocket.isClosed()) {
+						logger.warn("Socket is closed!");
+					}
+					logger.info("Socket is connected");
 
+					int dataInStream;
+					try {
+						dataInStream = dataInputStream.available();
+						if (dataInStream < 0) {
+							logger.warn("Less than 0 bytes available, disconnect?");
+						}
+						logger.info("pinging server");
+						dataOutputStream.write("ping".getBytes());
+						dataOutputStream.flush();
+						logger.info("pinged server!");
+						if (dataInStream > 0) {
+							byte[] b = new byte[dataInStream];
+							dataInputStream.read(b);
+							String dataString = new String(b);
+							if (logger.isDebugEnabled()) {
+								logger.debug("DATA>\n" + dataString + "\nLEN:"
+										+ dataString.length());
+							}
+							StringBuffer buffer = new StringBuffer((new Date())
+									+ " " + dataString);
+							String[] dataRows = dataString.split("\\n");
+							for (String string : dataRows) {
+								logger.debug(string);
+								TagReading reading = new TagReading(string);
+								logger.debug(reading);
+								List<TagReading> readings = new ArrayList<TagReading>();
+								readings.add(reading);
+								notifyListeners(readings);
+							}
+						} else {
+							logger.info("No data");
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						try {
+							disconnect();
+							connect();
+							dataInputStream = readerSocket.getInputStream();
+							dataOutputStream = readerSocket.getOutputStream();
+						} catch (IOException e2) {
+							e2.printStackTrace();
+						}
+					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
 
 	}

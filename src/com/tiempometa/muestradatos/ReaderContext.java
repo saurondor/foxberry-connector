@@ -27,9 +27,8 @@ import com.tiempometa.speedway.TcpReader;
 import com.tiempometa.thingmagic.UsbReader;
 
 /**
- * @author Gerardo Tasistro gtasistro@tiempometa.com
- * Copyright 2015 Gerardo Tasistro
- * Licensed under the Mozilla Public License, v. 2.0
+ * @author Gerardo Tasistro gtasistro@tiempometa.com Copyright 2015 Gerardo
+ *         Tasistro Licensed under the Mozilla Public License, v. 2.0
  * 
  */
 public class ReaderContext {
@@ -63,9 +62,13 @@ public class ReaderContext {
 	public static void connectFoxberry(String hostName, Integer port,
 			String preferredReader, String preferredAntenna)
 			throws UnknownHostException, IOException {
+		logger.info("Connecting to reader " + hostName + ":" + port
+				+ " reader: " + preferredReader + " antenna: " + preferredAntenna);
 		foxberryReader.connect(hostName, port, preferredReader,
 				preferredAntenna);
 		readerType = ReaderContext.FOXBERRY_READER;
+		workerThread = new Thread(foxberryReader);
+		workerThread.start();
 	}
 
 	public static void disconnectSpeedway() throws IOException {
@@ -238,8 +241,9 @@ public class ReaderContext {
 			throws ReaderException {
 		reader.executeTagOp(tagop, target);
 	}
-	
-	public static void writeEpc(TagReadData data, String hexString) throws ReaderException, DecoderException {
+
+	public static void writeEpc(TagReadData data, String hexString)
+			throws ReaderException, DecoderException {
 		reader.write(data, hexString);
 	}
 
