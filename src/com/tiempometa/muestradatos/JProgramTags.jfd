@@ -15,8 +15,8 @@ new FormModel {
 				name: "dialogPane"
 				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-					"$columnSpecs": "default, labelcompgap, default, labelcompgap, 71dlu, labelcompgap, 68dlu, labelcompgap, default"
-					"$rowSpecs": "10dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+					"$columnSpecs": "default, labelcompgap, default, labelcompgap, 71dlu, labelcompgap, 68dlu, labelcompgap, 97dlu, labelcompgap, default"
+					"$rowSpecs": "10dlu, linegap, 15dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 				} ) {
 					name: "contentPanel"
 					add( new FormComponent( "javax.swing.JLabel" ) {
@@ -58,6 +58,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JCheckBox" ) {
 						name: "checkBox1"
 						"text": new FormMessage( null, "JProgramTags.checkBox1.text" )
+						"enabled": false
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 9
@@ -75,13 +76,13 @@ new FormModel {
 						name: "label3"
 						"text": new FormMessage( null, "JProgramTags.label3.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
+						"gridX": 5
 						"gridY": 11
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "tidTextField"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
+						"gridX": 7
 						"gridY": 11
 						"gridWidth": 3
 					} )
@@ -89,14 +90,28 @@ new FormModel {
 						name: "label4"
 						"text": new FormMessage( null, "JProgramTags.label4.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
+						"gridX": 5
 						"gridY": 13
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "epcTextField"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
+						"gridX": 7
 						"gridY": 13
+						"gridWidth": 3
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label5"
+						"text": new FormMessage( null, "JProgramTags.label5.text" )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridY": 15
+						"gridX": 5
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "programmedEpcTextField"
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 7
+						"gridY": 15
 						"gridWidth": 3
 					} )
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
@@ -106,11 +121,11 @@ new FormModel {
 						} )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 15
-						"gridWidth": 5
+						"gridY": 17
+						"gridWidth": 7
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
-					"value": "Center"
+					"value": "East"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 					"$columnSpecs": "glue, button"
@@ -133,7 +148,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 615, 300 )
+			"size": new java.awt.Dimension( 675, 475 )
 		} )
 	}
 }

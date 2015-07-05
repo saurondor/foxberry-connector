@@ -16,6 +16,7 @@ new FormModel {
 			"defaultCloseOperation": 0
 			"$sizePolicy": 1
 			"undecorated": true
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/stopwatch_small.png" )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "bibLabel"
 				"text": new FormMessage( null, "JUserDataFrame.bibLabel.text" )

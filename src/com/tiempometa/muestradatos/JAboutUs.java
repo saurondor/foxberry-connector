@@ -40,6 +40,7 @@ public class JAboutUs extends JDialog {
 		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
+		label4 = new JLabel();
 		label1 = new JLabel();
 		label2 = new JLabel();
 		label3 = new JLabel();
@@ -66,6 +67,8 @@ public class JAboutUs extends JDialog {
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						FormFactory.DEFAULT_COLSPEC
 					},
 					new RowSpec[] {
@@ -78,18 +81,22 @@ public class JAboutUs extends JDialog {
 						FormFactory.DEFAULT_ROWSPEC
 					}));
 
+				//---- label4 ----
+				label4.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/stopwatch_medium.png")));
+				contentPanel.add(label4, cc.xy(3, 3));
+
 				//---- label1 ----
 				label1.setText(bundle.getString("JAboutUs.label1.text"));
 				label1.setFont(new Font("Tahoma", Font.BOLD, 24));
-				contentPanel.add(label1, cc.xy(3, 3));
+				contentPanel.add(label1, cc.xy(5, 3));
 
 				//---- label2 ----
 				label2.setText(bundle.getString("JAboutUs.label2.text"));
-				contentPanel.add(label2, cc.xy(3, 5));
+				contentPanel.add(label2, cc.xy(5, 5));
 
 				//---- label3 ----
 				label3.setText(bundle.getString("JAboutUs.label3.text"));
-				contentPanel.add(label3, cc.xy(3, 7));
+				contentPanel.add(label3, cc.xy(5, 7));
 			}
 			dialogPane.add(contentPanel, BorderLayout.CENTER);
 
@@ -116,7 +123,7 @@ public class JAboutUs extends JDialog {
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
 		contentPane.add(dialogPane, BorderLayout.CENTER);
-		setSize(480, 300);
+		setSize(615, 300);
 		setLocationRelativeTo(getOwner());
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
@@ -124,6 +131,7 @@ public class JAboutUs extends JDialog {
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	private JPanel dialogPane;
 	private JPanel contentPanel;
+	private JLabel label4;
 	private JLabel label1;
 	private JLabel label2;
 	private JLabel label3;

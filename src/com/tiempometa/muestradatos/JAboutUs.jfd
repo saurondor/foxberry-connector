@@ -16,30 +16,37 @@ new FormModel {
 				name: "dialogPane"
 				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-					"$columnSpecs": "5dlu, labelcompgap, default, labelcompgap, default"
+					"$columnSpecs": "5dlu, labelcompgap, default, labelcompgap, default, labelcompgap, default"
 					"$rowSpecs": "26dlu, linegap, default, linegap, default, linegap, default"
 				} ) {
 					name: "contentPanel"
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label4"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/stopwatch_medium.png" )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 3
+						"gridY": 3
+					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label1"
 						"text": new FormMessage( null, "JAboutUs.label1.text" )
 						"font": new java.awt.Font( "Tahoma", 1, 24 )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
+						"gridX": 5
 						"gridY": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label2"
 						"text": new FormMessage( null, "JAboutUs.label2.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
+						"gridX": 5
 						"gridY": 5
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label3"
 						"text": new FormMessage( null, "JAboutUs.label3.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
+						"gridX": 5
 						"gridY": 7
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
@@ -67,7 +74,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 480, 300 )
+			"size": new java.awt.Dimension( 615, 300 )
 		} )
 	}
 }
