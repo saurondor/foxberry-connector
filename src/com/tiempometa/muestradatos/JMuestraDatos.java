@@ -139,6 +139,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	}
 
 	private void programTagsMenuItemActionPerformed(ActionEvent e) {
+		JProgramTags programTag = new JProgramTags(this, true);
+		programTag.setVisible(true);
 	}
 
 	private void configMenuItemActionPerformed(ActionEvent e) {

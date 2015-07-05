@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 import org.llrp.ltk.generated.parameters.ReaderExceptionEvent;
@@ -20,6 +21,7 @@ import com.thingmagic.Gen2;
 import com.thingmagic.ReaderCodeException;
 import com.thingmagic.ReaderException;
 import com.thingmagic.TagData;
+import com.thingmagic.TagReadData;
 import com.tiempometa.foxberry.FoxberryReader;
 import com.tiempometa.speedway.TcpReader;
 import com.tiempometa.thingmagic.UsbReader;
@@ -235,6 +237,10 @@ public class ReaderContext {
 	public static void executeTagOp(WriteTag tagop, TagData target)
 			throws ReaderException {
 		reader.executeTagOp(tagop, target);
+	}
+	
+	public static void writeEpc(TagReadData data, String hexString) throws ReaderException, DecoderException {
+		reader.write(data, hexString);
 	}
 
 	public static String readTid(String epc, Integer tid_length)

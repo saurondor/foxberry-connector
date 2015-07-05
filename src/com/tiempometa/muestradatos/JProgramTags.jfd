@@ -10,53 +10,79 @@ new FormModel {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 			name: "this"
 			"title": new FormMessage( null, "JProgramTags.this.title" )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/stopwatch_small.png" )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 				name: "dialogPane"
 				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-					"$columnSpecs": "default, labelcompgap, default, labelcompgap, 43dlu, labelcompgap, 103dlu"
-					"$rowSpecs": "default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+					"$columnSpecs": "default, labelcompgap, default, labelcompgap, 71dlu, labelcompgap, 68dlu, labelcompgap, default"
+					"$rowSpecs": "10dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 				} ) {
 					name: "contentPanel"
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label1"
 						"text": new FormMessage( null, "JProgramTags.label1.text" )
+						"font": new java.awt.Font( "Tahoma", 0, 36 )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 3
+						"gridY": 5
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "textField3"
+						name: "nextChipnumberTextField"
+						"font": new java.awt.Font( "Tahoma", 0, 36 )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
-						"gridY": 3
+						"gridY": 5
 					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button1"
-						"text": new FormMessage( null, "JProgramTags.button1.text" )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "statusLabel"
+						"text": new FormMessage( null, "JProgramTags.statusLabel.text" )
+						"horizontalAlignment": 0
+						"background": new java.awt.Color( 255, 255, 0, 255 )
+						"opaque": true
+						"font": new java.awt.Font( "Tahoma", 1, 20 )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 7
 						"gridY": 3
+						"gridHeight": 5
+						"gridWidth": 3
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "programButton"
+						"text": new FormMessage( null, "JProgramTags.programButton.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "programButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 3
+						"gridY": 7
 					} )
 					add( new FormComponent( "javax.swing.JCheckBox" ) {
 						name: "checkBox1"
 						"text": new FormMessage( null, "JProgramTags.checkBox1.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 5
+						"gridY": 9
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "bibLabel"
+						"foreground": sfield java.awt.Color red
+						"font": new java.awt.Font( "Tahoma", 1, 36 )
+						"horizontalAlignment": 0
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 9
+						"gridY": 9
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label3"
 						"text": new FormMessage( null, "JProgramTags.label3.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 7
+						"gridY": 11
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "textField1"
+						name: "tidTextField"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
-						"gridY": 7
+						"gridY": 11
 						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
@@ -64,23 +90,23 @@ new FormModel {
 						"text": new FormMessage( null, "JProgramTags.label4.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 9
+						"gridY": 13
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "textField2"
+						name: "epcTextField"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
-						"gridY": 9
+						"gridY": 13
 						"gridWidth": 3
 					} )
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 						name: "scrollPane1"
 						add( new FormComponent( "javax.swing.JTable" ) {
-							name: "table1"
+							name: "tagReadTable"
 						} )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 11
+						"gridY": 15
 						"gridWidth": 5
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
@@ -107,7 +133,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 400, 300 )
+			"size": new java.awt.Dimension( 615, 300 )
 		} )
 	}
 }

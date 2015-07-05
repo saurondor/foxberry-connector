@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
@@ -277,11 +278,8 @@ public class UsbReader implements Runnable {
 		notifyStoppedReading();
 	}
 
-	public void write(TagReadData data) throws ReaderException {
-		Gen2.TagData epc = new Gen2.TagData(new byte[] { (byte) 0x01,
-				(byte) 0x23, (byte) 0x45, (byte) 0x67, (byte) 0x89,
-				(byte) 0xAB, (byte) 0xCD, (byte) 0xEF, (byte) 0x01,
-				(byte) 0x23, (byte) 0x45, (byte) 0x67, });
+	public void write(TagReadData data,String hexString) throws ReaderException, DecoderException {
+		Gen2.TagData epc = new Gen2.TagData(Hex.decodeHex(hexString.toCharArray()));
 		Gen2.WriteTag tagop = new Gen2.WriteTag(epc);
 		logger.debug("Requesting write EPC...");
 		TagData target = new TagData(data.getEPCMemData());
