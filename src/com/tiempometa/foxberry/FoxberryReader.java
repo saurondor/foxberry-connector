@@ -19,9 +19,8 @@ import com.tiempometa.muestradatos.TagReadListener;
 import com.tiempometa.muestradatos.TagReading;
 
 /**
- * @author Gerardo Tasistro gtasistro@tiempometa.com
- * Copyright 2015 Gerardo Tasistro
- * Licensed under the Mozilla Public License, v. 2.0
+ * @author Gerardo Tasistro gtasistro@tiempometa.com Copyright 2015 Gerardo
+ *         Tasistro Licensed under the Mozilla Public License, v. 2.0
  * 
  */
 public class FoxberryReader implements Runnable {
@@ -53,14 +52,14 @@ public class FoxberryReader implements Runnable {
 		notifyConnected();
 		logger.info("Notify successful connect");
 	}
-	
+
 	private void connect() throws UnknownHostException, IOException {
 		logger.info("Opening socket");
 		openSocket();
 		logger.info("Socket opened");
 		notifyConnected();
 		logger.info("Notify successful connect");
-		
+
 	}
 
 	private void openSocket() throws UnknownHostException, IOException {
@@ -136,18 +135,10 @@ public class FoxberryReader implements Runnable {
 					if (readerSocket.isClosed()) {
 						logger.warn("Socket is closed!");
 					}
-					logger.info("Socket is connected");
 
 					int dataInStream;
 					try {
 						dataInStream = dataInputStream.available();
-						if (dataInStream < 0) {
-							logger.warn("Less than 0 bytes available, disconnect?");
-						}
-						logger.info("pinging server");
-						dataOutputStream.write("ping".getBytes());
-						dataOutputStream.flush();
-						logger.info("pinged server!");
 						if (dataInStream > 0) {
 							byte[] b = new byte[dataInStream];
 							dataInputStream.read(b);
@@ -162,13 +153,16 @@ public class FoxberryReader implements Runnable {
 							for (String string : dataRows) {
 								logger.debug(string);
 								TagReading reading = new TagReading(string);
-								logger.debug(reading);
+								if (reading.isValid()) {
+									logger.debug(reading);
+								} else {
+									logger.debug(reading);
+								}
 								List<TagReading> readings = new ArrayList<TagReading>();
 								readings.add(reading);
 								notifyListeners(readings);
 							}
 						} else {
-							logger.info("No data");
 						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block

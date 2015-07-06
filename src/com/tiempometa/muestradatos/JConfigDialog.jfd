@@ -109,7 +109,8 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JComboBox" ) {
 						name: "readerComboBox"
 						"model": new javax.swing.DefaultComboBoxModel {
-							selectedItem: "Lector 1"
+							selectedItem: "Todos"
+							addElement( "Todos" )
 							addElement( "Lector 1" )
 							addElement( "Lector 2" )
 						}

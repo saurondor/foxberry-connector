@@ -165,11 +165,24 @@ enableReaders();
 				logger.info("Connecting to foxberry");
 				ReaderContext.connectFoxberry(readerBoxAddressTextField.getText(), null, null, null);
 				disableUsbFields();
+				JOptionPane
+				.showMessageDialog(this, "Conexión exitosa.",
+						"Conexión a Foxberry",
+						JOptionPane.INFORMATION_MESSAGE);
+				readerBoxConnectButton.setText("Desconectar");
 			} catch (UnknownHostException e1) {
-				// TODO Auto-generated catch block
+				JOptionPane
+				.showMessageDialog(this, "Nombre de dispositivo desconocido. "
+						+ e1.getMessage(),
+						"Error conectando",
+						JOptionPane.ERROR_MESSAGE);
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				JOptionPane
+				.showMessageDialog(this, "Error de datos. "
+						+ e1.getMessage(),
+						"Errorde red",
+						JOptionPane.ERROR_MESSAGE);
 				e1.printStackTrace();
 			}
 		} else {
@@ -177,11 +190,24 @@ enableReaders();
 				logger.info("Connecting to speedway");
 				ReaderContext.connectSpeedway(readerBoxAddressTextField.getText(), null, null);
 				disableUsbFields();
+				JOptionPane
+				.showMessageDialog(this, "Conexión exitosa.",
+						"Conexión a Speedway",
+						JOptionPane.INFORMATION_MESSAGE);
+				readerBoxConnectButton.setText("Desconectar");
 			} catch (UnknownHostException e1) {
-				// TODO Auto-generated catch block
+				JOptionPane
+				.showMessageDialog(this, "Nombre de dispositivo desconocido. "
+						+ e1.getMessage(),
+						"Error conectando",
+						JOptionPane.ERROR_MESSAGE);
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				JOptionPane
+				.showMessageDialog(this, "Error de datos. "
+						+ e1.getMessage(),
+						"Errorde red",
+						JOptionPane.ERROR_MESSAGE);
 				e1.printStackTrace();
 			}
 		}
@@ -370,6 +396,7 @@ enableReaders();
 
 				//---- readerComboBox ----
 				readerComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
+					"Todos",
 					"Lector 1",
 					"Lector 2"
 				}));
