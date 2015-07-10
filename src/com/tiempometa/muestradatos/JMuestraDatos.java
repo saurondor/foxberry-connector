@@ -188,6 +188,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		// }
 	}
 
+	private void loadReadingsMenuItemActionPerformed(ActionEvent e) {
+		JLoadTimeReadings loadReadings = new JLoadTimeReadings();
+		loadReadings.setVisible(true);
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -200,6 +205,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		verifyDataMenuItem = new JMenuItem();
 		readTagsMenuItem = new JMenuItem();
 		programTagsMenuItem = new JMenuItem();
+		loadReadingsMenuItem = new JMenuItem();
 		menu3 = new JMenu();
 		aboutUsMenuItem = new JMenuItem();
 		label8 = new JLabel();
@@ -318,6 +324,16 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					}
 				});
 				readingModeMenu.add(programTagsMenuItem);
+
+				//---- loadReadingsMenuItem ----
+				loadReadingsMenuItem.setText(bundle.getString("JMuestraDatos.loadReadingsMenuItem.text"));
+				loadReadingsMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						loadReadingsMenuItemActionPerformed(e);
+					}
+				});
+				readingModeMenu.add(loadReadingsMenuItem);
 			}
 			menuBar1.add(readingModeMenu);
 
@@ -415,6 +431,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenuItem verifyDataMenuItem;
 	private JMenuItem readTagsMenuItem;
 	private JMenuItem programTagsMenuItem;
+	private JMenuItem loadReadingsMenuItem;
 	private JMenu menu3;
 	private JMenuItem aboutUsMenuItem;
 	private JLabel label8;

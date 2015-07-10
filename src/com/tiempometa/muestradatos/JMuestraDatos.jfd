@@ -161,6 +161,11 @@ new FormModel {
 						"text": new FormMessage( null, "JMuestraDatos.programTagsMenuItem.text" )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "programTagsMenuItemActionPerformed", true ) )
 					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "loadReadingsMenuItem"
+						"text": new FormMessage( null, "JMuestraDatos.loadReadingsMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loadReadingsMenuItemActionPerformed", true ) )
+					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "menu3"
