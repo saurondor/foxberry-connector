@@ -380,69 +380,6 @@ public class JProgramTags extends JDialog implements TagReadListener {
 												"Chip ya programado",
 												JOptionPane.ERROR_MESSAGE);
 							}
-							// String rfidString = null;
-							// List<Rfid> rfids = rfidDao
-							// .findByRfid(rfidString);
-							// if (rfids.size() == 0) {
-							// String bib = nextBibTextField.getText();
-							// Rfid bibRfid = rfidDao.fetchByBib(bib);
-							// if ((bibRfid != null)
-							// & (!allowDuplicateBibsCheckBox
-							// .isSelected())) {
-							// JOptionPane.showMessageDialog(this,
-							// "Ese número ya ha sido capturado",
-							// "Número duplicado", JOptionPane.ERROR_MESSAGE);
-							// } else {
-							// Integer chipNumber = null;
-							// try {
-							// chipNumber = Integer.valueOf(bib);
-							// Rfid rfid = new Rfid(
-							// null,
-							// null,
-							// bib,
-							// rfidString,
-							// Rfid.STATUS_NOT_ASSIGNED,
-							// Rfid.PAYMENT_STATUS_UNPAID,
-							// Rfid.TOKEN_STATUS_AVAILABLE,
-							// null, chipNumber);
-							// rfidDao.save(rfid);
-							// tagTableModel.getData().add(rfid);
-							// tagTableModel
-							// .fireTableDataChanged();
-							// statusLabel.setText("Tag guardado");
-							// chipNumber = chipNumber + 1;
-							// nextBibTextField.setText(String
-							// .valueOf(chipNumber));
-							// } catch (NumberFormatException e) {
-							// JOptionPane
-							// .showMessageDialog(
-							// this,
-							// "El valor de número debe ser numérico",
-							// "Error de datos",
-							// JOptionPane.ERROR_MESSAGE);
-							// }
-							// }
-							// } else {
-							// statusLabel.setBackground(Color.red);
-							// statusLabel.setText("Tag ya leido");
-							// Rfid rfid = rfids.get(0);
-							// bibLabel.setText(rfid.getBib());
-							// try {
-							// Thread.sleep(1000);
-							// } catch (InterruptedException e) {
-							// // TODO Auto-generated catch block
-							// e.printStackTrace();
-							// }
-							//
-							// }
-							// } catch (SQLException e1) {
-							// JOptionPane.showMessageDialog(
-							// this,
-							// "Error guardando tag: "
-							// + e1.getMessage(),
-							// "Error de base de datos",
-							// JOptionPane.ERROR_MESSAGE);
-							// }
 
 							try {
 								Thread.sleep(1000);
@@ -456,6 +393,12 @@ public class JProgramTags extends JDialog implements TagReadListener {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 							statusLabel.setBackground(Color.red);
+							statusLabel.setText("Error");
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e1) {
+								e1.printStackTrace();
+							}
 						}
 					}
 				}
