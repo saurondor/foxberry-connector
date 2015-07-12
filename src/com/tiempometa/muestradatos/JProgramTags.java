@@ -23,7 +23,10 @@ import org.apache.log4j.Logger;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
+import com.thingmagic.Gen2.LockAction;
+import com.thingmagic.ReaderCodeException;
 import com.thingmagic.ReaderException;
+import com.thingmagic.TagData;
 import com.tiempometa.timing.dao.RfidDao;
 import com.tiempometa.timing.dao.access.RfidDaoImpl;
 import com.tiempometa.timing.models.Rfid;
@@ -251,6 +254,9 @@ public class JProgramTags extends JDialog implements TagReadListener {
 				// ---- label3 ----
 				label3.setText(bundle.getString("JProgramTags.label3.text"));
 				contentPanel.add(label3, cc.xy(7, 11));
+
+				// ---- tidTextField ----
+				tidTextField.setEditable(false);
 				contentPanel.add(tidTextField, cc.xywh(9, 11, 3, 1));
 
 				// ---- label6 ----
@@ -261,6 +267,9 @@ public class JProgramTags extends JDialog implements TagReadListener {
 				// ---- label4 ----
 				label4.setText(bundle.getString("JProgramTags.label4.text"));
 				contentPanel.add(label4, cc.xy(7, 13));
+
+				// ---- epcTextField ----
+				epcTextField.setEditable(false);
 				contentPanel.add(epcTextField, cc.xywh(9, 13, 3, 1));
 
 				// ---- checkBox1 ----
@@ -272,6 +281,9 @@ public class JProgramTags extends JDialog implements TagReadListener {
 				// ---- label5 ----
 				label5.setText(bundle.getString("JProgramTags.label5.text"));
 				contentPanel.add(label5, cc.xy(7, 15));
+
+				// ---- programmedEpcTextField ----
+				programmedEpcTextField.setEditable(false);
 				contentPanel.add(programmedEpcTextField, cc.xywh(9, 15, 3, 1));
 
 				// ======== scrollPane1 ========
@@ -429,6 +441,11 @@ public class JProgramTags extends JDialog implements TagReadListener {
 							}
 							statusLabel.setBackground(Color.white);
 							statusLabel.setText("Remover tag");
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e1) {
+								e1.printStackTrace();
+							}
 						} catch (ReaderException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -475,31 +492,6 @@ public class JProgramTags extends JDialog implements TagReadListener {
 					String killPassword = null;
 					ReaderContext.writeEpc(tagReading.getTagReadData(),
 							rfidString);
-					if (lockCheckbox.isSelected()) {
-						logger.debug("Locking tag");
-						if (accessPasswordTextField.getText().matches("[0-9a-fA-F]{8}?")) {
-							accessPassword = accessPasswordTextField.getText();
-						} else {
-							JOptionPane
-									.showMessageDialog(
-											this,
-											"Se debe especificar una contraseña de accesso de 8 caracteres (0-9, A-F)",
-											"Error de contraseña",
-											JOptionPane.ERROR_MESSAGE);
-						}
-						if (killPasswordTextField.getText().matches("[0-9a-fA-F]{8}?")) {
-							killPassword = killPasswordTextField.getText();
-						} else {
-							JOptionPane
-									.showMessageDialog(
-											this,
-											"Se debe especificar una contraseña de desactivación de 8 caracteres (0-9, A-F)",
-											"Error de contraseña",
-											JOptionPane.ERROR_MESSAGE);
-						}
-					} else {
-
-					}
 					logger.info("Tag programmed");
 					statusLabel.setBackground(Color.green);
 					statusLabel.setText("Tag programado");
@@ -509,6 +501,90 @@ public class JProgramTags extends JDialog implements TagReadListener {
 					programmedEpcTextField.setText(rfidString);
 					chipNumber = chipNumber + 1;
 					nextChipnumberTextField.setText(chipNumber.toString());
+					if (lockCheckbox.isSelected()) {
+						logger.debug("Lock tag enabled");
+						if (accessPasswordTextField.getText().matches(
+								"[0-9a-fA-F]{8}?")) {
+							accessPassword = accessPasswordTextField.getText();
+						} else {
+							JOptionPane
+									.showMessageDialog(
+											this,
+											"Se debe especificar una contraseña de accesso de 8 caracteres (0-9, A-F)",
+											"Error de contraseña",
+											JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						if (killPasswordTextField.getText().matches(
+								"[0-9a-fA-F]{8}?")) {
+							killPassword = killPasswordTextField.getText();
+						} else {
+							JOptionPane
+									.showMessageDialog(
+											this,
+											"Se debe especificar una contraseña de desactivación de 8 caracteres (0-9, A-F)",
+											"Error de contraseña",
+											JOptionPane.ERROR_MESSAGE);
+							return;
+						}
+						try {
+							short[] access = new short[2];
+							logger.debug("Building acces array:"
+									+ accessPassword.substring(0, 4) + ":"
+									+ accessPassword.substring(4, 8));
+							access[0] = Integer.valueOf(
+									accessPassword.substring(0, 4), 16)
+									.shortValue();
+							access[1] = Integer.valueOf(
+									accessPassword.substring(4, 8), 16)
+									.shortValue();
+							logger.debug("Built access array");
+							short[] killword = new short[2];
+							killword[0] = Integer.valueOf(
+									killPassword.substring(0, 4), 16)
+									.shortValue();
+							killword[1] = Integer.valueOf(
+									killPassword.substring(4, 8), 16)
+									.shortValue();
+							logger.debug("Built killword array");
+							try {
+								TagData data = new TagData(rfidString);
+								logger.debug("Writing access...");
+								ReaderContext.writeAccess(access, data);
+								logger.debug("Writing kill...");
+								ReaderContext.writeKill(killword, data);
+								Integer password = Long.valueOf(accessPassword,
+										16).intValue();
+								logger.debug("Locking access...");
+								ReaderContext.lockTag(password, new LockAction(
+										LockAction.EPC_LOCK), data);
+								statusLabel.setBackground(Color.yellow);
+								statusLabel.setText("EPC locked");
+								ReaderContext.lockTag(password, new LockAction(
+										LockAction.ACCESS_LOCK), data);
+								statusLabel.setBackground(Color.yellow);
+								statusLabel.setText("ACCESS locked");
+								ReaderContext.lockTag(password, new LockAction(
+										LockAction.KILL_LOCK), data);
+								statusLabel.setBackground(Color.yellow);
+								statusLabel.setText("KILL locked");
+								statusLabel.setBackground(Color.green);
+								statusLabel.setText("Tag bloqueado");
+							} catch (ReaderCodeException e) {
+								statusLabel.setBackground(Color.red);
+								statusLabel.setText("Error bloqueando");
+								JOptionPane.showMessageDialog(this,
+										"Error de bloqueo " + e.getMessage(),
+										"Error de bloqueo",
+										JOptionPane.ERROR_MESSAGE);
+							}
+						} catch (NumberFormatException e) {
+							logger.warn("Invalid access code format "
+									+ e.getMessage());
+						}
+					} else {
+
+					}
 				} catch (DecoderException e) {
 					statusLabel.setBackground(Color.red);
 					statusLabel.setText("Tag no programado");

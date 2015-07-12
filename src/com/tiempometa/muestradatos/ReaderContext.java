@@ -15,12 +15,16 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 import org.llrp.ltk.generated.parameters.ReaderExceptionEvent;
 
+import com.thingmagic.Gen2.Bank;
+import com.thingmagic.Gen2.LockAction;
 import com.thingmagic.Gen2.WriteTag;
 import com.thingmagic.Reader.GpioPin;
 import com.thingmagic.Gen2;
+import com.thingmagic.Reader;
 import com.thingmagic.ReaderCodeException;
 import com.thingmagic.ReaderException;
 import com.thingmagic.TagData;
+import com.thingmagic.TagFilter;
 import com.thingmagic.TagReadData;
 import com.tiempometa.foxberry.FoxberryReader;
 import com.tiempometa.speedway.TcpReader;
@@ -63,7 +67,8 @@ public class ReaderContext {
 			String preferredReader, String preferredAntenna)
 			throws UnknownHostException, IOException {
 		logger.info("Connecting to reader " + hostName + ":" + port
-				+ " reader: " + preferredReader + " antenna: " + preferredAntenna);
+				+ " reader: " + preferredReader + " antenna: "
+				+ preferredAntenna);
 		foxberryReader.connect(hostName, port, preferredReader,
 				preferredAntenna);
 		readerType = ReaderContext.FOXBERRY_READER;
@@ -269,4 +274,48 @@ public class ReaderContext {
 		return tid;
 	}
 
+	public static void killTag(int killword, TagData td) throws ReaderException {
+		Gen2.Kill killOp = new Gen2.Kill(killword);
+		reader.executeTagOp(killOp, td);
+
+	}
+
+	public static void writeKill(short[] killword, TagData td)
+			throws ReaderException {
+		Gen2.WriteData writeOp = new Gen2.WriteData(Bank.RESERVED, 0, killword);
+		logger.debug("Writing kill code on " + td);
+		reader.executeTagOp(writeOp, td);
+		logger.debug("Kill code written");
+	}
+
+	public static String readKill(TagData td) throws ReaderException {
+		Gen2.ReadData readOp = new Gen2.ReadData(Bank.RESERVED, 0, (byte) 2);
+		short[] data = (short[]) reader.executeTagOp(readOp, td);
+		String access = String.format("%04X", data[0])
+				+ String.format("%04X", data[1]);
+		return access;
+	}
+
+	public static void writeAccess(short[] password, TagData td)
+			throws ReaderException {
+		Gen2.WriteData writeOp = new Gen2.WriteData(Bank.RESERVED, 2, password);
+		logger.debug("Writing access code on " + td);
+		reader.executeTagOp(writeOp, td);
+		logger.debug("Access code written");
+	}
+
+	public static void lockTag(Integer password, LockAction lockAction,
+			TagData td) throws ReaderException {
+		logger.debug("Performing lock operation on " + td);
+		Gen2.Lock lockOp = new Gen2.Lock(password, lockAction);
+		reader.executeTagOp(lockOp, td);
+	}
+
+	public static String readAccess(TagData td) throws ReaderException {
+		Gen2.ReadData readOp = new Gen2.ReadData(Bank.RESERVED, 2, (byte) 2);
+		short[] data = (short[]) reader.executeTagOp(readOp, td);
+		String access = String.format("%04X", data[0])
+				+ String.format("%04X", data[1]);
+		return access;
+	}
 }

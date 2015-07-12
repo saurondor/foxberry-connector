@@ -336,8 +336,9 @@ public class UsbReader implements Runnable {
 		reader.gpoSet(pins);
 	}
 
-	public void executeTagOp(WriteTag tagop, TagData target)
+	public short[] executeTagOp(TagOp tagop, TagData target)
 			throws ReaderException {
-		reader.executeTagOp(tagop, target);
+		short[] data = (short[]) reader.executeTagOp(tagop, target);
+		return data;
 	}
 }
