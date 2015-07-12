@@ -42,6 +42,7 @@ public class JProgramTags extends JDialog implements TagReadListener {
 	private RfidDao rfidDao = new RfidDaoImpl();
 
 	private Map<String, Rfid> rfidMap = new HashMap<String, Rfid>();
+	private Map<String, Rfid> totalRfidMap = new HashMap<String, Rfid>();
 	private TagReadTableDataModel tagTableModel = new TagReadTableDataModel();
 
 	private void programButtonActionPerformed(ActionEvent e) {
@@ -73,6 +74,46 @@ public class JProgramTags extends JDialog implements TagReadListener {
 				tagReadTable.getModel());
 		sorter.setComparator(0, new BibComparator());
 		tagReadTable.setRowSorter(sorter);
+		List<Rfid> rfidList;
+		try {
+			rfidList = rfidDao.findAll();
+			for (Rfid rfid : rfidList) {
+				totalRfidMap.put(rfid.getRfidString().toUpperCase(), rfid);
+			}
+			JOptionPane.showMessageDialog(this,
+					"Se cargaron " + rfidList.size()
+							+ " tags de la base de datos",
+					"Cantidad de tags disponibles",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(
+					this,
+					"No se pudo cargar la lista de tags a programar.\n"
+							+ e.getMessage(), "Error de base de datos",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void closeButtonActionPerformed(ActionEvent e) {
+		if (ReaderContext.isUsbConnected()) {
+			if (ReaderContext.isUsbReading()) {
+				JOptionPane.showMessageDialog(this,
+						"Se debe detener la programación primero", "Alerta",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+		}
+		this.dispose();
+	}
+
+	private void checkBox2ItemStateChanged(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+			accessPasswordTextField.setEnabled(true);
+			killPasswordTextField.setEnabled(true);
+		} else if (e.getStateChange() == ItemEvent.DESELECTED) {
+			accessPasswordTextField.setEnabled(false);
+			killPasswordTextField.setEnabled(false);
+		}
 	}
 
 	private void initComponents() {
@@ -83,27 +124,33 @@ public class JProgramTags extends JDialog implements TagReadListener {
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		label1 = new JLabel();
-		nextChipnumberTextField = new JTextField();
 		statusLabel = new JLabel();
+		nextChipnumberTextField = new JTextField();
 		programButton = new JButton();
-		checkBox1 = new JCheckBox();
+		lockCheckbox = new JCheckBox();
 		bibLabel = new JLabel();
+		label2 = new JLabel();
+		accessPasswordTextField = new JTextField();
 		label3 = new JLabel();
 		tidTextField = new JTextField();
+		label6 = new JLabel();
+		killPasswordTextField = new JTextField();
 		label4 = new JLabel();
 		epcTextField = new JTextField();
+		checkBox1 = new JCheckBox();
 		label5 = new JLabel();
 		programmedEpcTextField = new JTextField();
 		scrollPane1 = new JScrollPane();
 		tagReadTable = new JTable();
 		buttonBar = new JPanel();
-		okButton = new JButton();
+		closeButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
 		// ======== this ========
 		setTitle(bundle.getString("JProgramTags.this.title"));
 		setIconImage(new ImageIcon(getClass().getResource(
 				"/com/tiempometa/resources/stopwatch_small.png")).getImage());
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
@@ -115,17 +162,17 @@ public class JProgramTags extends JDialog implements TagReadListener {
 			// ======== contentPanel ========
 			{
 				contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(Sizes.dluX(12)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(Sizes.dluX(62)),
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						new ColumnSpec(Sizes.dluX(101)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(71)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(68)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(97)),
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC }, new RowSpec[] {
+						new ColumnSpec(Sizes.dluX(97)) }, new RowSpec[] {
 						new RowSpec(Sizes.dluY(10)),
 						FormFactory.LINE_GAP_ROWSPEC,
 						new RowSpec(Sizes.dluY(15)),
@@ -134,7 +181,7 @@ public class JProgramTags extends JDialog implements TagReadListener {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
+						new RowSpec(Sizes.dluY(17)),
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
@@ -151,12 +198,7 @@ public class JProgramTags extends JDialog implements TagReadListener {
 				// ---- label1 ----
 				label1.setText(bundle.getString("JProgramTags.label1.text"));
 				label1.setFont(new Font("Tahoma", Font.PLAIN, 36));
-				contentPanel.add(label1, cc.xy(3, 5));
-
-				// ---- nextChipnumberTextField ----
-				nextChipnumberTextField.setFont(new Font("Tahoma", Font.PLAIN,
-						36));
-				contentPanel.add(nextChipnumberTextField, cc.xy(5, 5));
+				contentPanel.add(label1, cc.xywh(3, 5, 3, 1));
 
 				// ---- statusLabel ----
 				statusLabel.setText(bundle
@@ -165,7 +207,12 @@ public class JProgramTags extends JDialog implements TagReadListener {
 				statusLabel.setBackground(Color.yellow);
 				statusLabel.setOpaque(true);
 				statusLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-				contentPanel.add(statusLabel, cc.xywh(7, 3, 3, 5));
+				contentPanel.add(statusLabel, cc.xywh(9, 3, 3, 5));
+
+				// ---- nextChipnumberTextField ----
+				nextChipnumberTextField.setFont(new Font("Tahoma", Font.PLAIN,
+						36));
+				contentPanel.add(nextChipnumberTextField, cc.xy(7, 5));
 
 				// ---- programButton ----
 				programButton.setText(bundle
@@ -176,40 +223,62 @@ public class JProgramTags extends JDialog implements TagReadListener {
 						programButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(programButton, cc.xy(3, 7));
+				contentPanel.add(programButton, cc.xywh(3, 7, 3, 1));
 
-				// ---- checkBox1 ----
-				checkBox1.setText(bundle
-						.getString("JProgramTags.checkBox1.text"));
-				checkBox1.setEnabled(false);
-				contentPanel.add(checkBox1, cc.xy(3, 9));
+				// ---- lockCheckbox ----
+				lockCheckbox.setText(bundle
+						.getString("JProgramTags.lockCheckbox.text"));
+				lockCheckbox.setSelected(true);
+				lockCheckbox.addItemListener(new ItemListener() {
+					@Override
+					public void itemStateChanged(ItemEvent e) {
+						checkBox2ItemStateChanged(e);
+					}
+				});
+				contentPanel.add(lockCheckbox, cc.xy(3, 9));
 
 				// ---- bibLabel ----
 				bibLabel.setForeground(Color.red);
 				bibLabel.setFont(new Font("Tahoma", Font.BOLD, 36));
 				bibLabel.setHorizontalAlignment(SwingConstants.CENTER);
-				contentPanel.add(bibLabel, cc.xy(9, 9));
+				contentPanel.add(bibLabel, cc.xy(11, 9));
+
+				// ---- label2 ----
+				label2.setText(bundle.getString("JProgramTags.label2.text"));
+				contentPanel.add(label2, cc.xy(3, 11));
+				contentPanel.add(accessPasswordTextField, cc.xy(5, 11));
 
 				// ---- label3 ----
 				label3.setText(bundle.getString("JProgramTags.label3.text"));
-				contentPanel.add(label3, cc.xy(5, 11));
-				contentPanel.add(tidTextField, cc.xywh(7, 11, 3, 1));
+				contentPanel.add(label3, cc.xy(7, 11));
+				contentPanel.add(tidTextField, cc.xywh(9, 11, 3, 1));
+
+				// ---- label6 ----
+				label6.setText(bundle.getString("JProgramTags.label6.text"));
+				contentPanel.add(label6, cc.xy(3, 13));
+				contentPanel.add(killPasswordTextField, cc.xy(5, 13));
 
 				// ---- label4 ----
 				label4.setText(bundle.getString("JProgramTags.label4.text"));
-				contentPanel.add(label4, cc.xy(5, 13));
-				contentPanel.add(epcTextField, cc.xywh(7, 13, 3, 1));
+				contentPanel.add(label4, cc.xy(7, 13));
+				contentPanel.add(epcTextField, cc.xywh(9, 13, 3, 1));
+
+				// ---- checkBox1 ----
+				checkBox1.setText(bundle
+						.getString("JProgramTags.checkBox1.text"));
+				checkBox1.setEnabled(false);
+				contentPanel.add(checkBox1, cc.xy(3, 15));
 
 				// ---- label5 ----
 				label5.setText(bundle.getString("JProgramTags.label5.text"));
-				contentPanel.add(label5, cc.xy(5, 15));
-				contentPanel.add(programmedEpcTextField, cc.xywh(7, 15, 3, 1));
+				contentPanel.add(label5, cc.xy(7, 15));
+				contentPanel.add(programmedEpcTextField, cc.xywh(9, 15, 3, 1));
 
 				// ======== scrollPane1 ========
 				{
 					scrollPane1.setViewportView(tagReadTable);
 				}
-				contentPanel.add(scrollPane1, cc.xywh(3, 17, 7, 1));
+				contentPanel.add(scrollPane1, cc.xywh(3, 17, 9, 1));
 			}
 			dialogPane.add(contentPanel, BorderLayout.EAST);
 
@@ -220,16 +289,21 @@ public class JProgramTags extends JDialog implements TagReadListener {
 						FormFactory.GLUE_COLSPEC, FormFactory.BUTTON_COLSPEC },
 						RowSpec.decodeSpecs("pref")));
 
-				// ---- okButton ----
-				okButton.setText("OK");
-				buttonBar.add(okButton, cc.xy(2, 1));
+				// ---- closeButton ----
+				closeButton.setText("Cerrar");
+				closeButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						closeButtonActionPerformed(e);
+					}
+				});
+				buttonBar.add(closeButton, cc.xy(2, 1));
 			}
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
 		contentPane.add(dialogPane, BorderLayout.CENTER);
 		pack();
 		setLocationRelativeTo(getOwner());
-		// JFormDesigner - End of component initialization
 		// //GEN-END:initComponents
 	}
 
@@ -238,21 +312,26 @@ public class JProgramTags extends JDialog implements TagReadListener {
 	private JPanel dialogPane;
 	private JPanel contentPanel;
 	private JLabel label1;
-	private JTextField nextChipnumberTextField;
 	private JLabel statusLabel;
+	private JTextField nextChipnumberTextField;
 	private JButton programButton;
-	private JCheckBox checkBox1;
+	private JCheckBox lockCheckbox;
 	private JLabel bibLabel;
+	private JLabel label2;
+	private JTextField accessPasswordTextField;
 	private JLabel label3;
 	private JTextField tidTextField;
+	private JLabel label6;
+	private JTextField killPasswordTextField;
 	private JLabel label4;
 	private JTextField epcTextField;
+	private JCheckBox checkBox1;
 	private JLabel label5;
 	private JTextField programmedEpcTextField;
 	private JScrollPane scrollPane1;
 	private JTable tagReadTable;
 	private JPanel buttonBar;
-	private JButton okButton;
+	private JButton closeButton;
 
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
@@ -302,83 +381,44 @@ public class JProgramTags extends JDialog implements TagReadListener {
 							epcTextField.setText(tagReading.getEpc());
 							programmedEpcTextField.setText("");
 							// find tag by EPC/TID in database
-							Rfid rfid = rfidMap.get(tagReading.getEpc());
+							logger.debug("Looking up rfid by epc "
+									+ tagReading.getEpc()
+									+ " epc char "
+									+ Hex.encodeHexString(tagReading.getEpc()
+											.getBytes()));
+							Rfid rfid = totalRfidMap.get(tagReading.getEpc()
+									.toUpperCase());
 							if (rfid == null) {
-
+								logger.debug("Rfid string not in database tag list. Programming tag.");
 								// if in DB, warn
 
 								// if not then program with next chipnumber
-								Integer chipNumber = null;
-								try {
+								programTag(tagReading);
 
-									chipNumber = Integer
-											.valueOf(nextChipnumberTextField
-													.getText());
-									List<Rfid> rfidList = rfidDao
-											.findByChipNumber(chipNumber);
-									if (rfidList.size() == 0) {
-										JOptionPane.showMessageDialog(this,
-												"No existe un chip con numero "
-														+ chipNumber,
-												"Error de datos",
-												JOptionPane.ERROR_MESSAGE);
-									} else {
-										rfid = rfidList.get(0);
-										String rfidString = rfid
-												.getRfidString();
-										// program
-
-										try {
-											ReaderContext
-													.writeEpc(tagReading
-															.getTagReadData(),
-															rfidString);
-											logger.info("Tag programmed");
-											statusLabel
-													.setBackground(Color.green);
-											statusLabel
-													.setText("Tag programado");
-											tagTableModel.getData().add(rfid);
-											tagTableModel
-													.fireTableDataChanged();
-											rfidMap.put(rfid.getRfidString(),
-													rfid);
-											programmedEpcTextField
-													.setText(rfidString);
-											chipNumber = chipNumber + 1;
-											nextChipnumberTextField
-													.setText(chipNumber
-															.toString());
-										} catch (DecoderException e) {
-											statusLabel
-													.setBackground(Color.red);
-											statusLabel
-													.setText("Tag no programado");
-											e.printStackTrace();
-										}
+							} else {
+								logger.debug("Rfid string IN database tag list.");
+								Rfid batchRfid = rfidMap.get(tagReading
+										.getEpc());
+								if (batchRfid == null) {
+									logger.debug("Rfid string IN current program batch");
+									int response = JOptionPane
+											.showConfirmDialog(
+													this,
+													"Este tag tiene un código que existe en el evento actual.\nDesea sobreescribir este tag?",
+													"Tag ya programado",
+													JOptionPane.YES_NO_OPTION,
+													JOptionPane.WARNING_MESSAGE);
+									if (response == JOptionPane.YES_OPTION) {
+										programTag(tagReading);
 									}
-								} catch (NumberFormatException e) {
+								} else {
 									JOptionPane
 											.showMessageDialog(
 													this,
-													"El valor de chip debe ser numérico",
-													"Error de datos",
+													"Este tag tiene un código que ya ha sido programado en este lote.",
+													"Tag ya programado",
 													JOptionPane.ERROR_MESSAGE);
-								} catch (SQLException e) {
-									JOptionPane.showMessageDialog(this,
-											"Error: " + e.getMessage(),
-											"Error de base de datos",
-											JOptionPane.ERROR_MESSAGE);
 								}
-
-							} else {
-
-								JOptionPane
-										.showMessageDialog(
-												this,
-												"Este chip tiene un código que ya ha sido programado.",
-												"Chip ya programado",
-												JOptionPane.ERROR_MESSAGE);
 							}
 
 							try {
@@ -412,6 +452,77 @@ public class JProgramTags extends JDialog implements TagReadListener {
 
 		}
 
+	}
+
+	private void programTag(TagReading tagReading) throws ReaderException {
+		Rfid rfid;
+		Integer chipNumber = null;
+		try {
+
+			chipNumber = Integer.valueOf(nextChipnumberTextField.getText());
+			List<Rfid> rfidList = rfidDao.findByChipNumber(chipNumber);
+			if (rfidList.size() == 0) {
+				JOptionPane.showMessageDialog(this,
+						"No existe un chip con numero " + chipNumber,
+						"Error de datos", JOptionPane.ERROR_MESSAGE);
+			} else {
+				rfid = rfidList.get(0);
+				String rfidString = rfid.getRfidString();
+				// program
+
+				try {
+					String accessPassword = null;
+					String killPassword = null;
+					ReaderContext.writeEpc(tagReading.getTagReadData(),
+							rfidString);
+					if (lockCheckbox.isSelected()) {
+						logger.debug("Locking tag");
+						if (accessPasswordTextField.getText().matches("[0-9a-fA-F]{8}?")) {
+							accessPassword = accessPasswordTextField.getText();
+						} else {
+							JOptionPane
+									.showMessageDialog(
+											this,
+											"Se debe especificar una contraseña de accesso de 8 caracteres (0-9, A-F)",
+											"Error de contraseña",
+											JOptionPane.ERROR_MESSAGE);
+						}
+						if (killPasswordTextField.getText().matches("[0-9a-fA-F]{8}?")) {
+							killPassword = killPasswordTextField.getText();
+						} else {
+							JOptionPane
+									.showMessageDialog(
+											this,
+											"Se debe especificar una contraseña de desactivación de 8 caracteres (0-9, A-F)",
+											"Error de contraseña",
+											JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+
+					}
+					logger.info("Tag programmed");
+					statusLabel.setBackground(Color.green);
+					statusLabel.setText("Tag programado");
+					tagTableModel.getData().add(rfid);
+					tagTableModel.fireTableDataChanged();
+					rfidMap.put(rfid.getRfidString(), rfid);
+					programmedEpcTextField.setText(rfidString);
+					chipNumber = chipNumber + 1;
+					nextChipnumberTextField.setText(chipNumber.toString());
+				} catch (DecoderException e) {
+					statusLabel.setBackground(Color.red);
+					statusLabel.setText("Tag no programado");
+					e.printStackTrace();
+				}
+			}
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this,
+					"El valor de chip debe ser numérico", "Error de datos",
+					JOptionPane.ERROR_MESSAGE);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(),
+					"Error de base de datos", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/*
