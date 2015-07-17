@@ -318,4 +318,14 @@ public class ReaderContext {
 				+ String.format("%04X", data[1]);
 		return access;
 	}
+
+	public static void rewindFoxberry() throws IOException {
+		foxberryReader.rewind();
+		
+	}
+
+	public static void clearFoxberry() throws IOException {
+		foxberryReader.clear();
+		
+	}
 }

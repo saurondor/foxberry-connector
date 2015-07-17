@@ -85,6 +85,9 @@ public class TagReading {
 	 * @return
 	 */
 	public boolean isKeepAlive() {
+		if (antenna == null) {
+			return false;
+		}
 		return antenna.equals(KEEP_ALIVE);
 	}
 

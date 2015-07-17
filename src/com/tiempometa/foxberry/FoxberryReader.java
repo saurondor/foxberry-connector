@@ -197,4 +197,16 @@ public class FoxberryReader implements Runnable {
 		}
 	}
 
+	public void rewind() throws IOException {
+		dataOutputStream.write("rewind\n".getBytes());
+		dataOutputStream.flush();
+		
+	}
+
+	public void clear() throws IOException {
+		dataOutputStream.write("clear\n".getBytes());
+		dataOutputStream.flush();
+		
+	}
+
 }
