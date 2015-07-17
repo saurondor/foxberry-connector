@@ -469,11 +469,8 @@ public class JReadTags extends JDialog implements TagReadListener {
 													null,
 													null,
 													bib,
-													rfidString,
-													Rfid.STATUS_NOT_ASSIGNED,
-													Rfid.PAYMENT_STATUS_UNPAID,
-													Rfid.TOKEN_STATUS_AVAILABLE,
-													null, chipNumber);
+													rfidString,chipNumber,
+													Rfid.STATUS_NOT_ASSIGNED);
 											rfidDao.save(rfid);
 											tagTableModel.getData().add(rfid);
 											tagTableModel

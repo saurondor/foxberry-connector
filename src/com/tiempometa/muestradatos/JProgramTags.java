@@ -81,7 +81,7 @@ public class JProgramTags extends JDialog implements TagReadListener {
 		try {
 			rfidList = rfidDao.findAll();
 			for (Rfid rfid : rfidList) {
-				totalRfidMap.put(rfid.getRfidString().toUpperCase(), rfid);
+				totalRfidMap.put(rfid.getRfid().toUpperCase(), rfid);
 			}
 			JOptionPane.showMessageDialog(this,
 					"Se cargaron " + rfidList.size()
@@ -484,7 +484,7 @@ public class JProgramTags extends JDialog implements TagReadListener {
 						"Error de datos", JOptionPane.ERROR_MESSAGE);
 			} else {
 				rfid = rfidList.get(0);
-				String rfidString = rfid.getRfidString();
+				String rfidString = rfid.getRfid();
 				// program
 
 				try {
@@ -497,7 +497,7 @@ public class JProgramTags extends JDialog implements TagReadListener {
 					statusLabel.setText("Tag programado");
 					tagTableModel.getData().add(rfid);
 					tagTableModel.fireTableDataChanged();
-					rfidMap.put(rfid.getRfidString(), rfid);
+					rfidMap.put(rfid.getRfid(), rfid);
 					programmedEpcTextField.setText(rfidString);
 					chipNumber = chipNumber + 1;
 					nextChipnumberTextField.setText(chipNumber.toString());

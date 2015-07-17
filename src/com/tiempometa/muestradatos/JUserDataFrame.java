@@ -95,11 +95,11 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 						clearData();
 					} else {
 						bibLabel.setText(rfid.getBib());
-						nameLabel.setText(participant.getFirstName() + " "
-								+ participant.getLastName() + " "
-								+ participant.getMiddleName());
+						nameLabel.setText(participant.getNombres() + " "
+								+ participant.getPaterno() + " "
+								+ participant.getMaterno());
 						birthdateLabel.setText(dateFormat.format(participant
-								.getBirthDate()));
+								.getFecha()));
 						genderLabel.setText("");
 						distanceLabel.setText("");
 						// categoryLabel.setText(category.getTitle());

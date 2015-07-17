@@ -43,7 +43,7 @@ public class TagReadTableDataModel extends AbstractTableModel {
 		case 0:
 			return rfid.getBib();
 		case 1:
-			return rfid.getRfidString();
+			return rfid.getRfid();
 		default:
 			return null;
 		}

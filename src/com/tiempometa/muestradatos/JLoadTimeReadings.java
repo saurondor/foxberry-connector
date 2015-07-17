@@ -367,9 +367,11 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 					watchdog.resetCount();
 				} else {
 					String loadName = null;
+//					public ChipReadRaw(Integer id, String rfid, Date time, Long timeMillis,
+//							String phase, String checkPoint, Integer eventId, Integer cooked, Byte filtered, String loadName, Integer chipNumber) {
 					ChipReadRaw chipReading = new ChipReadRaw(null,
 							tagReading.getEpc(), tagReading.getTime(),
-							tagReading.getTimeMillis(), checkPoint, null,
+							tagReading.getTimeMillis(), checkPoint, checkPoint, null,
 							ChipReadRaw.STATUS_RAW,
 							ChipReadRaw.FILTERED_READER, loadName, null);
 					if (tagReading.getTime() == null) {
