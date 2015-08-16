@@ -228,7 +228,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		//======== this ========
 		setTitle(bundle.getString("JMuestraDatos.this.title"));
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/stopwatch_small.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/timpometa_icon_large_alpha.png")).getImage());
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new FormLayout(
 			new ColumnSpec[] {

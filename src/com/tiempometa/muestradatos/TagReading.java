@@ -28,6 +28,7 @@ public class TagReading {
 	private Date time;
 	private Integer peakRssi;
 	private Boolean valid = false;
+	private String stringData = null;
 
 	public TagReading() {
 		super();
@@ -44,6 +45,7 @@ public class TagReading {
 
 	public TagReading(String data) {
 		super();
+		stringData = data;
 		String[] fields = data.replaceAll("\\r", "").split(",");
 		switch (fields.length) {
 		case 0:
@@ -229,7 +231,7 @@ public class TagReading {
 				+ ", epc=" + epc + ", tid=" + tid + ", userData=" + userData
 				+ ", timeMillis=" + timeMillis + ", time=" + time
 				+ ", peakRssi=" + peakRssi + ", isKeepAlive()=" + isKeepAlive()
-				+ ", isValid()=" + isValid() + "]";
+				+ ", isValid()=" + isValid() + "] \n Data: " + stringData;
 	}
 
 	/**

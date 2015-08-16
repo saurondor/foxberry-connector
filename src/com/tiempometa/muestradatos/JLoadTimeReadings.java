@@ -361,39 +361,43 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 	@Override
 	public void handleReadings(List<TagReading> readings) {
 		if (readings.size() > 0) {
-			for (Iterator iterator = readings.iterator(); iterator.hasNext();) {
+			for (Iterator<TagReading> iterator = readings.iterator(); iterator.hasNext();) {
 				final TagReading tagReading = (TagReading) iterator.next();
 				if (tagReading.isKeepAlive()) {
 					watchdog.resetCount();
 				} else {
 					String loadName = null;
-//					public ChipReadRaw(Integer id, String rfid, Date time, Long timeMillis,
-//							String phase, String checkPoint, Integer eventId, Integer cooked, Byte filtered, String loadName, Integer chipNumber) {
-					ChipReadRaw chipReading = new ChipReadRaw(null,
-							tagReading.getEpc(), tagReading.getTime(),
-							tagReading.getTimeMillis(), checkPoint, checkPoint, null,
-							ChipReadRaw.STATUS_RAW,
-							ChipReadRaw.FILTERED_READER, loadName, null);
-					if (tagReading.getTime() == null) {
-						lastReadingLabel.setText("ND");
-					} else {
-						try {
-							logger.debug("Saving chip reading");
-							chipReadRawDao.save(chipReading);
-							SwingUtilities.invokeLater(new Runnable() {
+					try {
+						ChipReadRaw chipReading = new ChipReadRaw(null,
+								tagReading.getEpc().toLowerCase(), tagReading.getTime(),
+								tagReading.getTimeMillis()/1000, checkPoint, checkPoint, null,
+								ChipReadRaw.STATUS_RAW,
+								ChipReadRaw.FILTERED_READER, loadName, null);
+						if (tagReading.getTime() == null) {
+							lastReadingLabel.setText("ND");
+						} else {
+							try {
+								logger.debug("Saving chip reading");
+								chipReadRawDao.save(chipReading);
+								SwingUtilities.invokeLater(new Runnable() {
 
-								@Override
-								public void run() {
-									lastReadingLabel.setText(dateFormat
-											.format(tagReading.getTime()));
+									@Override
+									public void run() {
+										lastReadingLabel.setText(dateFormat
+												.format(tagReading.getTime()));
 
-								}
-							});
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+									}
+								});
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
+					} catch (NullPointerException e) {
+						logger.error("Null pointer e "+e.getMessage());
+						logger.error(tagReading);
 					}
+//					} catch (Null)
 				}
 			}
 		}
