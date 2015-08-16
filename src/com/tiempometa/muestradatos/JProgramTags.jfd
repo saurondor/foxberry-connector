@@ -10,7 +10,7 @@ new FormModel {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 			name: "this"
 			"title": new FormMessage( null, "JProgramTags.this.title" )
-			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/stopwatch_small.png" )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_large_alpha.png" )
 			"defaultCloseOperation": 2
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 				name: "dialogPane"

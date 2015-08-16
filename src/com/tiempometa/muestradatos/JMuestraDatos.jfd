@@ -15,7 +15,7 @@ new FormModel {
 			"title": new FormMessage( null, "JMuestraDatos.this.title" )
 			"$sizePolicy": 1
 			"defaultCloseOperation": 0
-			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/timpometa_icon_large_alpha.png" )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_large_alpha.png" )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label8"
 				"text": new FormMessage( null, "JMuestraDatos.label8.text" )

@@ -9,7 +9,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 			name: "this"
-			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/stopwatch_small.png" )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_large_alpha.png" )
 			"title": new FormMessage( null, "JLoadTimeReadings.this.title" )
 			"defaultCloseOperation": 2
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {

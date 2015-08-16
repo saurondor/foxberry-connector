@@ -183,7 +183,7 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 		CellConstraints cc = new CellConstraints();
 
 		//======== this ========
-		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/stopwatch_small.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")).getImage());
 		setTitle(bundle.getString("JLoadTimeReadings.this.title"));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Container contentPane = getContentPane();

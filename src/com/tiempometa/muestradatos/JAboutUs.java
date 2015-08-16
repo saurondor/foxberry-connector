@@ -82,7 +82,7 @@ public class JAboutUs extends JDialog {
 					}));
 
 				//---- label4 ----
-				label4.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/stopwatch_medium.png")));
+				label4.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")));
 				contentPanel.add(label4, cc.xy(3, 3));
 
 				//---- label1 ----

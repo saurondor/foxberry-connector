@@ -122,8 +122,7 @@ public class JProgramTags extends JDialog implements TagReadListener {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle
-				.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		label1 = new JLabel();
@@ -149,22 +148,22 @@ public class JProgramTags extends JDialog implements TagReadListener {
 		closeButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
-		// ======== this ========
+		//======== this ========
 		setTitle(bundle.getString("JProgramTags.this.title"));
-		setIconImage(new ImageIcon(getClass().getResource(
-				"/com/tiempometa/resources/stopwatch_small.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")).getImage());
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
-		// ======== dialogPane ========
+		//======== dialogPane ========
 		{
 			dialogPane.setBorder(Borders.DIALOG_BORDER);
 			dialogPane.setLayout(new BorderLayout());
 
-			// ======== contentPanel ========
+			//======== contentPanel ========
 			{
-				contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
+				contentPanel.setLayout(new FormLayout(
+					new ColumnSpec[] {
 						new ColumnSpec(Sizes.dluX(12)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(62)),
@@ -175,7 +174,9 @@ public class JProgramTags extends JDialog implements TagReadListener {
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(68)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(97)) }, new RowSpec[] {
+						new ColumnSpec(Sizes.dluX(97))
+					},
+					new RowSpec[] {
 						new RowSpec(Sizes.dluY(10)),
 						FormFactory.LINE_GAP_ROWSPEC,
 						new RowSpec(Sizes.dluY(15)),
@@ -196,30 +197,28 @@ public class JProgramTags extends JDialog implements TagReadListener {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC }));
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
-				// ---- label1 ----
+				//---- label1 ----
 				label1.setText(bundle.getString("JProgramTags.label1.text"));
 				label1.setFont(new Font("Tahoma", Font.PLAIN, 36));
 				contentPanel.add(label1, cc.xywh(3, 5, 3, 1));
 
-				// ---- statusLabel ----
-				statusLabel.setText(bundle
-						.getString("JProgramTags.statusLabel.text"));
+				//---- statusLabel ----
+				statusLabel.setText(bundle.getString("JProgramTags.statusLabel.text"));
 				statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				statusLabel.setBackground(Color.yellow);
 				statusLabel.setOpaque(true);
 				statusLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 				contentPanel.add(statusLabel, cc.xywh(9, 3, 3, 5));
 
-				// ---- nextChipnumberTextField ----
-				nextChipnumberTextField.setFont(new Font("Tahoma", Font.PLAIN,
-						36));
+				//---- nextChipnumberTextField ----
+				nextChipnumberTextField.setFont(new Font("Tahoma", Font.PLAIN, 36));
 				contentPanel.add(nextChipnumberTextField, cc.xy(7, 5));
 
-				// ---- programButton ----
-				programButton.setText(bundle
-						.getString("JProgramTags.programButton.text"));
+				//---- programButton ----
+				programButton.setText(bundle.getString("JProgramTags.programButton.text"));
 				programButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -228,9 +227,8 @@ public class JProgramTags extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(programButton, cc.xywh(3, 7, 3, 1));
 
-				// ---- lockCheckbox ----
-				lockCheckbox.setText(bundle
-						.getString("JProgramTags.lockCheckbox.text"));
+				//---- lockCheckbox ----
+				lockCheckbox.setText(bundle.getString("JProgramTags.lockCheckbox.text"));
 				lockCheckbox.setSelected(true);
 				lockCheckbox.addItemListener(new ItemListener() {
 					@Override
@@ -240,53 +238,52 @@ public class JProgramTags extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(lockCheckbox, cc.xy(3, 9));
 
-				// ---- bibLabel ----
+				//---- bibLabel ----
 				bibLabel.setForeground(Color.red);
 				bibLabel.setFont(new Font("Tahoma", Font.BOLD, 36));
 				bibLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPanel.add(bibLabel, cc.xy(11, 9));
 
-				// ---- label2 ----
+				//---- label2 ----
 				label2.setText(bundle.getString("JProgramTags.label2.text"));
 				contentPanel.add(label2, cc.xy(3, 11));
 				contentPanel.add(accessPasswordTextField, cc.xy(5, 11));
 
-				// ---- label3 ----
+				//---- label3 ----
 				label3.setText(bundle.getString("JProgramTags.label3.text"));
 				contentPanel.add(label3, cc.xy(7, 11));
 
-				// ---- tidTextField ----
+				//---- tidTextField ----
 				tidTextField.setEditable(false);
 				contentPanel.add(tidTextField, cc.xywh(9, 11, 3, 1));
 
-				// ---- label6 ----
+				//---- label6 ----
 				label6.setText(bundle.getString("JProgramTags.label6.text"));
 				contentPanel.add(label6, cc.xy(3, 13));
 				contentPanel.add(killPasswordTextField, cc.xy(5, 13));
 
-				// ---- label4 ----
+				//---- label4 ----
 				label4.setText(bundle.getString("JProgramTags.label4.text"));
 				contentPanel.add(label4, cc.xy(7, 13));
 
-				// ---- epcTextField ----
+				//---- epcTextField ----
 				epcTextField.setEditable(false);
 				contentPanel.add(epcTextField, cc.xywh(9, 13, 3, 1));
 
-				// ---- checkBox1 ----
-				checkBox1.setText(bundle
-						.getString("JProgramTags.checkBox1.text"));
+				//---- checkBox1 ----
+				checkBox1.setText(bundle.getString("JProgramTags.checkBox1.text"));
 				checkBox1.setEnabled(false);
 				contentPanel.add(checkBox1, cc.xy(3, 15));
 
-				// ---- label5 ----
+				//---- label5 ----
 				label5.setText(bundle.getString("JProgramTags.label5.text"));
 				contentPanel.add(label5, cc.xy(7, 15));
 
-				// ---- programmedEpcTextField ----
+				//---- programmedEpcTextField ----
 				programmedEpcTextField.setEditable(false);
 				contentPanel.add(programmedEpcTextField, cc.xywh(9, 15, 3, 1));
 
-				// ======== scrollPane1 ========
+				//======== scrollPane1 ========
 				{
 					scrollPane1.setViewportView(tagReadTable);
 				}
@@ -294,14 +291,17 @@ public class JProgramTags extends JDialog implements TagReadListener {
 			}
 			dialogPane.add(contentPanel, BorderLayout.EAST);
 
-			// ======== buttonBar ========
+			//======== buttonBar ========
 			{
 				buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
-				buttonBar.setLayout(new FormLayout(new ColumnSpec[] {
-						FormFactory.GLUE_COLSPEC, FormFactory.BUTTON_COLSPEC },
-						RowSpec.decodeSpecs("pref")));
+				buttonBar.setLayout(new FormLayout(
+					new ColumnSpec[] {
+						FormFactory.GLUE_COLSPEC,
+						FormFactory.BUTTON_COLSPEC
+					},
+					RowSpec.decodeSpecs("pref")));
 
-				// ---- closeButton ----
+				//---- closeButton ----
 				closeButton.setText("Cerrar");
 				closeButton.addActionListener(new ActionListener() {
 					@Override
@@ -344,7 +344,6 @@ public class JProgramTags extends JDialog implements TagReadListener {
 	private JTable tagReadTable;
 	private JPanel buttonBar;
 	private JButton closeButton;
-
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
 	@Override

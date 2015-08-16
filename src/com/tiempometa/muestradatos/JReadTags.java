@@ -195,7 +195,7 @@ public class JReadTags extends JDialog implements TagReadListener {
 		setTitle(bundle.getString("JReadTags.this.title"));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/stopwatch_small.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")).getImage());
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 

@@ -12,7 +12,7 @@ new FormModel {
 			"title": new FormMessage( null, "JReadTags.this.title" )
 			"defaultCloseOperation": 2
 			"resizable": false
-			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/stopwatch_small.png" )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_large_alpha.png" )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 				name: "dialogPane"
 				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER

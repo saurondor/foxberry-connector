@@ -130,8 +130,7 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle
-				.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		bibLabel = new JLabel();
 		label1 = new JLabel();
 		nameLabel = new JLabel();
@@ -147,103 +146,108 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 		colorLabel = new JLabel();
 		CellConstraints cc = new CellConstraints();
 
-		// ======== this ========
+		//======== this ========
 		setTitle(bundle.getString("JUserDataFrame.this.title"));
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setUndecorated(true);
-		setIconImage(new ImageIcon(getClass().getResource(
-				"/com/tiempometa/resources/stopwatch_small.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")).getImage());
 		Container contentPane = getContentPane();
-		contentPane.setLayout(new FormLayout(new ColumnSpec[] {
-				new ColumnSpec(ColumnSpec.FILL, Sizes.dluX(50),
-						FormSpec.DEFAULT_GROW),
+		contentPane.setLayout(new FormLayout(
+			new ColumnSpec[] {
+				new ColumnSpec(ColumnSpec.FILL, Sizes.dluX(50), FormSpec.DEFAULT_GROW),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				new ColumnSpec(Sizes.dluX(74)),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(ColumnSpec.FILL, Sizes.dluX(176),
-						FormSpec.DEFAULT_GROW),
+				new ColumnSpec(ColumnSpec.FILL, Sizes.dluX(176), FormSpec.DEFAULT_GROW),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				new ColumnSpec(Sizes.dluX(228)),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(Sizes.dluX(21)) }, new RowSpec[] {
-				new RowSpec(Sizes.dluY(23)), FormFactory.LINE_GAP_ROWSPEC,
-				new RowSpec(Sizes.dluY(179)), FormFactory.LINE_GAP_ROWSPEC,
-				new RowSpec(Sizes.dluY(13)), FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC }));
+				new ColumnSpec(Sizes.dluX(21))
+			},
+			new RowSpec[] {
+				new RowSpec(Sizes.dluY(23)),
+				FormFactory.LINE_GAP_ROWSPEC,
+				new RowSpec(Sizes.dluY(179)),
+				FormFactory.LINE_GAP_ROWSPEC,
+				new RowSpec(Sizes.dluY(13)),
+				FormFactory.LINE_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.LINE_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.LINE_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.LINE_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.LINE_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.LINE_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC
+			}));
 
-		// ---- bibLabel ----
+		//---- bibLabel ----
 		bibLabel.setText(bundle.getString("JUserDataFrame.bibLabel.text"));
 		bibLabel.setFont(new Font("Tahoma", Font.PLAIN, 120));
 		bibLabel.setForeground(Color.red);
 		contentPane.add(bibLabel, cc.xy(9, 3));
 
-		// ---- label1 ----
+		//---- label1 ----
 		label1.setText(bundle.getString("JUserDataFrame.label1.text"));
 		label1.setFont(new Font("Tahoma", Font.BOLD, 48));
 		contentPane.add(label1, cc.xy(3, 7));
 
-		// ---- nameLabel ----
+		//---- nameLabel ----
 		nameLabel.setText(bundle.getString("JUserDataFrame.nameLabel.text"));
 		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
 		contentPane.add(nameLabel, cc.xywh(5, 7, 7, 1));
 
-		// ---- label2 ----
+		//---- label2 ----
 		label2.setText(bundle.getString("JUserDataFrame.label2.text"));
 		label2.setFont(new Font("Tahoma", Font.BOLD, 48));
 		contentPane.add(label2, cc.xy(3, 9));
 
-		// ---- birthdateLabel ----
-		birthdateLabel.setText(bundle
-				.getString("JUserDataFrame.birthdateLabel.text"));
+		//---- birthdateLabel ----
+		birthdateLabel.setText(bundle.getString("JUserDataFrame.birthdateLabel.text"));
 		birthdateLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
 		contentPane.add(birthdateLabel, cc.xywh(5, 9, 5, 1));
 
-		// ---- label3 ----
+		//---- label3 ----
 		label3.setText(bundle.getString("JUserDataFrame.label3.text"));
 		label3.setFont(new Font("Tahoma", Font.BOLD, 48));
 		contentPane.add(label3, cc.xy(3, 11));
 
-		// ---- genderLabel ----
-		genderLabel
-				.setText(bundle.getString("JUserDataFrame.genderLabel.text"));
+		//---- genderLabel ----
+		genderLabel.setText(bundle.getString("JUserDataFrame.genderLabel.text"));
 		genderLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
 		contentPane.add(genderLabel, cc.xywh(5, 11, 3, 1));
 
-		// ---- label4 ----
+		//---- label4 ----
 		label4.setText(bundle.getString("JUserDataFrame.label4.text"));
 		label4.setFont(new Font("Tahoma", Font.BOLD, 48));
 		contentPane.add(label4, cc.xy(3, 13));
 
-		// ---- distanceLabel ----
-		distanceLabel.setText(bundle
-				.getString("JUserDataFrame.distanceLabel.text"));
+		//---- distanceLabel ----
+		distanceLabel.setText(bundle.getString("JUserDataFrame.distanceLabel.text"));
 		distanceLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
 		contentPane.add(distanceLabel, cc.xywh(5, 13, 3, 1));
 
-		// ---- label5 ----
+		//---- label5 ----
 		label5.setText(bundle.getString("JUserDataFrame.label5.text"));
 		label5.setFont(new Font("Tahoma", Font.BOLD, 48));
 		contentPane.add(label5, cc.xy(3, 15));
 
-		// ---- categoryLabel ----
-		categoryLabel.setText(bundle
-				.getString("JUserDataFrame.categoryLabel.text"));
+		//---- categoryLabel ----
+		categoryLabel.setText(bundle.getString("JUserDataFrame.categoryLabel.text"));
 		categoryLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
 		contentPane.add(categoryLabel, cc.xywh(5, 15, 5, 1));
 
-		// ---- label6 ----
+		//---- label6 ----
 		label6.setText(bundle.getString("JUserDataFrame.label6.text"));
 		label6.setFont(new Font("Tahoma", Font.BOLD, 48));
 		contentPane.add(label6, cc.xy(3, 17));
 
-		// ---- colorLabel ----
+		//---- colorLabel ----
 		colorLabel.setText(bundle.getString("JUserDataFrame.colorLabel.text"));
 		colorLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
 		contentPane.add(colorLabel, cc.xywh(5, 17, 3, 1));
@@ -278,7 +282,6 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 	private JLabel categoryLabel;
 	private JLabel label6;
 	private JLabel colorLabel;
-
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
 	@Override

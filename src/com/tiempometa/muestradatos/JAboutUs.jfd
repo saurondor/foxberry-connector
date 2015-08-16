@@ -22,7 +22,7 @@ new FormModel {
 					name: "contentPanel"
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label4"
-						"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/stopwatch_medium.png" )
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_large_alpha.png" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 3
