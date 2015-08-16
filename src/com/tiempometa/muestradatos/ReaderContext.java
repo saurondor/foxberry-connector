@@ -46,8 +46,23 @@ public class ReaderContext {
 	private static TcpReader speedwayReader = new TcpReader();
 	private static FoxberryReader foxberryReader = new FoxberryReader();
 	private static Thread workerThread;
-	private static File databaseFile;
+	private static File databaseFile = null;
 	private static Integer readerType = null;
+	private static ReaderSettings readerSettings = new ReaderSettings();
+	
+	
+	
+	public static ReaderSettings getSettings() {
+		return readerSettings;
+	}
+
+	public static void loadSettings() {
+		readerSettings.loadSettings("foxberry_settings");
+	}
+
+	public static void saveSettings() {
+		readerSettings.saveSettings("foxberry_settings");
+	}
 
 	public static boolean isSpeedwayConnected() {
 		return false;

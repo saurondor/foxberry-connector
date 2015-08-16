@@ -94,6 +94,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		writePowerLevel.setText("0");
 		regionLabel.setText("");
 		rssiLevelLabel.setText("ND");
+		ReaderContext.loadSettings();
 		ReaderContext.addReadingListener(this);
 		ReaderContext.addReaderStatusListener(this);
 	}
