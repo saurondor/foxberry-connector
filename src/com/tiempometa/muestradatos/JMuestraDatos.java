@@ -95,6 +95,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		regionLabel.setText("");
 		rssiLevelLabel.setText("ND");
 		ReaderContext.loadSettings();
+		databaseLabel.setText(ReaderContext.getSettings().getDatabaseName());
 		ReaderContext.addReadingListener(this);
 		ReaderContext.addReaderStatusListener(this);
 	}
@@ -209,8 +210,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		loadReadingsMenuItem = new JMenuItem();
 		menu3 = new JMenu();
 		aboutUsMenuItem = new JMenuItem();
+		panel5 = new JPanel();
 		label8 = new JLabel();
-		label1 = new JLabel();
+		databaseLabel = new JLabel();
+		panel3 = new JPanel();
+		panel4 = new JPanel();
 		tabbedPane1 = new JTabbedPane();
 		panel1 = new JPanel();
 		button3 = new JButton();
@@ -247,6 +251,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		writePowerLevel = new JLabel();
 		button1 = new JButton();
 		button2 = new JButton();
+		panel6 = new JPanel();
+		label21 = new JLabel();
+		panel7 = new JPanel();
 		CellConstraints cc = new CellConstraints();
 
 		//======== this ========
@@ -254,33 +261,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")).getImage());
 		Container contentPane = getContentPane();
-		contentPane.setLayout(new FormLayout(
-			new ColumnSpec[] {
-				new ColumnSpec(Sizes.dluX(18)),
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(Sizes.dluX(59)),
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(Sizes.dluX(58)),
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(Sizes.dluX(131))
-			},
-			new RowSpec[] {
-				new RowSpec(Sizes.dluY(27)),
-				FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC,
-				new RowSpec(Sizes.dluY(155))
-			}));
+		contentPane.setLayout(new BorderLayout());
 
 		//======== menuBar1 ========
 		{
@@ -377,224 +358,333 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		}
 		setJMenuBar(menuBar1);
 
-		//---- label8 ----
-		label8.setText(bundle.getString("JMuestraDatos.label8.text"));
-		label8.setFont(new Font("Tahoma", Font.BOLD, 16));
-		contentPane.add(label8, cc.xywh(3, 3, 3, 1));
-
-		//---- label1 ----
-		label1.setText(bundle.getString("JMuestraDatos.label1.text"));
-		contentPane.add(label1, cc.xy(3, 5));
-
-		//======== tabbedPane1 ========
+		//======== panel5 ========
 		{
-			tabbedPane1.setFont(new Font("Tahoma", Font.BOLD, 16));
+			panel5.setLayout(new FormLayout(
+				new ColumnSpec[] {
+					new ColumnSpec(Sizes.dluX(18)),
+					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+					new ColumnSpec(Sizes.dluX(343))
+				},
+				new RowSpec[] {
+					new RowSpec(Sizes.dluY(17)),
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					new RowSpec(Sizes.dluY(17))
+				}));
 
-			//======== panel1 ========
-			{
-				panel1.setLayout(new FormLayout(
-					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC
-					},
-					new RowSpec[] {
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC
-					}));
+			//---- label8 ----
+			label8.setText(bundle.getString("JMuestraDatos.label8.text"));
+			label8.setFont(new Font("Tahoma", Font.BOLD, 16));
+			panel5.add(label8, cc.xy(3, 3));
 
-				//---- button3 ----
-				button3.setText(bundle.getString("JMuestraDatos.button3.text"));
-				button3.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")));
-				panel1.add(button3, cc.xy(3, 3));
-
-				//---- button8 ----
-				button8.setText(bundle.getString("JMuestraDatos.button8.text"));
-				panel1.add(button8, cc.xy(7, 3));
-
-				//---- button4 ----
-				button4.setText(bundle.getString("JMuestraDatos.button4.text"));
-				panel1.add(button4, cc.xy(3, 5));
-
-				//---- label19 ----
-				label19.setText(bundle.getString("JMuestraDatos.label19.text"));
-				panel1.add(label19, cc.xy(7, 5));
-
-				//---- button5 ----
-				button5.setText(bundle.getString("JMuestraDatos.button5.text"));
-				panel1.add(button5, cc.xy(3, 7));
-
-				//---- label20 ----
-				label20.setText(bundle.getString("JMuestraDatos.label20.text"));
-				panel1.add(label20, cc.xy(7, 7));
-
-				//---- button6 ----
-				button6.setText(bundle.getString("JMuestraDatos.button6.text"));
-				panel1.add(button6, cc.xy(3, 9));
-
-				//---- button9 ----
-				button9.setText(bundle.getString("JMuestraDatos.button9.text"));
-				panel1.add(button9, cc.xy(7, 9));
-
-				//---- button7 ----
-				button7.setText(bundle.getString("JMuestraDatos.button7.text"));
-				panel1.add(button7, cc.xy(3, 11));
-			}
-			tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel1.tab.title"), panel1);
-
-			//======== panel2 ========
-			{
-				panel2.setLayout(new FormLayout(
-					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC
-					},
-					new RowSpec[] {
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC
-					}));
-
-				//---- label9 ----
-				label9.setText(bundle.getString("JMuestraDatos.label9.text"));
-				label9.setFont(new Font("Tahoma", Font.BOLD, 16));
-				panel2.add(label9, cc.xy(3, 3));
-
-				//---- label10 ----
-				label10.setText(bundle.getString("JMuestraDatos.label10.text"));
-				label10.setFont(new Font("Tahoma", Font.BOLD, 16));
-				panel2.add(label10, cc.xy(11, 3));
-
-				//---- label3 ----
-				label3.setText(bundle.getString("JMuestraDatos.label3.text"));
-				panel2.add(label3, cc.xy(3, 5));
-
-				//---- readerPortLabel ----
-				readerPortLabel.setText(bundle.getString("JMuestraDatos.readerPortLabel.text"));
-				panel2.add(readerPortLabel, cc.xy(5, 5));
-
-				//---- label11 ----
-				label11.setText(bundle.getString("JMuestraDatos.label11.text"));
-				panel2.add(label11, cc.xy(11, 5));
-
-				//---- label15 ----
-				label15.setText(bundle.getString("JMuestraDatos.label15.text"));
-				panel2.add(label15, cc.xy(13, 5));
-
-				//---- label4 ----
-				label4.setText(bundle.getString("JMuestraDatos.label4.text"));
-				panel2.add(label4, cc.xy(3, 7));
-
-				//---- readerStatusLabel ----
-				readerStatusLabel.setText(bundle.getString("JMuestraDatos.readerStatusLabel.text"));
-				panel2.add(readerStatusLabel, cc.xy(5, 7));
-
-				//---- label12 ----
-				label12.setText(bundle.getString("JMuestraDatos.label12.text"));
-				panel2.add(label12, cc.xy(11, 7));
-
-				//---- label16 ----
-				label16.setText(bundle.getString("JMuestraDatos.label16.text"));
-				panel2.add(label16, cc.xy(13, 7));
-
-				//---- label2 ----
-				label2.setText(bundle.getString("JMuestraDatos.label2.text"));
-				panel2.add(label2, cc.xy(3, 9));
-
-				//---- rssiLevelLabel ----
-				rssiLevelLabel.setText(bundle.getString("JMuestraDatos.rssiLevelLabel.text"));
-				panel2.add(rssiLevelLabel, cc.xy(5, 9));
-
-				//---- label13 ----
-				label13.setText(bundle.getString("JMuestraDatos.label13.text"));
-				panel2.add(label13, cc.xy(11, 9));
-
-				//---- label17 ----
-				label17.setText(bundle.getString("JMuestraDatos.label17.text"));
-				panel2.add(label17, cc.xy(13, 9));
-
-				//---- label5 ----
-				label5.setText(bundle.getString("JMuestraDatos.label5.text"));
-				panel2.add(label5, cc.xy(3, 11));
-
-				//---- regionLabel ----
-				regionLabel.setText(bundle.getString("JMuestraDatos.regionLabel.text"));
-				panel2.add(regionLabel, cc.xy(5, 11));
-
-				//---- label14 ----
-				label14.setText(bundle.getString("JMuestraDatos.label14.text"));
-				panel2.add(label14, cc.xy(11, 11));
-
-				//---- label18 ----
-				label18.setText(bundle.getString("JMuestraDatos.label18.text"));
-				panel2.add(label18, cc.xy(13, 11));
-
-				//---- label6 ----
-				label6.setText(bundle.getString("JMuestraDatos.label6.text"));
-				panel2.add(label6, cc.xy(3, 13));
-
-				//---- readPowerLabel ----
-				readPowerLabel.setText(bundle.getString("JMuestraDatos.readPowerLabel.text"));
-				panel2.add(readPowerLabel, cc.xy(5, 13));
-
-				//---- label7 ----
-				label7.setText(bundle.getString("JMuestraDatos.label7.text"));
-				panel2.add(label7, cc.xy(3, 15));
-
-				//---- writePowerLevel ----
-				writePowerLevel.setText(bundle.getString("JMuestraDatos.writePowerLevel.text"));
-				panel2.add(writePowerLevel, cc.xy(5, 15));
-
-				//---- button1 ----
-				button1.setText(bundle.getString("JMuestraDatos.button1.text"));
-				panel2.add(button1, cc.xy(5, 17));
-
-				//---- button2 ----
-				button2.setText(bundle.getString("JMuestraDatos.button2.text"));
-				panel2.add(button2, cc.xy(11, 17));
-			}
-			tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel2.tab.title"), panel2);
+			//---- databaseLabel ----
+			databaseLabel.setText(bundle.getString("JMuestraDatos.databaseLabel.text"));
+			panel5.add(databaseLabel, cc.xy(3, 5));
 		}
-		contentPane.add(tabbedPane1, cc.xywh(3, 7, 7, 7));
-		setSize(530, 475);
+		contentPane.add(panel5, BorderLayout.NORTH);
+
+		//======== panel3 ========
+		{
+			panel3.setLayout(new FormLayout(
+				new ColumnSpec[] {
+					new ColumnSpec(Sizes.dluX(16)),
+					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+					FormFactory.DEFAULT_COLSPEC
+				},
+				new RowSpec[] {
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC
+				}));
+		}
+		contentPane.add(panel3, BorderLayout.WEST);
+
+		//======== panel4 ========
+		{
+			panel4.setLayout(new FormLayout(
+				new ColumnSpec[] {
+					new ColumnSpec(Sizes.dluX(307)),
+					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+					FormFactory.DEFAULT_COLSPEC
+				},
+				new RowSpec[] {
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC
+				}));
+
+			//======== tabbedPane1 ========
+			{
+				tabbedPane1.setFont(new Font("Tahoma", Font.BOLD, 16));
+
+				//======== panel1 ========
+				{
+					panel1.setLayout(new FormLayout(
+						new ColumnSpec[] {
+							new ColumnSpec(Sizes.dluX(15)),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(Sizes.dluX(120)),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(Sizes.dluX(20)),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(Sizes.dluX(120))
+						},
+						new RowSpec[] {
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC
+						}));
+
+					//---- button3 ----
+					button3.setText(bundle.getString("JMuestraDatos.button3.text"));
+					button3.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button3.setHorizontalAlignment(SwingConstants.LEFT);
+					panel1.add(button3, cc.xy(3, 3));
+
+					//---- button8 ----
+					button8.setText(bundle.getString("JMuestraDatos.button8.text"));
+					button8.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button8.setHorizontalAlignment(SwingConstants.LEFT);
+					panel1.add(button8, cc.xy(7, 3));
+
+					//---- button4 ----
+					button4.setText(bundle.getString("JMuestraDatos.button4.text"));
+					button4.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button4.setHorizontalAlignment(SwingConstants.LEFT);
+					panel1.add(button4, cc.xy(3, 5));
+
+					//---- label19 ----
+					label19.setText(bundle.getString("JMuestraDatos.label19.text"));
+					panel1.add(label19, cc.xy(7, 5));
+
+					//---- button5 ----
+					button5.setText(bundle.getString("JMuestraDatos.button5.text"));
+					button5.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button5.setHorizontalAlignment(SwingConstants.LEFT);
+					panel1.add(button5, cc.xy(3, 7));
+
+					//---- label20 ----
+					label20.setText(bundle.getString("JMuestraDatos.label20.text"));
+					panel1.add(label20, cc.xy(7, 7));
+
+					//---- button6 ----
+					button6.setText(bundle.getString("JMuestraDatos.button6.text"));
+					button6.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button6.setHorizontalAlignment(SwingConstants.LEFT);
+					panel1.add(button6, cc.xy(3, 9));
+
+					//---- button9 ----
+					button9.setText(bundle.getString("JMuestraDatos.button9.text"));
+					button9.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button9.setHorizontalAlignment(SwingConstants.LEFT);
+					panel1.add(button9, cc.xy(7, 9));
+
+					//---- button7 ----
+					button7.setText(bundle.getString("JMuestraDatos.button7.text"));
+					button7.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button7.setHorizontalAlignment(SwingConstants.LEFT);
+					panel1.add(button7, cc.xy(3, 11));
+				}
+				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel1.tab.title"), panel1);
+
+				//======== panel2 ========
+				{
+					panel2.setLayout(new FormLayout(
+						new ColumnSpec[] {
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC
+						},
+						new RowSpec[] {
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC
+						}));
+
+					//---- label9 ----
+					label9.setText(bundle.getString("JMuestraDatos.label9.text"));
+					label9.setFont(new Font("Tahoma", Font.BOLD, 16));
+					panel2.add(label9, cc.xy(3, 3));
+
+					//---- label10 ----
+					label10.setText(bundle.getString("JMuestraDatos.label10.text"));
+					label10.setFont(new Font("Tahoma", Font.BOLD, 16));
+					panel2.add(label10, cc.xy(11, 3));
+
+					//---- label3 ----
+					label3.setText(bundle.getString("JMuestraDatos.label3.text"));
+					panel2.add(label3, cc.xy(3, 5));
+
+					//---- readerPortLabel ----
+					readerPortLabel.setText(bundle.getString("JMuestraDatos.readerPortLabel.text"));
+					panel2.add(readerPortLabel, cc.xy(5, 5));
+
+					//---- label11 ----
+					label11.setText(bundle.getString("JMuestraDatos.label11.text"));
+					panel2.add(label11, cc.xy(11, 5));
+
+					//---- label15 ----
+					label15.setText(bundle.getString("JMuestraDatos.label15.text"));
+					panel2.add(label15, cc.xy(13, 5));
+
+					//---- label4 ----
+					label4.setText(bundle.getString("JMuestraDatos.label4.text"));
+					panel2.add(label4, cc.xy(3, 7));
+
+					//---- readerStatusLabel ----
+					readerStatusLabel.setText(bundle.getString("JMuestraDatos.readerStatusLabel.text"));
+					panel2.add(readerStatusLabel, cc.xy(5, 7));
+
+					//---- label12 ----
+					label12.setText(bundle.getString("JMuestraDatos.label12.text"));
+					panel2.add(label12, cc.xy(11, 7));
+
+					//---- label16 ----
+					label16.setText(bundle.getString("JMuestraDatos.label16.text"));
+					panel2.add(label16, cc.xy(13, 7));
+
+					//---- label2 ----
+					label2.setText(bundle.getString("JMuestraDatos.label2.text"));
+					panel2.add(label2, cc.xy(3, 9));
+
+					//---- rssiLevelLabel ----
+					rssiLevelLabel.setText(bundle.getString("JMuestraDatos.rssiLevelLabel.text"));
+					panel2.add(rssiLevelLabel, cc.xy(5, 9));
+
+					//---- label13 ----
+					label13.setText(bundle.getString("JMuestraDatos.label13.text"));
+					panel2.add(label13, cc.xy(11, 9));
+
+					//---- label17 ----
+					label17.setText(bundle.getString("JMuestraDatos.label17.text"));
+					panel2.add(label17, cc.xy(13, 9));
+
+					//---- label5 ----
+					label5.setText(bundle.getString("JMuestraDatos.label5.text"));
+					panel2.add(label5, cc.xy(3, 11));
+
+					//---- regionLabel ----
+					regionLabel.setText(bundle.getString("JMuestraDatos.regionLabel.text"));
+					panel2.add(regionLabel, cc.xy(5, 11));
+
+					//---- label14 ----
+					label14.setText(bundle.getString("JMuestraDatos.label14.text"));
+					panel2.add(label14, cc.xy(11, 11));
+
+					//---- label18 ----
+					label18.setText(bundle.getString("JMuestraDatos.label18.text"));
+					panel2.add(label18, cc.xy(13, 11));
+
+					//---- label6 ----
+					label6.setText(bundle.getString("JMuestraDatos.label6.text"));
+					panel2.add(label6, cc.xy(3, 13));
+
+					//---- readPowerLabel ----
+					readPowerLabel.setText(bundle.getString("JMuestraDatos.readPowerLabel.text"));
+					panel2.add(readPowerLabel, cc.xy(5, 13));
+
+					//---- label7 ----
+					label7.setText(bundle.getString("JMuestraDatos.label7.text"));
+					panel2.add(label7, cc.xy(3, 15));
+
+					//---- writePowerLevel ----
+					writePowerLevel.setText(bundle.getString("JMuestraDatos.writePowerLevel.text"));
+					panel2.add(writePowerLevel, cc.xy(5, 15));
+
+					//---- button1 ----
+					button1.setText(bundle.getString("JMuestraDatos.button1.text"));
+					panel2.add(button1, cc.xy(5, 17));
+
+					//---- button2 ----
+					button2.setText(bundle.getString("JMuestraDatos.button2.text"));
+					panel2.add(button2, cc.xy(11, 17));
+				}
+				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel2.tab.title"), panel2);
+			}
+			panel4.add(tabbedPane1, cc.xy(1, 1));
+		}
+		contentPane.add(panel4, BorderLayout.CENTER);
+
+		//======== panel6 ========
+		{
+			panel6.setLayout(new FormLayout(
+				new ColumnSpec[] {
+					FormFactory.DEFAULT_COLSPEC,
+					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+					FormFactory.DEFAULT_COLSPEC
+				},
+				new RowSpec[] {
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC
+				}));
+
+			//---- label21 ----
+			label21.setText(bundle.getString("JMuestraDatos.label21.text"));
+			panel6.add(label21, cc.xy(3, 1));
+		}
+		contentPane.add(panel6, BorderLayout.SOUTH);
+
+		//======== panel7 ========
+		{
+			panel7.setLayout(new FormLayout(
+				new ColumnSpec[] {
+					FormFactory.DEFAULT_COLSPEC,
+					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+					FormFactory.DEFAULT_COLSPEC
+				},
+				new RowSpec[] {
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC
+				}));
+		}
+		contentPane.add(panel7, BorderLayout.EAST);
+		setSize(705, 545);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
 	}
@@ -612,8 +702,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenuItem loadReadingsMenuItem;
 	private JMenu menu3;
 	private JMenuItem aboutUsMenuItem;
+	private JPanel panel5;
 	private JLabel label8;
-	private JLabel label1;
+	private JLabel databaseLabel;
+	private JPanel panel3;
+	private JPanel panel4;
 	private JTabbedPane tabbedPane1;
 	private JPanel panel1;
 	private JButton button3;
@@ -650,6 +743,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JLabel writePowerLevel;
 	private JButton button1;
 	private JButton button2;
+	private JPanel panel6;
+	private JLabel label21;
+	private JPanel panel7;
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
 	private void redLedOn() {
