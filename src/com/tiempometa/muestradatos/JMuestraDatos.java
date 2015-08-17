@@ -211,19 +211,42 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		aboutUsMenuItem = new JMenuItem();
 		label8 = new JLabel();
 		label1 = new JLabel();
+		tabbedPane1 = new JTabbedPane();
+		panel1 = new JPanel();
+		button3 = new JButton();
+		button8 = new JButton();
+		button4 = new JButton();
+		label19 = new JLabel();
+		button5 = new JButton();
+		label20 = new JLabel();
+		button6 = new JButton();
+		button9 = new JButton();
+		button7 = new JButton();
+		panel2 = new JPanel();
 		label9 = new JLabel();
+		label10 = new JLabel();
 		label3 = new JLabel();
 		readerPortLabel = new JLabel();
+		label11 = new JLabel();
+		label15 = new JLabel();
 		label4 = new JLabel();
 		readerStatusLabel = new JLabel();
+		label12 = new JLabel();
+		label16 = new JLabel();
 		label2 = new JLabel();
 		rssiLevelLabel = new JLabel();
+		label13 = new JLabel();
+		label17 = new JLabel();
 		label5 = new JLabel();
 		regionLabel = new JLabel();
+		label14 = new JLabel();
+		label18 = new JLabel();
 		label6 = new JLabel();
 		readPowerLabel = new JLabel();
 		label7 = new JLabel();
 		writePowerLevel = new JLabel();
+		button1 = new JButton();
+		button2 = new JButton();
 		CellConstraints cc = new CellConstraints();
 
 		//======== this ========
@@ -237,7 +260,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				new ColumnSpec(Sizes.dluX(160))
+				new ColumnSpec(Sizes.dluX(59)),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				new ColumnSpec(Sizes.dluX(58)),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				new ColumnSpec(Sizes.dluX(131))
 			},
 			new RowSpec[] {
 				new RowSpec(Sizes.dluY(27)),
@@ -252,13 +279,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				FormFactory.LINE_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.LINE_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC
+				new RowSpec(Sizes.dluY(155))
 			}));
 
 		//======== menuBar1 ========
@@ -358,66 +379,222 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 		//---- label8 ----
 		label8.setText(bundle.getString("JMuestraDatos.label8.text"));
-		label8.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		contentPane.add(label8, cc.xy(3, 3));
+		label8.setFont(new Font("Tahoma", Font.BOLD, 16));
+		contentPane.add(label8, cc.xywh(3, 3, 3, 1));
 
 		//---- label1 ----
 		label1.setText(bundle.getString("JMuestraDatos.label1.text"));
 		contentPane.add(label1, cc.xy(3, 5));
 
-		//---- label9 ----
-		label9.setText(bundle.getString("JMuestraDatos.label9.text"));
-		label9.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		contentPane.add(label9, cc.xy(3, 7));
+		//======== tabbedPane1 ========
+		{
+			tabbedPane1.setFont(new Font("Tahoma", Font.BOLD, 16));
 
-		//---- label3 ----
-		label3.setText(bundle.getString("JMuestraDatos.label3.text"));
-		contentPane.add(label3, cc.xy(3, 9));
+			//======== panel1 ========
+			{
+				panel1.setLayout(new FormLayout(
+					new ColumnSpec[] {
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC
+					},
+					new RowSpec[] {
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
-		//---- readerPortLabel ----
-		readerPortLabel.setText(bundle.getString("JMuestraDatos.readerPortLabel.text"));
-		contentPane.add(readerPortLabel, cc.xy(5, 9));
+				//---- button3 ----
+				button3.setText(bundle.getString("JMuestraDatos.button3.text"));
+				button3.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")));
+				panel1.add(button3, cc.xy(3, 3));
 
-		//---- label4 ----
-		label4.setText(bundle.getString("JMuestraDatos.label4.text"));
-		contentPane.add(label4, cc.xy(3, 11));
+				//---- button8 ----
+				button8.setText(bundle.getString("JMuestraDatos.button8.text"));
+				panel1.add(button8, cc.xy(7, 3));
 
-		//---- readerStatusLabel ----
-		readerStatusLabel.setText(bundle.getString("JMuestraDatos.readerStatusLabel.text"));
-		contentPane.add(readerStatusLabel, cc.xy(5, 11));
+				//---- button4 ----
+				button4.setText(bundle.getString("JMuestraDatos.button4.text"));
+				panel1.add(button4, cc.xy(3, 5));
 
-		//---- label2 ----
-		label2.setText(bundle.getString("JMuestraDatos.label2.text"));
-		contentPane.add(label2, cc.xy(3, 13));
+				//---- label19 ----
+				label19.setText(bundle.getString("JMuestraDatos.label19.text"));
+				panel1.add(label19, cc.xy(7, 5));
 
-		//---- rssiLevelLabel ----
-		rssiLevelLabel.setText(bundle.getString("JMuestraDatos.rssiLevelLabel.text"));
-		contentPane.add(rssiLevelLabel, cc.xy(5, 13));
+				//---- button5 ----
+				button5.setText(bundle.getString("JMuestraDatos.button5.text"));
+				panel1.add(button5, cc.xy(3, 7));
 
-		//---- label5 ----
-		label5.setText(bundle.getString("JMuestraDatos.label5.text"));
-		contentPane.add(label5, cc.xy(3, 15));
+				//---- label20 ----
+				label20.setText(bundle.getString("JMuestraDatos.label20.text"));
+				panel1.add(label20, cc.xy(7, 7));
 
-		//---- regionLabel ----
-		regionLabel.setText(bundle.getString("JMuestraDatos.regionLabel.text"));
-		contentPane.add(regionLabel, cc.xy(5, 15));
+				//---- button6 ----
+				button6.setText(bundle.getString("JMuestraDatos.button6.text"));
+				panel1.add(button6, cc.xy(3, 9));
 
-		//---- label6 ----
-		label6.setText(bundle.getString("JMuestraDatos.label6.text"));
-		contentPane.add(label6, cc.xy(3, 17));
+				//---- button9 ----
+				button9.setText(bundle.getString("JMuestraDatos.button9.text"));
+				panel1.add(button9, cc.xy(7, 9));
 
-		//---- readPowerLabel ----
-		readPowerLabel.setText(bundle.getString("JMuestraDatos.readPowerLabel.text"));
-		contentPane.add(readPowerLabel, cc.xy(5, 17));
+				//---- button7 ----
+				button7.setText(bundle.getString("JMuestraDatos.button7.text"));
+				panel1.add(button7, cc.xy(3, 11));
+			}
+			tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel1.tab.title"), panel1);
 
-		//---- label7 ----
-		label7.setText(bundle.getString("JMuestraDatos.label7.text"));
-		contentPane.add(label7, cc.xy(3, 19));
+			//======== panel2 ========
+			{
+				panel2.setLayout(new FormLayout(
+					new ColumnSpec[] {
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC,
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC
+					},
+					new RowSpec[] {
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
-		//---- writePowerLevel ----
-		writePowerLevel.setText(bundle.getString("JMuestraDatos.writePowerLevel.text"));
-		contentPane.add(writePowerLevel, cc.xy(5, 19));
-		setSize(425, 335);
+				//---- label9 ----
+				label9.setText(bundle.getString("JMuestraDatos.label9.text"));
+				label9.setFont(new Font("Tahoma", Font.BOLD, 16));
+				panel2.add(label9, cc.xy(3, 3));
+
+				//---- label10 ----
+				label10.setText(bundle.getString("JMuestraDatos.label10.text"));
+				label10.setFont(new Font("Tahoma", Font.BOLD, 16));
+				panel2.add(label10, cc.xy(11, 3));
+
+				//---- label3 ----
+				label3.setText(bundle.getString("JMuestraDatos.label3.text"));
+				panel2.add(label3, cc.xy(3, 5));
+
+				//---- readerPortLabel ----
+				readerPortLabel.setText(bundle.getString("JMuestraDatos.readerPortLabel.text"));
+				panel2.add(readerPortLabel, cc.xy(5, 5));
+
+				//---- label11 ----
+				label11.setText(bundle.getString("JMuestraDatos.label11.text"));
+				panel2.add(label11, cc.xy(11, 5));
+
+				//---- label15 ----
+				label15.setText(bundle.getString("JMuestraDatos.label15.text"));
+				panel2.add(label15, cc.xy(13, 5));
+
+				//---- label4 ----
+				label4.setText(bundle.getString("JMuestraDatos.label4.text"));
+				panel2.add(label4, cc.xy(3, 7));
+
+				//---- readerStatusLabel ----
+				readerStatusLabel.setText(bundle.getString("JMuestraDatos.readerStatusLabel.text"));
+				panel2.add(readerStatusLabel, cc.xy(5, 7));
+
+				//---- label12 ----
+				label12.setText(bundle.getString("JMuestraDatos.label12.text"));
+				panel2.add(label12, cc.xy(11, 7));
+
+				//---- label16 ----
+				label16.setText(bundle.getString("JMuestraDatos.label16.text"));
+				panel2.add(label16, cc.xy(13, 7));
+
+				//---- label2 ----
+				label2.setText(bundle.getString("JMuestraDatos.label2.text"));
+				panel2.add(label2, cc.xy(3, 9));
+
+				//---- rssiLevelLabel ----
+				rssiLevelLabel.setText(bundle.getString("JMuestraDatos.rssiLevelLabel.text"));
+				panel2.add(rssiLevelLabel, cc.xy(5, 9));
+
+				//---- label13 ----
+				label13.setText(bundle.getString("JMuestraDatos.label13.text"));
+				panel2.add(label13, cc.xy(11, 9));
+
+				//---- label17 ----
+				label17.setText(bundle.getString("JMuestraDatos.label17.text"));
+				panel2.add(label17, cc.xy(13, 9));
+
+				//---- label5 ----
+				label5.setText(bundle.getString("JMuestraDatos.label5.text"));
+				panel2.add(label5, cc.xy(3, 11));
+
+				//---- regionLabel ----
+				regionLabel.setText(bundle.getString("JMuestraDatos.regionLabel.text"));
+				panel2.add(regionLabel, cc.xy(5, 11));
+
+				//---- label14 ----
+				label14.setText(bundle.getString("JMuestraDatos.label14.text"));
+				panel2.add(label14, cc.xy(11, 11));
+
+				//---- label18 ----
+				label18.setText(bundle.getString("JMuestraDatos.label18.text"));
+				panel2.add(label18, cc.xy(13, 11));
+
+				//---- label6 ----
+				label6.setText(bundle.getString("JMuestraDatos.label6.text"));
+				panel2.add(label6, cc.xy(3, 13));
+
+				//---- readPowerLabel ----
+				readPowerLabel.setText(bundle.getString("JMuestraDatos.readPowerLabel.text"));
+				panel2.add(readPowerLabel, cc.xy(5, 13));
+
+				//---- label7 ----
+				label7.setText(bundle.getString("JMuestraDatos.label7.text"));
+				panel2.add(label7, cc.xy(3, 15));
+
+				//---- writePowerLevel ----
+				writePowerLevel.setText(bundle.getString("JMuestraDatos.writePowerLevel.text"));
+				panel2.add(writePowerLevel, cc.xy(5, 15));
+
+				//---- button1 ----
+				button1.setText(bundle.getString("JMuestraDatos.button1.text"));
+				panel2.add(button1, cc.xy(5, 17));
+
+				//---- button2 ----
+				button2.setText(bundle.getString("JMuestraDatos.button2.text"));
+				panel2.add(button2, cc.xy(11, 17));
+			}
+			tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel2.tab.title"), panel2);
+		}
+		contentPane.add(tabbedPane1, cc.xywh(3, 7, 7, 7));
+		setSize(530, 475);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
 	}
@@ -437,19 +614,42 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenuItem aboutUsMenuItem;
 	private JLabel label8;
 	private JLabel label1;
+	private JTabbedPane tabbedPane1;
+	private JPanel panel1;
+	private JButton button3;
+	private JButton button8;
+	private JButton button4;
+	private JLabel label19;
+	private JButton button5;
+	private JLabel label20;
+	private JButton button6;
+	private JButton button9;
+	private JButton button7;
+	private JPanel panel2;
 	private JLabel label9;
+	private JLabel label10;
 	private JLabel label3;
 	private JLabel readerPortLabel;
+	private JLabel label11;
+	private JLabel label15;
 	private JLabel label4;
 	private JLabel readerStatusLabel;
+	private JLabel label12;
+	private JLabel label16;
 	private JLabel label2;
 	private JLabel rssiLevelLabel;
+	private JLabel label13;
+	private JLabel label17;
 	private JLabel label5;
 	private JLabel regionLabel;
+	private JLabel label14;
+	private JLabel label18;
 	private JLabel label6;
 	private JLabel readPowerLabel;
 	private JLabel label7;
 	private JLabel writePowerLevel;
+	private JButton button1;
+	private JButton button2;
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
 	private void redLedOn() {
