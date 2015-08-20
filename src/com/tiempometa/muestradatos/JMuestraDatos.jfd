@@ -445,31 +445,6 @@ new FormModel {
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
-					name: "readingModeMenu"
-					"text": new FormMessage( null, "JMuestraDatos.readingModeMenu.text" )
-					"enabled": false
-					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "verifyDataMenuItem"
-						"text": new FormMessage( null, "JMuestraDatos.verifyDataMenuItem.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "verifyDataMenuItemActionPerformed", true ) )
-					} )
-					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "readTagsMenuItem"
-						"text": new FormMessage( null, "JMuestraDatos.readTagsMenuItem.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "readTagsMenuItemActionPerformed", true ) )
-					} )
-					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "programTagsMenuItem"
-						"text": new FormMessage( null, "JMuestraDatos.programTagsMenuItem.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "programTagsMenuItemActionPerformed", true ) )
-					} )
-					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "loadReadingsMenuItem"
-						"text": new FormMessage( null, "JMuestraDatos.loadReadingsMenuItem.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loadReadingsMenuItemActionPerformed", true ) )
-					} )
-				} )
-				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "menu3"
 					"text": new FormMessage( null, "JMuestraDatos.menu3.text" )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
