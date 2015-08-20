@@ -17,6 +17,9 @@ import com.thingmagic.TagReadData;
  */
 public class TagReading {
 	public static final String KEEP_ALIVE = "*";
+	public static final String TYPE_TAG = "tag";
+	public static final String TYPE_COMMAND_RESPONSE = "response";
+	public static final String TYPE_KEEP_ALIVE = "keepalive";
 
 	private TagReadData tagReadData;
 	private String reader;
@@ -29,6 +32,7 @@ public class TagReading {
 	private Integer peakRssi;
 	private Boolean valid = false;
 	private String stringData = null;
+	private String readingType = null;
 
 	public TagReading() {
 		super();
@@ -46,38 +50,64 @@ public class TagReading {
 	public TagReading(String data) {
 		super();
 		stringData = data;
-		String[] fields = data.replaceAll("\\r", "").split(",");
-		switch (fields.length) {
-		case 0:
-			break;
-		case 1:
-			break;
-		case 2:
-			valid = true;
-			// single field data packet is keep alive
-			antenna = fields[1];
-			break;
-		case 7:
-			// six field data packet includes user data
-			userData = fields[6];
-		case 6:
-			tid = fields[5];
-		case 5:
-			// five field data packet lacks user data
-			valid = true;
-			reader = fields[0];
-			antenna = fields[1];
-			epc = fields[2];
-			try {
-				timeMillis = Long.valueOf(fields[3]);
-				time = new Date(timeMillis / 1000);
-				peakRssi = Integer.parseInt(fields[4]);
-			} catch (NumberFormatException e) {
-				valid = false;
-			}
-			break;
-		default:
+		if (data.startsWith("#")) {
+			readingType = TagReading.TYPE_COMMAND_RESPONSE;
+			// command response
+			String[] fields = data.replaceAll("\\r", "").split(",");
+			switch (fields.length) {
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				System.out.println("Time - " + fields[2]);
+				System.out.println("Time + " + (new Date()).getTime());
+				Double millis = Double.valueOf(fields[2]) * 1000;
+				time = new Date(millis.longValue());
+				Long diff = (new Date()).getTime() - time.getTime();
+				epc = diff.toString();
+				readingType = TagReading.TYPE_COMMAND_RESPONSE;
+				timeMillis = time.getTime();
 
+				break;
+			}
+		} else {
+			readingType = TagReading.TYPE_TAG;
+			String[] fields = data.replaceAll("\\r", "").split(",");
+			switch (fields.length) {
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				valid = true;
+				// single field data packet is keep alive
+				readingType = TagReading.TYPE_KEEP_ALIVE;
+				antenna = fields[1];
+				break;
+			case 7:
+				// six field data packet includes user data
+				userData = fields[6];
+			case 6:
+				tid = fields[5];
+			case 5:
+				// five field data packet lacks user data
+				valid = true;
+				reader = fields[0];
+				antenna = fields[1];
+				epc = fields[2];
+				try {
+					timeMillis = Long.valueOf(fields[3]);
+					time = new Date(timeMillis / 1000);
+					peakRssi = Integer.parseInt(fields[4]);
+				} catch (NumberFormatException e) {
+					valid = false;
+				}
+				break;
+			default:
+			}
 		}
 	}
 
@@ -247,6 +277,13 @@ public class TagReading {
 	 */
 	public void setTagReadData(TagReadData tagReadData) {
 		this.tagReadData = tagReadData;
+	}
+
+	/**
+	 * @return the readingType
+	 */
+	public String getReadingType() {
+		return readingType;
 	}
 
 }

@@ -351,4 +351,13 @@ public class ReaderContext {
 		connectFoxberry(getSettings().getFoxberryReaderAddress(), 10201, getSettings().getPreferredReader(), getSettings().getPreferredAntenna());
 		
 	}
+
+	public static Long getFoxberryTime() throws IOException {
+		return foxberryReader.getTime();	
+	}
+
+	public static void setFoxberryTime() throws IOException {
+		foxberryReader.setTime();
+		
+	}
 }

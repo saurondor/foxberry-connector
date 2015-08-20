@@ -37,14 +37,14 @@ public class FoxberryReader implements Runnable {
 	private String preferredAntenna = null;
 	private String preferredReader = null;
 	private boolean doReadings = false;
-	
+
 	public boolean isConnected() {
-		if ((dataInputStream == null)||(dataOutputStream == null)) {
+		if ((dataInputStream == null) || (dataOutputStream == null)) {
 			return false;
 		} else {
 			return true;
 		}
- 	}
+	}
 
 	public void connect(String hostName, Integer port, String preferredReader,
 			String preferredAntenna) throws UnknownHostException, IOException {
@@ -211,13 +211,28 @@ public class FoxberryReader implements Runnable {
 	public void rewind() throws IOException {
 		dataOutputStream.write("rewind\n".getBytes());
 		dataOutputStream.flush();
-		
+
 	}
 
 	public void clear() throws IOException {
 		dataOutputStream.write("clear\n".getBytes());
 		dataOutputStream.flush();
-		
+
+	}
+
+	public Long getTime() throws IOException {
+		// TODO Auto-generated method stub
+		dataOutputStream.write("time get".getBytes());
+		dataOutputStream.flush();
+		return null;
+	}
+
+	public void setTime() throws IOException {
+		Date systemTime = new Date();
+		logger.info("SET time " + ((systemTime.getTime() + 1100) / 1000));
+		dataOutputStream.write(("time set " + ((systemTime.getTime() + 1100) / 1000))
+				.getBytes());
+		dataOutputStream.flush();
 	}
 
 }
