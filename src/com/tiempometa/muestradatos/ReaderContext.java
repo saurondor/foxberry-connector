@@ -69,7 +69,10 @@ public class ReaderContext {
 	}
 
 	public static boolean isFoxberryConnected() {
-		return false;
+		if (foxberryReader == null) {
+			return false;
+		}
+		return foxberryReader.isConnected();
 	}
 
 	public static void connectSpeedway(String hostName, Integer port,

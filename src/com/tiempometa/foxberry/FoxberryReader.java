@@ -37,6 +37,14 @@ public class FoxberryReader implements Runnable {
 	private String preferredAntenna = null;
 	private String preferredReader = null;
 	private boolean doReadings = false;
+	
+	public boolean isConnected() {
+		if ((dataInputStream == null)||(dataOutputStream == null)) {
+			return false;
+		} else {
+			return true;
+		}
+ 	}
 
 	public void connect(String hostName, Integer port, String preferredReader,
 			String preferredAntenna) throws UnknownHostException, IOException {
@@ -67,7 +75,10 @@ public class FoxberryReader implements Runnable {
 	}
 
 	public void disconnect() throws IOException {
+		doReadings = false;
 		readerSocket.close();
+		dataInputStream = null;
+		dataOutputStream = null;
 		notifyDisconnected();
 
 	}
@@ -126,12 +137,12 @@ public class FoxberryReader implements Runnable {
 			dataInputStream = readerSocket.getInputStream();
 			dataOutputStream = readerSocket.getOutputStream();
 			boolean read = true;
-			while ((read) & (!readerSocket.isClosed())) {
+			while ((read) & (this.isConnected())) {
 				synchronized (this) {
 					read = doReadings;
 				}
 				logger.info("Socket is open");
-				while (readerSocket.isConnected()) {
+				while (this.isConnected()) {
 					if (readerSocket.isClosed()) {
 						logger.warn("Socket is closed!");
 					}
