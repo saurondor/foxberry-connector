@@ -317,21 +317,23 @@ new FormModel {
 					} ) {
 						name: "panel8"
 						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button9"
-							"text": new FormMessage( null, "JMuestraDatos.button9.text" )
+							name: "setBoxTimeButton"
+							"text": new FormMessage( null, "JMuestraDatos.setBoxTimeButton.text" )
 							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/set_time_64.png" )
 							"horizontalAlignment": 2
 							"font": new java.awt.Font( "Tahoma", 1, 16 )
+							"enabled": false
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridY": 3
 							"gridX": 3
 						} )
 						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button8"
-							"text": new FormMessage( null, "JMuestraDatos.button8.text" )
+							name: "getBoxTimeButton"
+							"text": new FormMessage( null, "JMuestraDatos.getBoxTimeButton.text" )
 							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/get_time_64.png" )
 							"horizontalAlignment": 2
 							"font": new java.awt.Font( "Tahoma", 1, 16 )
+							"enabled": false
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridY": 3
 							"gridX": 5

@@ -366,8 +366,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		countTagsButton = new JButton();
 		programTagButton = new JButton();
 		panel8 = new JPanel();
-		button9 = new JButton();
-		button8 = new JButton();
+		setBoxTimeButton = new JButton();
+		getBoxTimeButton = new JButton();
 		label20 = new JLabel();
 		label19 = new JLabel();
 		panel6 = new JPanel();
@@ -773,19 +773,21 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.DEFAULT_ROWSPEC
 						}));
 
-					//---- button9 ----
-					button9.setText(bundle.getString("JMuestraDatos.button9.text"));
-					button9.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/set_time_64.png")));
-					button9.setHorizontalAlignment(SwingConstants.LEFT);
-					button9.setFont(new Font("Tahoma", Font.BOLD, 16));
-					panel8.add(button9, cc.xy(3, 3));
+					//---- setBoxTimeButton ----
+					setBoxTimeButton.setText(bundle.getString("JMuestraDatos.setBoxTimeButton.text"));
+					setBoxTimeButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/set_time_64.png")));
+					setBoxTimeButton.setHorizontalAlignment(SwingConstants.LEFT);
+					setBoxTimeButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+					setBoxTimeButton.setEnabled(false);
+					panel8.add(setBoxTimeButton, cc.xy(3, 3));
 
-					//---- button8 ----
-					button8.setText(bundle.getString("JMuestraDatos.button8.text"));
-					button8.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/get_time_64.png")));
-					button8.setHorizontalAlignment(SwingConstants.LEFT);
-					button8.setFont(new Font("Tahoma", Font.BOLD, 16));
-					panel8.add(button8, cc.xy(5, 3));
+					//---- getBoxTimeButton ----
+					getBoxTimeButton.setText(bundle.getString("JMuestraDatos.getBoxTimeButton.text"));
+					getBoxTimeButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/get_time_64.png")));
+					getBoxTimeButton.setHorizontalAlignment(SwingConstants.LEFT);
+					getBoxTimeButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+					getBoxTimeButton.setEnabled(false);
+					panel8.add(getBoxTimeButton, cc.xy(5, 3));
 
 					//---- label20 ----
 					label20.setText(bundle.getString("JMuestraDatos.label20.text"));
@@ -933,8 +935,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JButton countTagsButton;
 	private JButton programTagButton;
 	private JPanel panel8;
-	private JButton button9;
-	private JButton button8;
+	private JButton setBoxTimeButton;
+	private JButton getBoxTimeButton;
 	private JLabel label20;
 	private JLabel label19;
 	private JPanel panel6;
@@ -1012,11 +1014,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private void enableTcpFunctions() {
 		loadReadingsButton.setEnabled(true);
 		countTagsButton.setEnabled(true);
+		getBoxTimeButton.setEnabled(true);
+		setBoxTimeButton.setEnabled(true);
 	}
 	
 	private void disableTcpFunctions() {
 		loadReadingsButton.setEnabled(false);
 		countTagsButton.setEnabled(false);
+		getBoxTimeButton.setEnabled(false);
+		setBoxTimeButton.setEnabled(false);
 	}
 
 	@Override
