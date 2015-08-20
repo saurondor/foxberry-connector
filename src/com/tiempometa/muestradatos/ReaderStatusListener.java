@@ -11,12 +11,12 @@ package com.tiempometa.muestradatos;
  */
 public interface ReaderStatusListener {
 	
-	void connected();
-	void disconnected();
+	void usbConnected();
+	void usbDisconnected();
 	void tcpConnected();
 	void tcpDisconnected();
-	void startedReading();
-	void stoppedReading();
+	void usbStartedReading();
+	void usbStoppedReading();
 	void updatedRegion(String regionName);
 	void updatedReadPower(Integer readPower);
 	void updatedWritePower(Integer writePower);

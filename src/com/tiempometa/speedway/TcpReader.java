@@ -194,13 +194,13 @@ public class TcpReader implements Runnable {
 
 	private void notifyStartedReading() {
 		for (ReaderStatusListener listener : statusListeners) {
-			listener.startedReading();
+			listener.usbStartedReading();
 		}
 	}
 
 	private void notifyStoppedReading() {
 		for (ReaderStatusListener listener : statusListeners) {
-			listener.stoppedReading();
+			listener.usbStoppedReading();
 		}
 	}
 

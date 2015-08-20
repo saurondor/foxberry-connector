@@ -125,25 +125,25 @@ public class UsbReader implements Runnable {
 
 	private void notifyConnected() {
 		for (ReaderStatusListener listener : statusListeners) {
-			listener.connected();
+			listener.usbConnected();
 		}
 	}
 
 	private void notifyDisconnected() {
 		for (ReaderStatusListener listener : statusListeners) {
-			listener.disconnected();
+			listener.usbDisconnected();
 		}
 	}
 
 	private void notifyStartedReading() {
 		for (ReaderStatusListener listener : statusListeners) {
-			listener.startedReading();
+			listener.usbStartedReading();
 		}
 	}
 
 	private void notifyStoppedReading() {
 		for (ReaderStatusListener listener : statusListeners) {
-			listener.stoppedReading();
+			listener.usbStoppedReading();
 		}
 	}
 

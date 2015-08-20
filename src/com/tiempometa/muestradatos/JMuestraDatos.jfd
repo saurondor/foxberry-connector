@@ -39,76 +39,6 @@ new FormModel {
 					name: "tabbedPane1"
 					"font": new java.awt.Font( "Tahoma", 1, 16 )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-						"$columnSpecs": "35dlu, labelcompgap, 120dlu, labelcompgap, 47dlu, labelcompgap, 130dlu, labelcompgap, 28dlu"
-						"$rowSpecs": "15dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
-					} ) {
-						name: "panel1"
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "verifyDataButton"
-							"text": new FormMessage( null, "JMuestraDatos.verifyDataButton.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/check_64.png" )
-							"horizontalAlignment": 2
-							"rolloverIcon": sfield com.jformdesigner.model.FormObject NULL_VALUE
-							"pressedIcon": sfield com.jformdesigner.model.FormObject NULL_VALUE
-							"font": new java.awt.Font( "Tahoma", 1, 16 )
-							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "verifyDataButtonActionPerformed", true ) )
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 3
-							"gridY": 3
-							"gridWidth": 3
-						} )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "loadReadingsButton"
-							"text": new FormMessage( null, "JMuestraDatos.loadReadingsButton.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/load_64.png" )
-							"horizontalAlignment": 2
-							"font": new java.awt.Font( "Tahoma", 1, 16 )
-							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loadReadingsButtonActionPerformed", true ) )
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 7
-							"gridY": 3
-							"gridWidth": 3
-						} )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "readTagButton"
-							"text": new FormMessage( null, "JMuestraDatos.readTagButton.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/scan_64.png" )
-							"horizontalAlignment": 2
-							"font": new java.awt.Font( "Tahoma", 1, 16 )
-							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "readTagButtonActionPerformed", true ) )
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 3
-							"gridY": 5
-							"gridWidth": 3
-						} )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "countTagsButton"
-							"text": new FormMessage( null, "JMuestraDatos.countTagsButton.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/counter_64.png" )
-							"horizontalAlignment": 2
-							"font": new java.awt.Font( "Tahoma", 1, 16 )
-							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "countTagsButtonActionPerformed", true ) )
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 7
-							"gridY": 5
-							"gridWidth": 3
-						} )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "programTagButton"
-							"text": new FormMessage( null, "JMuestraDatos.programTagButton.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/record_64.png" )
-							"horizontalAlignment": 2
-							"font": new java.awt.Font( "Tahoma", 1, 16 )
-							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "programTagButtonActionPerformed", true ) )
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 3
-							"gridY": 7
-							"gridWidth": 3
-						} )
-					}, new FormLayoutConstraints( null ) {
-						"title": new FormMessage( null, "JMuestraDatos.panel1.tab.title" )
-					} )
-					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 						"$columnSpecs": "25dlu, labelcompgap, 89dlu, labelcompgap, 73dlu, labelcompgap, 17dlu, labelcompgap, 84dlu, labelcompgap, 80dlu"
 						"$rowSpecs": "20dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, 8dlu"
 					} ) {
@@ -305,6 +235,81 @@ new FormModel {
 						} )
 					}, new FormLayoutConstraints( null ) {
 						"title": new FormMessage( null, "JMuestraDatos.panel2.tab.title" )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
+						"$columnSpecs": "35dlu, labelcompgap, 120dlu, labelcompgap, 47dlu, labelcompgap, 130dlu, labelcompgap, 28dlu"
+						"$rowSpecs": "15dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+					} ) {
+						name: "panel1"
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "verifyDataButton"
+							"text": new FormMessage( null, "JMuestraDatos.verifyDataButton.text" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/check_64.png" )
+							"horizontalAlignment": 2
+							"rolloverIcon": sfield com.jformdesigner.model.FormObject NULL_VALUE
+							"pressedIcon": sfield com.jformdesigner.model.FormObject NULL_VALUE
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
+							"enabled": false
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "verifyDataButtonActionPerformed", true ) )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 3
+							"gridWidth": 3
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "loadReadingsButton"
+							"text": new FormMessage( null, "JMuestraDatos.loadReadingsButton.text" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/load_64.png" )
+							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
+							"enabled": false
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loadReadingsButtonActionPerformed", true ) )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 7
+							"gridY": 3
+							"gridWidth": 3
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "readTagButton"
+							"text": new FormMessage( null, "JMuestraDatos.readTagButton.text" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/scan_64.png" )
+							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
+							"enabled": false
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "readTagButtonActionPerformed", true ) )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 5
+							"gridWidth": 3
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "countTagsButton"
+							"text": new FormMessage( null, "JMuestraDatos.countTagsButton.text" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/counter_64.png" )
+							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
+							"enabled": false
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "countTagsButtonActionPerformed", true ) )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 7
+							"gridY": 5
+							"gridWidth": 3
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "programTagButton"
+							"text": new FormMessage( null, "JMuestraDatos.programTagButton.text" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/record_64.png" )
+							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
+							"enabled": false
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "programTagButtonActionPerformed", true ) )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 7
+							"gridWidth": 3
+						} )
+					}, new FormLayoutConstraints( null ) {
+						"title": new FormMessage( null, "JMuestraDatos.panel1.tab.title" )
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 						"$columnSpecs": "35dlu, labelcompgap, 160dlu, labelcompgap, 160dlu"
