@@ -350,14 +350,47 @@ new FormModel {
 				"value": "Center"
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-				"$columnSpecs": "default, labelcompgap, 354dlu"
+				"$columnSpecs": "default, labelcompgap, default, labelcompgap, 65dlu, labelcompgap, default, labelcompgap, 65dlu, labelcompgap, 222dlu"
 				"$rowSpecs": "default, linegap, default, linegap, default"
 			} ) {
 				name: "panel6"
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label21"
 					"text": new FormMessage( null, "JMuestraDatos.label21.text" )
+					"font": new java.awt.Font( "Tahoma", 1, 16 )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label1"
+					"text": new FormMessage( null, "JMuestraDatos.label1.text" )
+					"font": new java.awt.Font( "Tahoma", 0, 14 )
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+					"gridX": 3
+					"gridY": 1
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "usbStatusLabel"
+					"text": new FormMessage( null, "JMuestraDatos.usbStatusLabel.text" )
+					"font": new java.awt.Font( "Tahoma", 0, 14 )
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+					"gridX": 5
+					"gridY": 1
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label16"
+					"text": new FormMessage( null, "JMuestraDatos.label16.text" )
+					"font": new java.awt.Font( "Tahoma", 0, 14 )
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+					"gridX": 7
+					"gridY": 1
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "tcpStatusLabel"
+					"text": new FormMessage( null, "JMuestraDatos.tcpStatusLabel.text" )
+					"font": new java.awt.Font( "Tahoma", 0, 14 )
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+					"gridX": 9
+					"gridY": 1
+				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label8"
 					"text": new FormMessage( null, "JMuestraDatos.label8.text" )
@@ -370,7 +403,7 @@ new FormModel {
 					"text": new FormMessage( null, "JMuestraDatos.databaseLabel.text" )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 					"gridY": 5
-					"gridWidth": 3
+					"gridWidth": 11
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "South"
