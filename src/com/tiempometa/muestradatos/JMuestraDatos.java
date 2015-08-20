@@ -398,7 +398,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		{
 			panel4.setLayout(new FormLayout(
 				new ColumnSpec[] {
-					new ColumnSpec(Sizes.dluX(366)),
+					new ColumnSpec(Sizes.dluX(410)),
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 					FormFactory.DEFAULT_COLSPEC
 				},
@@ -487,9 +487,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 						new ColumnSpec[] {
 							new ColumnSpec(Sizes.dluX(25)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(Sizes.dluX(69)),
+							new ColumnSpec(Sizes.dluX(89)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(Sizes.dluX(55)),
+							new ColumnSpec(Sizes.dluX(79)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							FormFactory.DEFAULT_COLSPEC,
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
@@ -497,7 +497,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(57)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(Sizes.dluX(73))
+							new ColumnSpec(Sizes.dluX(105))
 						},
 						new RowSpec[] {
 							new RowSpec(Sizes.dluY(20)),
@@ -522,17 +522,18 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					//---- label9 ----
 					label9.setText(bundle.getString("JMuestraDatos.label9.text"));
 					label9.setFont(new Font("Tahoma", Font.BOLD, 16));
-					label9.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/record_64.png")));
+					label9.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/usb_128.png")));
 					panel2.add(label9, cc.xywh(3, 3, 3, 1));
 
 					//---- label10 ----
 					label10.setText(bundle.getString("JMuestraDatos.label10.text"));
 					label10.setFont(new Font("Tahoma", Font.BOLD, 16));
-					label10.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/check_64.png")));
+					label10.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/briefcase_128.png")));
 					panel2.add(label10, cc.xywh(11, 3, 3, 1));
 
 					//---- label3 ----
 					label3.setText(bundle.getString("JMuestraDatos.label3.text"));
+					label3.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label3, cc.xy(3, 5));
 
 					//---- readerPortLabel ----
@@ -541,6 +542,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- label11 ----
 					label11.setText(bundle.getString("JMuestraDatos.label11.text"));
+					label11.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label11, cc.xy(11, 5));
 
 					//---- label15 ----
@@ -549,6 +551,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- label4 ----
 					label4.setText(bundle.getString("JMuestraDatos.label4.text"));
+					label4.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label4, cc.xy(3, 7));
 
 					//---- readerStatusLabel ----
@@ -557,6 +560,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- label12 ----
 					label12.setText(bundle.getString("JMuestraDatos.label12.text"));
+					label12.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label12, cc.xy(11, 7));
 
 					//---- label16 ----
@@ -565,6 +569,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- label2 ----
 					label2.setText(bundle.getString("JMuestraDatos.label2.text"));
+					label2.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label2, cc.xy(3, 9));
 
 					//---- rssiLevelLabel ----
@@ -573,6 +578,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- label13 ----
 					label13.setText(bundle.getString("JMuestraDatos.label13.text"));
+					label13.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label13, cc.xy(11, 9));
 
 					//---- label17 ----
@@ -581,6 +587,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- label5 ----
 					label5.setText(bundle.getString("JMuestraDatos.label5.text"));
+					label5.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label5, cc.xy(3, 11));
 
 					//---- regionLabel ----
@@ -589,6 +596,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- label14 ----
 					label14.setText(bundle.getString("JMuestraDatos.label14.text"));
+					label14.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label14, cc.xy(11, 11));
 
 					//---- label18 ----
@@ -597,6 +605,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- label6 ----
 					label6.setText(bundle.getString("JMuestraDatos.label6.text"));
+					label6.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label6, cc.xy(3, 13));
 
 					//---- readPowerLabel ----
@@ -605,6 +614,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- label7 ----
 					label7.setText(bundle.getString("JMuestraDatos.label7.text"));
+					label7.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label7, cc.xy(3, 15));
 
 					//---- writePowerLevel ----
@@ -613,10 +623,12 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- button1 ----
 					button1.setText(bundle.getString("JMuestraDatos.button1.text"));
+					button1.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(button1, cc.xywh(3, 17, 3, 1));
 
 					//---- button2 ----
 					button2.setText(bundle.getString("JMuestraDatos.button2.text"));
+					button2.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(button2, cc.xywh(11, 17, 3, 1));
 				}
 				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel2.tab.title"), panel2);
@@ -721,7 +733,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				}));
 		}
 		contentPane.add(panel7, BorderLayout.EAST);
-		setSize(705, 630);
+		setSize(740, 630);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
 	}

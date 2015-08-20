@@ -31,7 +31,7 @@ new FormModel {
 				"value": "West"
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-				"$columnSpecs": "366dlu, labelcompgap, default"
+				"$columnSpecs": "410dlu, labelcompgap, default"
 				"$rowSpecs": "default, linegap, default, linegap, default"
 			} ) {
 				name: "panel4"
@@ -104,7 +104,7 @@ new FormModel {
 						"title": new FormMessage( null, "JMuestraDatos.panel1.tab.title" )
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-						"$columnSpecs": "25dlu, labelcompgap, 69dlu, labelcompgap, 55dlu, labelcompgap, default, labelcompgap, default, labelcompgap, 57dlu, labelcompgap, 73dlu"
+						"$columnSpecs": "25dlu, labelcompgap, 89dlu, labelcompgap, 79dlu, labelcompgap, default, labelcompgap, default, labelcompgap, 57dlu, labelcompgap, 105dlu"
 						"$rowSpecs": "20dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 					} ) {
 						name: "panel2"
@@ -112,7 +112,7 @@ new FormModel {
 							name: "label9"
 							"text": new FormMessage( null, "JMuestraDatos.label9.text" )
 							"font": new java.awt.Font( "Tahoma", 1, 16 )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/record_64.png" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/usb_128.png" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
 							"gridY": 3
@@ -122,7 +122,7 @@ new FormModel {
 							name: "label10"
 							"text": new FormMessage( null, "JMuestraDatos.label10.text" )
 							"font": new java.awt.Font( "Tahoma", 1, 16 )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/check_64.png" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/briefcase_128.png" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 11
 							"gridY": 3
@@ -131,6 +131,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label3"
 							"text": new FormMessage( null, "JMuestraDatos.label3.text" )
+							"font": &Font0 new java.awt.Font( "Tahoma", 1, 14 )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridY": 5
 							"gridX": 3
@@ -145,6 +146,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label11"
 							"text": new FormMessage( null, "JMuestraDatos.label11.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 11
 							"gridY": 5
@@ -159,6 +161,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label4"
 							"text": new FormMessage( null, "JMuestraDatos.label4.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridY": 7
 							"gridX": 3
@@ -173,6 +176,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label12"
 							"text": new FormMessage( null, "JMuestraDatos.label12.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 11
 							"gridY": 7
@@ -187,6 +191,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label2"
 							"text": new FormMessage( null, "JMuestraDatos.label2.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridY": 9
 							"gridX": 3
@@ -201,6 +206,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label13"
 							"text": new FormMessage( null, "JMuestraDatos.label13.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 11
 							"gridY": 9
@@ -215,6 +221,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label5"
 							"text": new FormMessage( null, "JMuestraDatos.label5.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridY": 11
 							"gridX": 3
@@ -229,6 +236,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label14"
 							"text": new FormMessage( null, "JMuestraDatos.label14.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 11
 							"gridY": 11
@@ -243,6 +251,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label6"
 							"text": new FormMessage( null, "JMuestraDatos.label6.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridY": 13
 							"gridX": 3
@@ -257,6 +266,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label7"
 							"text": new FormMessage( null, "JMuestraDatos.label7.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridY": 15
 							"gridX": 3
@@ -271,6 +281,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "button1"
 							"text": new FormMessage( null, "JMuestraDatos.button1.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
 							"gridY": 17
@@ -279,6 +290,7 @@ new FormModel {
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "button2"
 							"text": new FormMessage( null, "JMuestraDatos.button2.text" )
+							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 11
 							"gridY": 17
@@ -425,7 +437,7 @@ new FormModel {
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 25, 0 )
-			"size": new java.awt.Dimension( 705, 630 )
+			"size": new java.awt.Dimension( 740, 630 )
 		} )
 	}
 }
