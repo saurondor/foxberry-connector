@@ -280,7 +280,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			JReadTags readTag = new JReadTags(this, true);
 			readTag.setVisible(true);
 		} else {
-
+			JOptionPane.showConfirmDialog(this,
+					"Se debe conectar a un lector primero",
+					"Sin conexión a lectores", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -290,7 +292,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			JProgramTags programTag = new JProgramTags(this, true);
 			programTag.setVisible(true);
 		} else {
-
+			JOptionPane.showConfirmDialog(this,
+					"Se debe conectar a un lector primero",
+					"Sin conexión a lectores", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -300,7 +304,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			JLoadTimeReadings loadReadings = new JLoadTimeReadings();
 			loadReadings.setVisible(true);
 		} else {
-
+			JOptionPane.showConfirmDialog(this,
+					"Se debe conectar a un lector primero",
+					"Sin conexión a lectores", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -308,7 +314,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		if (ReaderContext.isFoxberryConnected()
 				|| (ReaderContext.isUsbConnected())) {
 		} else {
-
+			JOptionPane.showConfirmDialog(this,
+					"Se debe conectar a un lector primero",
+					"Sin conexión a lectores", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
