@@ -9,6 +9,8 @@ package com.tiempometa.muestradatos;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
@@ -249,6 +251,18 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 						"Error de conexión: " + e1.getMessage(), "Error USB",
 						JOptionPane.ERROR_MESSAGE);
 			}
+		}
+	}
+
+	private void boxConnectButtonActionPerformed(ActionEvent e) {
+		try {
+			ReaderContext.connectFoxberry();
+		} catch (UnknownHostException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 
@@ -690,6 +704,12 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					//---- boxConnectButton ----
 					boxConnectButton.setText(bundle.getString("JMuestraDatos.boxConnectButton.text"));
 					boxConnectButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+					boxConnectButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							boxConnectButtonActionPerformed(e);
+						}
+					});
 					panel2.add(boxConnectButton, cc.xywh(9, 17, 3, 1));
 				}
 				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel2.tab.title"), panel2);

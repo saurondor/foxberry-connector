@@ -343,4 +343,9 @@ public class ReaderContext {
 		foxberryReader.clear();
 		
 	}
+
+	public static void connectFoxberry() throws UnknownHostException, IOException {
+		connectFoxberry(getSettings().getFoxberryReaderAddress(), 10201, getSettings().getPreferredReader(), getSettings().getPreferredAntenna());
+		
+	}
 }

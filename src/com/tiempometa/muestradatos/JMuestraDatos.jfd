@@ -292,6 +292,7 @@ new FormModel {
 							name: "boxConnectButton"
 							"text": new FormMessage( null, "JMuestraDatos.boxConnectButton.text" )
 							"font": #Font0
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "boxConnectButtonActionPerformed", true ) )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 9
 							"gridY": 17
