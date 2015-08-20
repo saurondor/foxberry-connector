@@ -88,14 +88,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				}
 			}
 		});
-		readerStatusLabel.setText("Desconectado");
-		readPowerLabel.setText("ND");
-		writePowerLevel.setText("ND");
-		rssiLevelLabel.setText("ND");
-		ReaderContext.loadSettings();
-		regionLabel.setText(ReaderContext.getSettings().getUsbRegion());
-		readerPortLabel.setText(ReaderContext.getSettings().getUsbPort());
-		databaseLabel.setText(ReaderContext.getSettings().getDatabaseName());
+		loadSettings();
 		ReaderContext.addReadingListener(this);
 		ReaderContext.addReaderStatusListener(this);
 	}
@@ -146,8 +139,21 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	}
 
 	private void configMenuItemActionPerformed(ActionEvent e) {
-		JConfigDialog configDialog = new JConfigDialog(this);
+		JConfigDialog configDialog = new JConfigDialog(this, true);
 		configDialog.setVisible(true);
+		loadSettings();
+	}
+
+	private void loadSettings() {
+		readerStatusLabel.setText("Desconectado");
+		readPowerLabel.setText("ND");
+		writePowerLevel.setText("ND");
+		rssiLevelLabel.setText("ND");
+		ReaderContext.loadSettings();
+		regionLabel.setText(ReaderContext.getSettings().getUsbRegion());
+		readerPortLabel.setText(ReaderContext.getSettings().getUsbPort());
+		databaseLabel.setText(ReaderContext.getSettings().getDatabaseName());
+		
 	}
 
 	private void menuItem2ActionPerformed(ActionEvent e) {

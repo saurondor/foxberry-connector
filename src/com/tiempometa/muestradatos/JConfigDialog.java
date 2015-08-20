@@ -82,15 +82,15 @@ public class JConfigDialog extends JDialog {
 		ReaderContext.saveSettings();
 	}
 
-	public JConfigDialog(Frame owner) {
-		super(owner);
+	public JConfigDialog(Frame owner, boolean modal) {
+		super(owner, modal);
 		initComponents();
 		loadSettings();
 		setReaders();
 	}
 
-	public JConfigDialog(Dialog owner) {
-		super(owner);
+	public JConfigDialog(Dialog owner, boolean modal) {
+		super(owner, modal);
 		initComponents();
 		loadSettings();
 		setReaders();
