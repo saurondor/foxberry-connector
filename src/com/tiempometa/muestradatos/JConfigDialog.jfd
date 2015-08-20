@@ -139,14 +139,7 @@ new FormModel {
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 15
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "readerBoxConnectButton"
-						"text": new FormMessage( null, "JConfigDialog.readerBoxConnectButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "readerBoxConnectButtonActionPerformed", true ) )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
-						"gridY": 15
+						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label3"
@@ -198,14 +191,7 @@ new FormModel {
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 19
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "usbReaderConnectButton"
-						"text": new FormMessage( null, "JConfigDialog.usbReaderConnectButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "usbReaderConnectButtonActionPerformed", true ) )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
-						"gridY": 19
+						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label1"
@@ -232,14 +218,7 @@ new FormModel {
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 21
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "usbReaderSetRegionButton"
-						"text": new FormMessage( null, "JConfigDialog.usbReaderSetRegionButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "usbReaderSetRegionButtonActionPerformed", true ) )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
-						"gridY": 21
+						"gridWidth": 3
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
 					"value": "North"
