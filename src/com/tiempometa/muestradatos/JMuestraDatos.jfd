@@ -13,26 +13,12 @@ new FormModel {
 			"$sizePolicy": 1
 			"defaultCloseOperation": 0
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_large_alpha.png" )
+			"resizable": false
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 				"$columnSpecs": "18dlu, labelcompgap, 343dlu"
-				"$rowSpecs": "17dlu, linegap, default, linegap, default, linegap, 17dlu"
+				"$rowSpecs": "17dlu, linegap, 17dlu"
 			} ) {
 				name: "panel5"
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "label8"
-					"text": new FormMessage( null, "JMuestraDatos.label8.text" )
-					"font": new java.awt.Font( "Tahoma", 1, 16 )
-				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-					"gridY": 3
-					"gridX": 3
-				} )
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "databaseLabel"
-					"text": new FormMessage( null, "JMuestraDatos.databaseLabel.text" )
-				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-					"gridY": 5
-					"gridX": 3
-				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "North"
 			} )
@@ -45,7 +31,7 @@ new FormModel {
 				"value": "West"
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-				"$columnSpecs": "307dlu, labelcompgap, default"
+				"$columnSpecs": "366dlu, labelcompgap, default"
 				"$rowSpecs": "default, linegap, default, linegap, default"
 			} ) {
 				name: "panel4"
@@ -53,110 +39,94 @@ new FormModel {
 					name: "tabbedPane1"
 					"font": new java.awt.Font( "Tahoma", 1, 16 )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-						"$columnSpecs": "15dlu, labelcompgap, 120dlu, labelcompgap, 20dlu, labelcompgap, 120dlu"
+						"$columnSpecs": "15dlu, labelcompgap, 120dlu, labelcompgap, 47dlu, labelcompgap, 130dlu, labelcompgap, 28dlu"
 						"$rowSpecs": "default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 					} ) {
 						name: "panel1"
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "button3"
 							"text": new FormMessage( null, "JMuestraDatos.button3.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_small.png" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/check_64.png" )
 							"horizontalAlignment": 2
+							"rolloverIcon": sfield com.jformdesigner.model.FormObject NULL_VALUE
+							"pressedIcon": sfield com.jformdesigner.model.FormObject NULL_VALUE
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
 							"gridY": 3
-						} )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button8"
-							"text": new FormMessage( null, "JMuestraDatos.button8.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_small.png" )
-							"horizontalAlignment": 2
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 7
-							"gridY": 3
-						} )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button4"
-							"text": new FormMessage( null, "JMuestraDatos.button4.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_small.png" )
-							"horizontalAlignment": 2
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 3
-							"gridY": 5
-						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label19"
-							"text": new FormMessage( null, "JMuestraDatos.label19.text" )
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 7
-							"gridY": 5
-						} )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button5"
-							"text": new FormMessage( null, "JMuestraDatos.button5.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_small.png" )
-							"horizontalAlignment": 2
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 3
-							"gridY": 7
-						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label20"
-							"text": new FormMessage( null, "JMuestraDatos.label20.text" )
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 7
-							"gridY": 7
+							"gridWidth": 3
 						} )
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "button6"
 							"text": new FormMessage( null, "JMuestraDatos.button6.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_small.png" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/load_64.png" )
 							"horizontalAlignment": 2
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 3
-							"gridY": 9
-						} )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button9"
-							"text": new FormMessage( null, "JMuestraDatos.button9.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_small.png" )
-							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 7
-							"gridY": 9
+							"gridY": 3
+							"gridWidth": 3
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "button4"
+							"text": new FormMessage( null, "JMuestraDatos.button4.text" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/scan_64.png" )
+							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 5
+							"gridWidth": 3
 						} )
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "button7"
 							"text": new FormMessage( null, "JMuestraDatos.button7.text" )
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_small.png" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/counter_64.png" )
 							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 7
+							"gridY": 5
+							"gridWidth": 3
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "button5"
+							"text": new FormMessage( null, "JMuestraDatos.button5.text" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/record_64.png" )
+							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
-							"gridY": 11
+							"gridY": 7
+							"gridWidth": 3
 						} )
 					}, new FormLayoutConstraints( null ) {
 						"title": new FormMessage( null, "JMuestraDatos.panel1.tab.title" )
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-						"$columnSpecs": "default, labelcompgap, default, labelcompgap, default, labelcompgap, default, labelcompgap, default, labelcompgap, default, labelcompgap, default"
-						"$rowSpecs": "default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+						"$columnSpecs": "25dlu, labelcompgap, 69dlu, labelcompgap, 55dlu, labelcompgap, default, labelcompgap, default, labelcompgap, 57dlu, labelcompgap, 73dlu"
+						"$rowSpecs": "20dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 					} ) {
 						name: "panel2"
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label9"
 							"text": new FormMessage( null, "JMuestraDatos.label9.text" )
 							"font": new java.awt.Font( "Tahoma", 1, 16 )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/record_64.png" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
 							"gridY": 3
+							"gridWidth": 3
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label10"
 							"text": new FormMessage( null, "JMuestraDatos.label10.text" )
 							"font": new java.awt.Font( "Tahoma", 1, 16 )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/check_64.png" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 11
 							"gridY": 3
+							"gridWidth": 3
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label3"
@@ -302,8 +272,9 @@ new FormModel {
 							name: "button1"
 							"text": new FormMessage( null, "JMuestraDatos.button1.text" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 5
+							"gridX": 3
 							"gridY": 17
+							"gridWidth": 3
 						} )
 						add( new FormComponent( "javax.swing.JButton" ) {
 							name: "button2"
@@ -311,25 +282,81 @@ new FormModel {
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 11
 							"gridY": 17
+							"gridWidth": 3
 						} )
 					}, new FormLayoutConstraints( null ) {
 						"title": new FormMessage( null, "JMuestraDatos.panel2.tab.title" )
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
+						"$columnSpecs": "20dlu, labelcompgap, 160dlu, labelcompgap, 160dlu"
+						"$rowSpecs": "default, linegap, default, linegap, default, linegap, default, linegap, default"
+					} ) {
+						name: "panel8"
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "button9"
+							"text": new FormMessage( null, "JMuestraDatos.button9.text" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/set_time_64.png" )
+							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridY": 3
+							"gridX": 3
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "button8"
+							"text": new FormMessage( null, "JMuestraDatos.button8.text" )
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/get_time_64.png" )
+							"horizontalAlignment": 2
+							"font": new java.awt.Font( "Tahoma", 1, 16 )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridY": 3
+							"gridX": 5
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label20"
+							"text": new FormMessage( null, "JMuestraDatos.label20.text" )
+							"font": new java.awt.Font( "Tahoma", 1, 14 )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 5
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label19"
+							"text": new FormMessage( null, "JMuestraDatos.label19.text" )
+							"font": new java.awt.Font( "Tahoma", 1, 14 )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridY": 5
+							"gridX": 5
+						} )
+					}, new FormLayoutConstraints( null ) {
+						"title": new FormMessage( null, "JMuestraDatos.panel8.tab.title" )
 					} )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-				"$columnSpecs": "default, labelcompgap, default"
+				"$columnSpecs": "default, labelcompgap, 354dlu"
 				"$rowSpecs": "default, linegap, default, linegap, default"
 			} ) {
 				name: "panel6"
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label21"
 					"text": new FormMessage( null, "JMuestraDatos.label21.text" )
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label8"
+					"text": new FormMessage( null, "JMuestraDatos.label8.text" )
+					"font": new java.awt.Font( "Tahoma", 1, 16 )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-					"gridX": 3
-					"gridY": 1
+					"gridY": 3
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "databaseLabel"
+					"text": new FormMessage( null, "JMuestraDatos.databaseLabel.text" )
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+					"gridY": 5
+					"gridWidth": 3
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "South"
@@ -398,7 +425,7 @@ new FormModel {
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 25, 0 )
-			"size": new java.awt.Dimension( 705, 545 )
+			"size": new java.awt.Dimension( 705, 630 )
 		} )
 	}
 }

@@ -211,21 +211,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		menu3 = new JMenu();
 		aboutUsMenuItem = new JMenuItem();
 		panel5 = new JPanel();
-		label8 = new JLabel();
-		databaseLabel = new JLabel();
 		panel3 = new JPanel();
 		panel4 = new JPanel();
 		tabbedPane1 = new JTabbedPane();
 		panel1 = new JPanel();
 		button3 = new JButton();
-		button8 = new JButton();
-		button4 = new JButton();
-		label19 = new JLabel();
-		button5 = new JButton();
-		label20 = new JLabel();
 		button6 = new JButton();
-		button9 = new JButton();
+		button4 = new JButton();
 		button7 = new JButton();
+		button5 = new JButton();
 		panel2 = new JPanel();
 		label9 = new JLabel();
 		label10 = new JLabel();
@@ -251,8 +245,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		writePowerLevel = new JLabel();
 		button1 = new JButton();
 		button2 = new JButton();
+		panel8 = new JPanel();
+		button9 = new JButton();
+		button8 = new JButton();
+		label20 = new JLabel();
+		label19 = new JLabel();
 		panel6 = new JPanel();
 		label21 = new JLabel();
+		label8 = new JLabel();
+		databaseLabel = new JLabel();
 		panel7 = new JPanel();
 		CellConstraints cc = new CellConstraints();
 
@@ -260,6 +261,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		setTitle(bundle.getString("JMuestraDatos.this.title"));
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")).getImage());
+		setResizable(false);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
@@ -369,21 +371,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				new RowSpec[] {
 					new RowSpec(Sizes.dluY(17)),
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
 					new RowSpec(Sizes.dluY(17))
 				}));
-
-			//---- label8 ----
-			label8.setText(bundle.getString("JMuestraDatos.label8.text"));
-			label8.setFont(new Font("Tahoma", Font.BOLD, 16));
-			panel5.add(label8, cc.xy(3, 3));
-
-			//---- databaseLabel ----
-			databaseLabel.setText(bundle.getString("JMuestraDatos.databaseLabel.text"));
-			panel5.add(databaseLabel, cc.xy(3, 5));
 		}
 		contentPane.add(panel5, BorderLayout.NORTH);
 
@@ -409,7 +398,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		{
 			panel4.setLayout(new FormLayout(
 				new ColumnSpec[] {
-					new ColumnSpec(Sizes.dluX(307)),
+					new ColumnSpec(Sizes.dluX(366)),
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 					FormFactory.DEFAULT_COLSPEC
 				},
@@ -433,9 +422,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(120)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(Sizes.dluX(20)),
+							new ColumnSpec(Sizes.dluX(47)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(Sizes.dluX(120))
+							new ColumnSpec(Sizes.dluX(130)),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(Sizes.dluX(28))
 						},
 						new RowSpec[] {
 							FormFactory.DEFAULT_ROWSPEC,
@@ -453,53 +444,40 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- button3 ----
 					button3.setText(bundle.getString("JMuestraDatos.button3.text"));
-					button3.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button3.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/check_64.png")));
 					button3.setHorizontalAlignment(SwingConstants.LEFT);
-					panel1.add(button3, cc.xy(3, 3));
-
-					//---- button8 ----
-					button8.setText(bundle.getString("JMuestraDatos.button8.text"));
-					button8.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
-					button8.setHorizontalAlignment(SwingConstants.LEFT);
-					panel1.add(button8, cc.xy(7, 3));
-
-					//---- button4 ----
-					button4.setText(bundle.getString("JMuestraDatos.button4.text"));
-					button4.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
-					button4.setHorizontalAlignment(SwingConstants.LEFT);
-					panel1.add(button4, cc.xy(3, 5));
-
-					//---- label19 ----
-					label19.setText(bundle.getString("JMuestraDatos.label19.text"));
-					panel1.add(label19, cc.xy(7, 5));
-
-					//---- button5 ----
-					button5.setText(bundle.getString("JMuestraDatos.button5.text"));
-					button5.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
-					button5.setHorizontalAlignment(SwingConstants.LEFT);
-					panel1.add(button5, cc.xy(3, 7));
-
-					//---- label20 ----
-					label20.setText(bundle.getString("JMuestraDatos.label20.text"));
-					panel1.add(label20, cc.xy(7, 7));
+					button3.setRolloverIcon(null);
+					button3.setPressedIcon(null);
+					button3.setFont(new Font("Tahoma", Font.BOLD, 16));
+					panel1.add(button3, cc.xywh(3, 3, 3, 1));
 
 					//---- button6 ----
 					button6.setText(bundle.getString("JMuestraDatos.button6.text"));
-					button6.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button6.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/load_64.png")));
 					button6.setHorizontalAlignment(SwingConstants.LEFT);
-					panel1.add(button6, cc.xy(3, 9));
+					button6.setFont(new Font("Tahoma", Font.BOLD, 16));
+					panel1.add(button6, cc.xywh(7, 3, 3, 1));
 
-					//---- button9 ----
-					button9.setText(bundle.getString("JMuestraDatos.button9.text"));
-					button9.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
-					button9.setHorizontalAlignment(SwingConstants.LEFT);
-					panel1.add(button9, cc.xy(7, 9));
+					//---- button4 ----
+					button4.setText(bundle.getString("JMuestraDatos.button4.text"));
+					button4.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/scan_64.png")));
+					button4.setHorizontalAlignment(SwingConstants.LEFT);
+					button4.setFont(new Font("Tahoma", Font.BOLD, 16));
+					panel1.add(button4, cc.xywh(3, 5, 3, 1));
 
 					//---- button7 ----
 					button7.setText(bundle.getString("JMuestraDatos.button7.text"));
-					button7.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_small.png")));
+					button7.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/counter_64.png")));
 					button7.setHorizontalAlignment(SwingConstants.LEFT);
-					panel1.add(button7, cc.xy(3, 11));
+					button7.setFont(new Font("Tahoma", Font.BOLD, 16));
+					panel1.add(button7, cc.xywh(7, 5, 3, 1));
+
+					//---- button5 ----
+					button5.setText(bundle.getString("JMuestraDatos.button5.text"));
+					button5.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/record_64.png")));
+					button5.setHorizontalAlignment(SwingConstants.LEFT);
+					button5.setFont(new Font("Tahoma", Font.BOLD, 16));
+					panel1.add(button5, cc.xywh(3, 7, 3, 1));
 				}
 				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel1.tab.title"), panel1);
 
@@ -507,22 +485,22 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				{
 					panel2.setLayout(new FormLayout(
 						new ColumnSpec[] {
-							FormFactory.DEFAULT_COLSPEC,
+							new ColumnSpec(Sizes.dluX(25)),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(Sizes.dluX(69)),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(Sizes.dluX(55)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							FormFactory.DEFAULT_COLSPEC,
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							FormFactory.DEFAULT_COLSPEC,
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							FormFactory.DEFAULT_COLSPEC,
+							new ColumnSpec(Sizes.dluX(57)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							FormFactory.DEFAULT_COLSPEC,
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							FormFactory.DEFAULT_COLSPEC,
-							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							FormFactory.DEFAULT_COLSPEC
+							new ColumnSpec(Sizes.dluX(73))
 						},
 						new RowSpec[] {
-							FormFactory.DEFAULT_ROWSPEC,
+							new RowSpec(Sizes.dluY(20)),
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
 							FormFactory.LINE_GAP_ROWSPEC,
@@ -544,12 +522,14 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					//---- label9 ----
 					label9.setText(bundle.getString("JMuestraDatos.label9.text"));
 					label9.setFont(new Font("Tahoma", Font.BOLD, 16));
-					panel2.add(label9, cc.xy(3, 3));
+					label9.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/record_64.png")));
+					panel2.add(label9, cc.xywh(3, 3, 3, 1));
 
 					//---- label10 ----
 					label10.setText(bundle.getString("JMuestraDatos.label10.text"));
 					label10.setFont(new Font("Tahoma", Font.BOLD, 16));
-					panel2.add(label10, cc.xy(11, 3));
+					label10.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/check_64.png")));
+					panel2.add(label10, cc.xywh(11, 3, 3, 1));
 
 					//---- label3 ----
 					label3.setText(bundle.getString("JMuestraDatos.label3.text"));
@@ -633,13 +613,61 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 					//---- button1 ----
 					button1.setText(bundle.getString("JMuestraDatos.button1.text"));
-					panel2.add(button1, cc.xy(5, 17));
+					panel2.add(button1, cc.xywh(3, 17, 3, 1));
 
 					//---- button2 ----
 					button2.setText(bundle.getString("JMuestraDatos.button2.text"));
-					panel2.add(button2, cc.xy(11, 17));
+					panel2.add(button2, cc.xywh(11, 17, 3, 1));
 				}
 				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel2.tab.title"), panel2);
+
+				//======== panel8 ========
+				{
+					panel8.setLayout(new FormLayout(
+						new ColumnSpec[] {
+							new ColumnSpec(Sizes.dluX(20)),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(Sizes.dluX(160)),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(Sizes.dluX(160))
+						},
+						new RowSpec[] {
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC
+						}));
+
+					//---- button9 ----
+					button9.setText(bundle.getString("JMuestraDatos.button9.text"));
+					button9.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/set_time_64.png")));
+					button9.setHorizontalAlignment(SwingConstants.LEFT);
+					button9.setFont(new Font("Tahoma", Font.BOLD, 16));
+					panel8.add(button9, cc.xy(3, 3));
+
+					//---- button8 ----
+					button8.setText(bundle.getString("JMuestraDatos.button8.text"));
+					button8.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/get_time_64.png")));
+					button8.setHorizontalAlignment(SwingConstants.LEFT);
+					button8.setFont(new Font("Tahoma", Font.BOLD, 16));
+					panel8.add(button8, cc.xy(5, 3));
+
+					//---- label20 ----
+					label20.setText(bundle.getString("JMuestraDatos.label20.text"));
+					label20.setFont(new Font("Tahoma", Font.BOLD, 14));
+					panel8.add(label20, cc.xy(3, 5));
+
+					//---- label19 ----
+					label19.setText(bundle.getString("JMuestraDatos.label19.text"));
+					label19.setFont(new Font("Tahoma", Font.BOLD, 14));
+					panel8.add(label19, cc.xy(5, 5));
+				}
+				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel8.tab.title"), panel8);
 			}
 			panel4.add(tabbedPane1, cc.xy(1, 1));
 		}
@@ -651,7 +679,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				new ColumnSpec[] {
 					FormFactory.DEFAULT_COLSPEC,
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-					FormFactory.DEFAULT_COLSPEC
+					new ColumnSpec(Sizes.dluX(354))
 				},
 				new RowSpec[] {
 					FormFactory.DEFAULT_ROWSPEC,
@@ -663,7 +691,16 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 			//---- label21 ----
 			label21.setText(bundle.getString("JMuestraDatos.label21.text"));
-			panel6.add(label21, cc.xy(3, 1));
+			panel6.add(label21, cc.xy(1, 1));
+
+			//---- label8 ----
+			label8.setText(bundle.getString("JMuestraDatos.label8.text"));
+			label8.setFont(new Font("Tahoma", Font.BOLD, 16));
+			panel6.add(label8, cc.xy(1, 3));
+
+			//---- databaseLabel ----
+			databaseLabel.setText(bundle.getString("JMuestraDatos.databaseLabel.text"));
+			panel6.add(databaseLabel, cc.xywh(1, 5, 3, 1));
 		}
 		contentPane.add(panel6, BorderLayout.SOUTH);
 
@@ -684,7 +721,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				}));
 		}
 		contentPane.add(panel7, BorderLayout.EAST);
-		setSize(705, 545);
+		setSize(705, 630);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
 	}
@@ -703,21 +740,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenu menu3;
 	private JMenuItem aboutUsMenuItem;
 	private JPanel panel5;
-	private JLabel label8;
-	private JLabel databaseLabel;
 	private JPanel panel3;
 	private JPanel panel4;
 	private JTabbedPane tabbedPane1;
 	private JPanel panel1;
 	private JButton button3;
-	private JButton button8;
-	private JButton button4;
-	private JLabel label19;
-	private JButton button5;
-	private JLabel label20;
 	private JButton button6;
-	private JButton button9;
+	private JButton button4;
 	private JButton button7;
+	private JButton button5;
 	private JPanel panel2;
 	private JLabel label9;
 	private JLabel label10;
@@ -743,8 +774,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JLabel writePowerLevel;
 	private JButton button1;
 	private JButton button2;
+	private JPanel panel8;
+	private JButton button9;
+	private JButton button8;
+	private JLabel label20;
+	private JLabel label19;
 	private JPanel panel6;
 	private JLabel label21;
+	private JLabel label8;
+	private JLabel databaseLabel;
 	private JPanel panel7;
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
