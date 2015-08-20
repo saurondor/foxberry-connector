@@ -32,15 +32,15 @@ new FormModel {
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 				"$columnSpecs": "410dlu, labelcompgap, default"
-				"$rowSpecs": "default, linegap, default, linegap, default"
+				"$rowSpecs": "245dlu"
 			} ) {
 				name: "panel4"
 				add( new FormContainer( "javax.swing.JTabbedPane", new FormLayoutManager( class javax.swing.JTabbedPane ) ) {
 					name: "tabbedPane1"
 					"font": new java.awt.Font( "Tahoma", 1, 16 )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-						"$columnSpecs": "15dlu, labelcompgap, 120dlu, labelcompgap, 47dlu, labelcompgap, 130dlu, labelcompgap, 28dlu"
-						"$rowSpecs": "default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+						"$columnSpecs": "35dlu, labelcompgap, 120dlu, labelcompgap, 47dlu, labelcompgap, 130dlu, labelcompgap, 28dlu"
+						"$rowSpecs": "15dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 					} ) {
 						name: "panel1"
 						add( new FormComponent( "javax.swing.JButton" ) {
@@ -105,7 +105,7 @@ new FormModel {
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 						"$columnSpecs": "25dlu, labelcompgap, 89dlu, labelcompgap, 73dlu, labelcompgap, 17dlu, labelcompgap, 84dlu, labelcompgap, 80dlu"
-						"$rowSpecs": "20dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+						"$rowSpecs": "20dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, 8dlu"
 					} ) {
 						name: "panel2"
 						add( new FormComponent( "javax.swing.JLabel" ) {
@@ -302,8 +302,8 @@ new FormModel {
 						"title": new FormMessage( null, "JMuestraDatos.panel2.tab.title" )
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-						"$columnSpecs": "20dlu, labelcompgap, 160dlu, labelcompgap, 160dlu"
-						"$rowSpecs": "default, linegap, default, linegap, default, linegap, default, linegap, default"
+						"$columnSpecs": "35dlu, labelcompgap, 160dlu, labelcompgap, 160dlu"
+						"$rowSpecs": "15dlu, linegap, default, linegap, default, linegap, default, linegap, default"
 					} ) {
 						name: "panel8"
 						add( new FormComponent( "javax.swing.JButton" ) {
@@ -350,21 +350,23 @@ new FormModel {
 				"value": "Center"
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-				"$columnSpecs": "default, labelcompgap, default, labelcompgap, 65dlu, labelcompgap, default, labelcompgap, 65dlu, labelcompgap, 222dlu"
-				"$rowSpecs": "default, linegap, default, linegap, default"
+				"$columnSpecs": "17dlu, labelcompgap, default, labelcompgap, default, labelcompgap, 65dlu, labelcompgap, default, labelcompgap, 65dlu, labelcompgap, 199dlu"
+				"$rowSpecs": "default, linegap, default, linegap, default, linegap, 10dlu"
 			} ) {
 				name: "panel6"
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label21"
 					"text": new FormMessage( null, "JMuestraDatos.label21.text" )
 					"font": new java.awt.Font( "Tahoma", 1, 16 )
-				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) )
+				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+					"gridX": 3
+				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label1"
 					"text": new FormMessage( null, "JMuestraDatos.label1.text" )
 					"font": new java.awt.Font( "Tahoma", 0, 14 )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-					"gridX": 3
+					"gridX": 5
 					"gridY": 1
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
@@ -372,7 +374,7 @@ new FormModel {
 					"text": new FormMessage( null, "JMuestraDatos.usbStatusLabel.text" )
 					"font": new java.awt.Font( "Tahoma", 0, 14 )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-					"gridX": 5
+					"gridX": 7
 					"gridY": 1
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
@@ -380,7 +382,7 @@ new FormModel {
 					"text": new FormMessage( null, "JMuestraDatos.label16.text" )
 					"font": new java.awt.Font( "Tahoma", 0, 14 )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-					"gridX": 7
+					"gridX": 9
 					"gridY": 1
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
@@ -388,7 +390,7 @@ new FormModel {
 					"text": new FormMessage( null, "JMuestraDatos.tcpStatusLabel.text" )
 					"font": new java.awt.Font( "Tahoma", 0, 14 )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-					"gridX": 9
+					"gridX": 11
 					"gridY": 1
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
@@ -397,6 +399,7 @@ new FormModel {
 					"font": new java.awt.Font( "Tahoma", 1, 16 )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 					"gridY": 3
+					"gridX": 3
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "databaseLabel"
@@ -404,6 +407,7 @@ new FormModel {
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 					"gridY": 5
 					"gridWidth": 11
+					"gridX": 3
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "South"
@@ -472,7 +476,7 @@ new FormModel {
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 25, 0 )
-			"size": new java.awt.Dimension( 740, 630 )
+			"size": new java.awt.Dimension( 740, 620 )
 		} )
 	}
 }

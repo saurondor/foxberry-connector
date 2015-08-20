@@ -502,13 +502,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 					FormFactory.DEFAULT_COLSPEC
 				},
-				new RowSpec[] {
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC
-				}));
+				RowSpec.decodeSpecs("245dlu")));
 
 			//======== tabbedPane1 ========
 			{
@@ -518,7 +512,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				{
 					panel1.setLayout(new FormLayout(
 						new ColumnSpec[] {
-							new ColumnSpec(Sizes.dluX(15)),
+							new ColumnSpec(Sizes.dluX(35)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(120)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
@@ -529,7 +523,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							new ColumnSpec(Sizes.dluX(28))
 						},
 						new RowSpec[] {
-							FormFactory.DEFAULT_ROWSPEC,
+							new RowSpec(Sizes.dluY(15)),
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
 							FormFactory.LINE_GAP_ROWSPEC,
@@ -614,7 +608,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
 							FormFactory.LINE_GAP_ROWSPEC,
-							FormFactory.DEFAULT_ROWSPEC
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							new RowSpec(Sizes.DLUY8)
 						}));
 
 					//---- label9 ----
@@ -747,14 +743,14 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				{
 					panel8.setLayout(new FormLayout(
 						new ColumnSpec[] {
-							new ColumnSpec(Sizes.dluX(20)),
+							new ColumnSpec(Sizes.dluX(35)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(160)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(160))
 						},
 						new RowSpec[] {
-							FormFactory.DEFAULT_ROWSPEC,
+							new RowSpec(Sizes.dluY(15)),
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
 							FormFactory.LINE_GAP_ROWSPEC,
@@ -799,6 +795,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		{
 			panel6.setLayout(new FormLayout(
 				new ColumnSpec[] {
+					new ColumnSpec(Sizes.dluX(17)),
+					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 					FormFactory.DEFAULT_COLSPEC,
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 					FormFactory.DEFAULT_COLSPEC,
@@ -809,49 +807,51 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 					new ColumnSpec(Sizes.dluX(65)),
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-					new ColumnSpec(Sizes.dluX(222))
+					new ColumnSpec(Sizes.dluX(199))
 				},
 				new RowSpec[] {
 					FormFactory.DEFAULT_ROWSPEC,
 					FormFactory.LINE_GAP_ROWSPEC,
 					FormFactory.DEFAULT_ROWSPEC,
 					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC
+					FormFactory.DEFAULT_ROWSPEC,
+					FormFactory.LINE_GAP_ROWSPEC,
+					new RowSpec(Sizes.dluY(10))
 				}));
 
 			//---- label21 ----
 			label21.setText(bundle.getString("JMuestraDatos.label21.text"));
 			label21.setFont(new Font("Tahoma", Font.BOLD, 16));
-			panel6.add(label21, cc.xy(1, 1));
+			panel6.add(label21, cc.xy(3, 1));
 
 			//---- label1 ----
 			label1.setText(bundle.getString("JMuestraDatos.label1.text"));
 			label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			panel6.add(label1, cc.xy(3, 1));
+			panel6.add(label1, cc.xy(5, 1));
 
 			//---- usbStatusLabel ----
 			usbStatusLabel.setText(bundle.getString("JMuestraDatos.usbStatusLabel.text"));
 			usbStatusLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			panel6.add(usbStatusLabel, cc.xy(5, 1));
+			panel6.add(usbStatusLabel, cc.xy(7, 1));
 
 			//---- label16 ----
 			label16.setText(bundle.getString("JMuestraDatos.label16.text"));
 			label16.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			panel6.add(label16, cc.xy(7, 1));
+			panel6.add(label16, cc.xy(9, 1));
 
 			//---- tcpStatusLabel ----
 			tcpStatusLabel.setText(bundle.getString("JMuestraDatos.tcpStatusLabel.text"));
 			tcpStatusLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			panel6.add(tcpStatusLabel, cc.xy(9, 1));
+			panel6.add(tcpStatusLabel, cc.xy(11, 1));
 
 			//---- label8 ----
 			label8.setText(bundle.getString("JMuestraDatos.label8.text"));
 			label8.setFont(new Font("Tahoma", Font.BOLD, 16));
-			panel6.add(label8, cc.xy(1, 3));
+			panel6.add(label8, cc.xy(3, 3));
 
 			//---- databaseLabel ----
 			databaseLabel.setText(bundle.getString("JMuestraDatos.databaseLabel.text"));
-			panel6.add(databaseLabel, cc.xywh(1, 5, 11, 1));
+			panel6.add(databaseLabel, cc.xywh(3, 5, 11, 1));
 		}
 		contentPane.add(panel6, BorderLayout.SOUTH);
 
@@ -872,7 +872,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				}));
 		}
 		contentPane.add(panel7, BorderLayout.EAST);
-		setSize(740, 630);
+		setSize(740, 620);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
 	}
