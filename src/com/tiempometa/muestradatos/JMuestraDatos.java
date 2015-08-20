@@ -88,13 +88,13 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				}
 			}
 		});
-		readerPortLabel.setText("");
 		readerStatusLabel.setText("Desconectado");
-		readPowerLabel.setText("0");
-		writePowerLevel.setText("0");
-		regionLabel.setText("");
+		readPowerLabel.setText("ND");
+		writePowerLevel.setText("ND");
 		rssiLevelLabel.setText("ND");
 		ReaderContext.loadSettings();
+		regionLabel.setText(ReaderContext.getSettings().getUsbRegion());
+		readerPortLabel.setText(ReaderContext.getSettings().getUsbPort());
 		databaseLabel.setText(ReaderContext.getSettings().getDatabaseName());
 		ReaderContext.addReadingListener(this);
 		ReaderContext.addReaderStatusListener(this);
@@ -195,6 +195,31 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		loadReadings.setVisible(true);
 	}
 
+	private void usbConnectButtonActionPerformed(ActionEvent e) {
+		if (ReaderContext.isUsbConnected()) {
+			if (ReaderContext.isUsbReading()) {
+				JOptionPane.showMessageDialog(this, "Debes detener todas las lecturas antes de desconectar el lector", "Lectura activa", JOptionPane.WARNING_MESSAGE);
+			} else {
+				try {
+					ReaderContext.disconnectUsbReader();
+					JOptionPane.showMessageDialog(this, "Se desconectó con éxito al lector usb", "Desonexión exitosa", JOptionPane.INFORMATION_MESSAGE);
+					usbConnectButton.setText("Conectar");
+				} catch (ReaderException e1) {
+					JOptionPane.showMessageDialog(this, "Error de desconexión: "+e1.getMessage(), "Error USB", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		} else {
+			try {
+				ReaderContext.connectUsbReader(ReaderContext.getSettings().getUsbPort());
+				JOptionPane.showMessageDialog(this, "Se conectó con éxito al lector usb", "Conexión exitosa", JOptionPane.INFORMATION_MESSAGE);
+				usbConnectButton.setText("Desonectar");
+			} catch (ReaderException e1) {
+				JOptionPane.showMessageDialog(this, "Error de conexión: "+e1.getMessage(), "Error USB", JOptionPane.ERROR_MESSAGE);
+			}			
+		}
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -243,8 +268,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		readPowerLabel = new JLabel();
 		label7 = new JLabel();
 		writePowerLevel = new JLabel();
-		button1 = new JButton();
-		button2 = new JButton();
+		usbConnectButton = new JButton();
+		boxConnectButton = new JButton();
 		panel8 = new JPanel();
 		button9 = new JButton();
 		button8 = new JButton();
@@ -621,15 +646,21 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					writePowerLevel.setText(bundle.getString("JMuestraDatos.writePowerLevel.text"));
 					panel2.add(writePowerLevel, cc.xy(5, 15));
 
-					//---- button1 ----
-					button1.setText(bundle.getString("JMuestraDatos.button1.text"));
-					button1.setFont(new Font("Tahoma", Font.BOLD, 14));
-					panel2.add(button1, cc.xywh(3, 17, 3, 1));
+					//---- usbConnectButton ----
+					usbConnectButton.setText(bundle.getString("JMuestraDatos.usbConnectButton.text"));
+					usbConnectButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+					usbConnectButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							usbConnectButtonActionPerformed(e);
+						}
+					});
+					panel2.add(usbConnectButton, cc.xywh(3, 17, 3, 1));
 
-					//---- button2 ----
-					button2.setText(bundle.getString("JMuestraDatos.button2.text"));
-					button2.setFont(new Font("Tahoma", Font.BOLD, 14));
-					panel2.add(button2, cc.xywh(11, 17, 3, 1));
+					//---- boxConnectButton ----
+					boxConnectButton.setText(bundle.getString("JMuestraDatos.boxConnectButton.text"));
+					boxConnectButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+					panel2.add(boxConnectButton, cc.xywh(11, 17, 3, 1));
 				}
 				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel2.tab.title"), panel2);
 
@@ -784,8 +815,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JLabel readPowerLabel;
 	private JLabel label7;
 	private JLabel writePowerLevel;
-	private JButton button1;
-	private JButton button2;
+	private JButton usbConnectButton;
+	private JButton boxConnectButton;
 	private JPanel panel8;
 	private JButton button9;
 	private JButton button8;

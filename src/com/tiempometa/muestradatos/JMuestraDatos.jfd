@@ -279,17 +279,18 @@ new FormModel {
 							"gridY": 15
 						} )
 						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button1"
-							"text": new FormMessage( null, "JMuestraDatos.button1.text" )
+							name: "usbConnectButton"
+							"text": new FormMessage( null, "JMuestraDatos.usbConnectButton.text" )
 							"font": #Font0
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "usbConnectButtonActionPerformed", true ) )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
 							"gridY": 17
 							"gridWidth": 3
 						} )
 						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button2"
-							"text": new FormMessage( null, "JMuestraDatos.button2.text" )
+							name: "boxConnectButton"
+							"text": new FormMessage( null, "JMuestraDatos.boxConnectButton.text" )
 							"font": #Font0
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 11
