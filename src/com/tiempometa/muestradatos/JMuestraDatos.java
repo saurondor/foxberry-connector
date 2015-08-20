@@ -264,20 +264,19 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				ReaderContext.disconnectFoxberry();
 				JOptionPane.showMessageDialog(this,
 						"Se desconectó con éxito de la caja",
-						"Desconexión exitosa",
-						JOptionPane.INFORMATION_MESSAGE);
+						"Desconexión exitosa", JOptionPane.INFORMATION_MESSAGE);
 				boxConnectButton.setText("Conectar");
 			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(this,
-						"Error de desconexión: " + e1.getMessage(),
-						"Error TCP", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error de desconexión: "
+						+ e1.getMessage(), "Error TCP",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
 			try {
 				ReaderContext.connectFoxberry();
 				JOptionPane.showMessageDialog(this,
-						"Se conectó con éxito a la caja",
-						"Conexión exitosa", JOptionPane.INFORMATION_MESSAGE);
+						"Se conectó con éxito a la caja", "Conexión exitosa",
+						JOptionPane.INFORMATION_MESSAGE);
 				boxConnectButton.setText("Desconectar");
 			} catch (UnknownHostException e1) {
 				JOptionPane.showMessageDialog(this,
@@ -288,6 +287,66 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 						"Error de conexión: " + e1.getMessage(), "Error TCP",
 						JOptionPane.ERROR_MESSAGE);
 			}
+		}
+	}
+
+	private void verifyDataButtonActionPerformed(ActionEvent e) {
+		if (ReaderContext.isFoxberryConnected()
+				|| (ReaderContext.isUsbConnected())) {
+			if (userDataFrame.isVisible()) {
+				userDataFrame.setVisible(false);
+				ReaderContext.removeReadingListener(userDataFrame);
+				ReaderContext.stopReading();
+			} else {
+				try {
+					ReaderContext.startReading();
+					ReaderContext.addReadingListener(userDataFrame);
+					userDataFrame.setVisible(true);
+				} catch (ReaderException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		} else {
+			JOptionPane.showConfirmDialog(this, "Se debe conectar a un lector primero", "Sin conexión a lectores", JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	private void readTagButtonActionPerformed(ActionEvent e) {
+		if (ReaderContext.isFoxberryConnected()
+				|| (ReaderContext.isUsbConnected())) {
+			JReadTags readTag = new JReadTags(this, true);
+			readTag.setVisible(true);
+		} else {
+			
+		}
+	}
+
+	private void programTagButtonActionPerformed(ActionEvent e) {
+		if (ReaderContext.isFoxberryConnected()
+				|| (ReaderContext.isUsbConnected())) {
+			JProgramTags programTag = new JProgramTags(this, true);
+			programTag.setVisible(true);
+		} else {
+			
+		}
+	}
+
+	private void loadReadingsButtonActionPerformed(ActionEvent e) {
+		if (ReaderContext.isFoxberryConnected()
+				|| (ReaderContext.isUsbConnected())) {
+			JLoadTimeReadings loadReadings = new JLoadTimeReadings();
+			loadReadings.setVisible(true);
+		} else {
+			
+		}
+	}
+
+	private void countTagsButtonActionPerformed(ActionEvent e) {
+		if (ReaderContext.isFoxberryConnected()
+				|| (ReaderContext.isUsbConnected())) {
+		} else {
+			
 		}
 	}
 
@@ -311,11 +370,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		panel4 = new JPanel();
 		tabbedPane1 = new JTabbedPane();
 		panel1 = new JPanel();
-		button3 = new JButton();
-		button6 = new JButton();
-		button4 = new JButton();
-		button7 = new JButton();
-		button5 = new JButton();
+		verifyDataButton = new JButton();
+		loadReadingsButton = new JButton();
+		readTagButton = new JButton();
+		countTagsButton = new JButton();
+		programTagButton = new JButton();
 		panel2 = new JPanel();
 		label9 = new JLabel();
 		label10 = new JLabel();
@@ -536,42 +595,72 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.DEFAULT_ROWSPEC
 						}));
 
-					//---- button3 ----
-					button3.setText(bundle.getString("JMuestraDatos.button3.text"));
-					button3.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/check_64.png")));
-					button3.setHorizontalAlignment(SwingConstants.LEFT);
-					button3.setRolloverIcon(null);
-					button3.setPressedIcon(null);
-					button3.setFont(new Font("Tahoma", Font.BOLD, 16));
-					panel1.add(button3, cc.xywh(3, 3, 3, 1));
+					//---- verifyDataButton ----
+					verifyDataButton.setText(bundle.getString("JMuestraDatos.verifyDataButton.text"));
+					verifyDataButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/check_64.png")));
+					verifyDataButton.setHorizontalAlignment(SwingConstants.LEFT);
+					verifyDataButton.setRolloverIcon(null);
+					verifyDataButton.setPressedIcon(null);
+					verifyDataButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+					verifyDataButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							verifyDataButtonActionPerformed(e);
+						}
+					});
+					panel1.add(verifyDataButton, cc.xywh(3, 3, 3, 1));
 
-					//---- button6 ----
-					button6.setText(bundle.getString("JMuestraDatos.button6.text"));
-					button6.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/load_64.png")));
-					button6.setHorizontalAlignment(SwingConstants.LEFT);
-					button6.setFont(new Font("Tahoma", Font.BOLD, 16));
-					panel1.add(button6, cc.xywh(7, 3, 3, 1));
+					//---- loadReadingsButton ----
+					loadReadingsButton.setText(bundle.getString("JMuestraDatos.loadReadingsButton.text"));
+					loadReadingsButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/load_64.png")));
+					loadReadingsButton.setHorizontalAlignment(SwingConstants.LEFT);
+					loadReadingsButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+					loadReadingsButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							loadReadingsButtonActionPerformed(e);
+						}
+					});
+					panel1.add(loadReadingsButton, cc.xywh(7, 3, 3, 1));
 
-					//---- button4 ----
-					button4.setText(bundle.getString("JMuestraDatos.button4.text"));
-					button4.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/scan_64.png")));
-					button4.setHorizontalAlignment(SwingConstants.LEFT);
-					button4.setFont(new Font("Tahoma", Font.BOLD, 16));
-					panel1.add(button4, cc.xywh(3, 5, 3, 1));
+					//---- readTagButton ----
+					readTagButton.setText(bundle.getString("JMuestraDatos.readTagButton.text"));
+					readTagButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/scan_64.png")));
+					readTagButton.setHorizontalAlignment(SwingConstants.LEFT);
+					readTagButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+					readTagButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							readTagButtonActionPerformed(e);
+						}
+					});
+					panel1.add(readTagButton, cc.xywh(3, 5, 3, 1));
 
-					//---- button7 ----
-					button7.setText(bundle.getString("JMuestraDatos.button7.text"));
-					button7.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/counter_64.png")));
-					button7.setHorizontalAlignment(SwingConstants.LEFT);
-					button7.setFont(new Font("Tahoma", Font.BOLD, 16));
-					panel1.add(button7, cc.xywh(7, 5, 3, 1));
+					//---- countTagsButton ----
+					countTagsButton.setText(bundle.getString("JMuestraDatos.countTagsButton.text"));
+					countTagsButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/counter_64.png")));
+					countTagsButton.setHorizontalAlignment(SwingConstants.LEFT);
+					countTagsButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+					countTagsButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							countTagsButtonActionPerformed(e);
+						}
+					});
+					panel1.add(countTagsButton, cc.xywh(7, 5, 3, 1));
 
-					//---- button5 ----
-					button5.setText(bundle.getString("JMuestraDatos.button5.text"));
-					button5.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/record_64.png")));
-					button5.setHorizontalAlignment(SwingConstants.LEFT);
-					button5.setFont(new Font("Tahoma", Font.BOLD, 16));
-					panel1.add(button5, cc.xywh(3, 7, 3, 1));
+					//---- programTagButton ----
+					programTagButton.setText(bundle.getString("JMuestraDatos.programTagButton.text"));
+					programTagButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/record_64.png")));
+					programTagButton.setHorizontalAlignment(SwingConstants.LEFT);
+					programTagButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+					programTagButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							programTagButtonActionPerformed(e);
+						}
+					});
+					panel1.add(programTagButton, cc.xywh(3, 7, 3, 1));
 				}
 				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel1.tab.title"), panel1);
 
@@ -895,11 +984,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JPanel panel4;
 	private JTabbedPane tabbedPane1;
 	private JPanel panel1;
-	private JButton button3;
-	private JButton button6;
-	private JButton button4;
-	private JButton button7;
-	private JButton button5;
+	private JButton verifyDataButton;
+	private JButton loadReadingsButton;
+	private JButton readTagButton;
+	private JButton countTagsButton;
+	private JButton programTagButton;
 	private JPanel panel2;
 	private JLabel label9;
 	private JLabel label10;
