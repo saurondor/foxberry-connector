@@ -45,6 +45,7 @@ public class TagReading {
 		this.antenna = String.valueOf(tagReadData.getAntenna());
 		this.timeMillis = tagReadData.getTime();
 		this.time = new Date(this.timeMillis);
+		this.readingType = TagReading.TYPE_TAG;
 	}
 
 	public TagReading(String data) {
