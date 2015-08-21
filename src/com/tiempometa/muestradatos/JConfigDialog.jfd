@@ -32,6 +32,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label5"
 						"text": new FormMessage( null, "JConfigDialog.label5.text" )
+						"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridY": 3
 					} )
@@ -45,6 +46,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "databaseSelectButton"
 						"text": new FormMessage( null, "JConfigDialog.databaseSelectButton.text" )
+						"font": #Font0
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "databaseSelectButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
@@ -68,12 +70,14 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label8"
 						"text": new FormMessage( null, "JConfigDialog.label8.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 1
 						"gridY": 9
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "readerBoxAddressTextField"
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 9
@@ -82,6 +86,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label6"
 						"text": new FormMessage( null, "JConfigDialog.label6.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 1
 						"gridY": 11
@@ -93,6 +98,7 @@ new FormModel {
 							addElement( "Foxberry" )
 							addElement( "Speedway" )
 						}
+						"font": #Font0
 						addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "readerTypeComboBoxItemStateChanged", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
@@ -102,6 +108,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label10"
 						"text": new FormMessage( null, "JConfigDialog.label10.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 1
 						"gridY": 13
@@ -114,6 +121,7 @@ new FormModel {
 							addElement( "Lector 1" )
 							addElement( "Lector 2" )
 						}
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 13
@@ -122,6 +130,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label9"
 						"text": new FormMessage( null, "JConfigDialog.label9.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 1
 						"gridY": 15
@@ -136,6 +145,7 @@ new FormModel {
 							addElement( "Antena 3" )
 							addElement( "Antena 4" )
 						}
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 15
@@ -159,6 +169,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label2"
 						"text": new FormMessage( null, "JConfigDialog.label2.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 1
 						"gridY": 19
@@ -188,6 +199,7 @@ new FormModel {
 							addElement( "COM19" )
 							addElement( "COM20" )
 						}
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 19
@@ -196,6 +208,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label1"
 						"text": new FormMessage( null, "JConfigDialog.label1.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridY": 21
 					} )
@@ -215,6 +228,7 @@ new FormModel {
 							addElement( "NZ" )
 							addElement( "OPEN" )
 						}
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 21
@@ -232,6 +246,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "okButton"
 						"text": "OK"
+						"font": #Font0
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "okButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 2
@@ -240,6 +255,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "cancelButton"
 						"text": "Cancel"
+						"font": #Font0
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cancelButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 4

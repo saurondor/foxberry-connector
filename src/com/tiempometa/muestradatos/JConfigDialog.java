@@ -265,11 +265,13 @@ public class JConfigDialog extends JDialog {
 
 				//---- label5 ----
 				label5.setText(bundle.getString("JConfigDialog.label5.text"));
+				label5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label5, cc.xy(1, 3));
 				contentPanel.add(databaseTextField, cc.xywh(3, 3, 3, 1));
 
 				//---- databaseSelectButton ----
 				databaseSelectButton.setText(bundle.getString("JConfigDialog.databaseSelectButton.text"));
+				databaseSelectButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				databaseSelectButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -286,11 +288,16 @@ public class JConfigDialog extends JDialog {
 
 				//---- label8 ----
 				label8.setText(bundle.getString("JConfigDialog.label8.text"));
+				label8.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label8, cc.xy(1, 9));
+
+				//---- readerBoxAddressTextField ----
+				readerBoxAddressTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(readerBoxAddressTextField, cc.xywh(3, 9, 3, 1));
 
 				//---- label6 ----
 				label6.setText(bundle.getString("JConfigDialog.label6.text"));
+				label6.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label6, cc.xy(1, 11));
 
 				//---- readerTypeComboBox ----
@@ -298,6 +305,7 @@ public class JConfigDialog extends JDialog {
 					"Foxberry",
 					"Speedway"
 				}));
+				readerTypeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				readerTypeComboBox.addItemListener(new ItemListener() {
 					@Override
 					public void itemStateChanged(ItemEvent e) {
@@ -308,6 +316,7 @@ public class JConfigDialog extends JDialog {
 
 				//---- label10 ----
 				label10.setText(bundle.getString("JConfigDialog.label10.text"));
+				label10.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label10, cc.xy(1, 13));
 
 				//---- readerComboBox ----
@@ -316,10 +325,12 @@ public class JConfigDialog extends JDialog {
 					"Lector 1",
 					"Lector 2"
 				}));
+				readerComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(readerComboBox, cc.xywh(3, 13, 3, 1));
 
 				//---- label9 ----
 				label9.setText(bundle.getString("JConfigDialog.label9.text"));
+				label9.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label9, cc.xy(1, 15));
 
 				//---- antennaComboBox ----
@@ -330,6 +341,7 @@ public class JConfigDialog extends JDialog {
 					"Antena 3",
 					"Antena 4"
 				}));
+				antennaComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(antennaComboBox, cc.xywh(3, 15, 3, 1));
 
 				//---- label3 ----
@@ -340,6 +352,7 @@ public class JConfigDialog extends JDialog {
 
 				//---- label2 ----
 				label2.setText(bundle.getString("JConfigDialog.label2.text"));
+				label2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label2, cc.xy(1, 19));
 
 				//---- commPortComboBox ----
@@ -365,10 +378,12 @@ public class JConfigDialog extends JDialog {
 					"COM19",
 					"COM20"
 				}));
+				commPortComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(commPortComboBox, cc.xywh(3, 19, 3, 1));
 
 				//---- label1 ----
 				label1.setText(bundle.getString("JConfigDialog.label1.text"));
+				label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label1, cc.xy(1, 21));
 
 				//---- regionComboBox ----
@@ -385,6 +400,7 @@ public class JConfigDialog extends JDialog {
 					"NZ",
 					"OPEN"
 				}));
+				regionComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(regionComboBox, cc.xywh(3, 21, 3, 1));
 			}
 			dialogPane.add(contentPanel, BorderLayout.NORTH);
@@ -403,6 +419,7 @@ public class JConfigDialog extends JDialog {
 
 				//---- okButton ----
 				okButton.setText("OK");
+				okButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				okButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -413,6 +430,7 @@ public class JConfigDialog extends JDialog {
 
 				//---- cancelButton ----
 				cancelButton.setText("Cancel");
+				cancelButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				cancelButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
