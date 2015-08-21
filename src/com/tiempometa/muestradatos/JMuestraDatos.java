@@ -1167,12 +1167,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	}
 
 	private void disableUsbFunctions() {
-		verifyDataButton.setEnabled(false);
+		if (!ReaderContext.isFoxberryConnected()) {
+			verifyDataButton.setEnabled(false);
+		}
 		programTagButton.setEnabled(false);
 		readTagButton.setEnabled(false);
 	}
 
 	private void enableTcpFunctions() {
+		verifyDataButton.setEnabled(true);
 		loadReadingsButton.setEnabled(true);
 		countTagsButton.setEnabled(true);
 		getBoxTimeButton.setEnabled(true);
@@ -1180,6 +1183,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	}
 
 	private void disableTcpFunctions() {
+		if (!ReaderContext.isUsbConnected()) {
+			verifyDataButton.setEnabled(false);
+		}
 		loadReadingsButton.setEnabled(false);
 		countTagsButton.setEnabled(false);
 		getBoxTimeButton.setEnabled(false);
