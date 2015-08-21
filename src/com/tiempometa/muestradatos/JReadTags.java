@@ -72,11 +72,11 @@ public class JReadTags extends JDialog implements TagReadListener {
 		if (ReaderContext.isUsbConnected()) {
 			if (ReaderContext.isUsbReading()) {
 				ReaderContext.stopReading();
-				startReadingButton.setText("Iniciar Lectura");
+				startReadingButton.setText("Iniciar la lectura");
 			} else {
 				try {
 					ReaderContext.startReading();
-					startReadingButton.setText("Detener Lectura");
+					startReadingButton.setText("Detener la lectura");
 				} catch (ReaderException e1) {
 					JOptionPane.showMessageDialog(this,
 							"No se pudo iniciar la lectura.",
@@ -161,7 +161,15 @@ public class JReadTags extends JDialog implements TagReadListener {
 	}
 
 	private void closeButtonActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		if (ReaderContext.isUsbConnected()) {
+			if (ReaderContext.isUsbReading()) {
+				JOptionPane.showMessageDialog(this,
+						"Se debe detener la lectura primero", "Alerta",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+		}
+		this.dispose();
 	}
 
 	private void initComponents() {
@@ -173,20 +181,20 @@ public class JReadTags extends JDialog implements TagReadListener {
 		label2 = new JLabel();
 		nextBibTextField = new JTextField();
 		statusLabel = new JLabel();
+		startReadingButton = new JButton();
 		bibLabel = new JLabel();
 		scrollPane1 = new JScrollPane();
 		tagReadTable = new JTable();
-		label1 = new JLabel();
-		dataToStoreComboBox = new JComboBox<>();
-		allowDuplicateBibsCheckBox = new JCheckBox();
-		startReadingButton = new JButton();
 		label3 = new JLabel();
 		tidTextField = new JTextField();
+		deleteSelectedButton = new JButton();
 		label4 = new JLabel();
 		epcTextField = new JTextField();
-		deleteSelectedButton = new JButton();
 		deleteReadButton = new JButton();
+		label1 = new JLabel();
+		dataToStoreComboBox = new JComboBox<>();
 		deleteAllButton = new JButton();
+		allowDuplicateBibsCheckBox = new JCheckBox();
 		buttonBar = new JPanel();
 		closeButton = new JButton();
 		CellConstraints cc = new CellConstraints();
@@ -208,13 +216,15 @@ public class JReadTags extends JDialog implements TagReadListener {
 			{
 				contentPanel.setLayout(new FormLayout(
 					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(Sizes.dluX(15)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(Sizes.dluX(52)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(85)),
+						new ColumnSpec(Sizes.dluX(138)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(143))
+						new ColumnSpec(Sizes.dluX(71)),
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						new ColumnSpec(Sizes.dluX(155))
 					},
 					new RowSpec[] {
 						new RowSpec(Sizes.dluY(17)),
@@ -235,25 +245,19 @@ public class JReadTags extends JDialog implements TagReadListener {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC
 					}));
 
 				//---- label2 ----
 				label2.setText(bundle.getString("JReadTags.label2.text"));
 				label2.setFont(new Font("Tahoma", Font.PLAIN, 36));
-				contentPanel.add(label2, cc.xy(3, 5));
+				contentPanel.add(label2, cc.xywh(3, 5, 3, 1));
 
 				//---- nextBibTextField ----
 				nextBibTextField.setFont(new Font("Tahoma", Font.PLAIN, 36));
 				nextBibTextField.setHorizontalAlignment(SwingConstants.RIGHT);
 				nextBibTextField.setText(bundle.getString("JReadTags.nextBibTextField.text"));
-				contentPanel.add(nextBibTextField, cc.xy(5, 5));
+				contentPanel.add(nextBibTextField, cc.xy(7, 5));
 
 				//---- statusLabel ----
 				statusLabel.setText(bundle.getString("JReadTags.statusLabel.text"));
@@ -261,87 +265,101 @@ public class JReadTags extends JDialog implements TagReadListener {
 				statusLabel.setBackground(Color.yellow);
 				statusLabel.setOpaque(true);
 				statusLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-				contentPanel.add(statusLabel, cc.xywh(7, 3, 1, 5));
-
-				//---- bibLabel ----
-				bibLabel.setForeground(Color.red);
-				bibLabel.setFont(new Font("Tahoma", Font.BOLD, 36));
-				bibLabel.setHorizontalAlignment(SwingConstants.CENTER);
-				contentPanel.add(bibLabel, cc.xy(7, 9));
-
-				//======== scrollPane1 ========
-				{
-					scrollPane1.setViewportView(tagReadTable);
-				}
-				contentPanel.add(scrollPane1, cc.xywh(3, 11, 5, 1));
-
-				//---- label1 ----
-				label1.setText(bundle.getString("JReadTags.label1.text"));
-				label1.setHorizontalAlignment(SwingConstants.RIGHT);
-				contentPanel.add(label1, cc.xy(3, 13));
-
-				//---- dataToStoreComboBox ----
-				dataToStoreComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
-					"EPC",
-					"TID"
-				}));
-				contentPanel.add(dataToStoreComboBox, cc.xy(5, 13));
-
-				//---- allowDuplicateBibsCheckBox ----
-				allowDuplicateBibsCheckBox.setText(bundle.getString("JReadTags.allowDuplicateBibsCheckBox.text"));
-				contentPanel.add(allowDuplicateBibsCheckBox, cc.xy(7, 13));
+				contentPanel.add(statusLabel, cc.xywh(9, 3, 1, 5));
 
 				//---- startReadingButton ----
 				startReadingButton.setText(bundle.getString("JReadTags.startReadingButton.text"));
+				startReadingButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				startReadingButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						startReadingButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(startReadingButton, cc.xywh(3, 15, 5, 1));
+				contentPanel.add(startReadingButton, cc.xywh(3, 7, 3, 1));
+
+				//---- bibLabel ----
+				bibLabel.setForeground(Color.red);
+				bibLabel.setFont(new Font("Tahoma", Font.BOLD, 36));
+				bibLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				contentPanel.add(bibLabel, cc.xy(9, 9));
+
+				//======== scrollPane1 ========
+				{
+					scrollPane1.setViewportView(tagReadTable);
+				}
+				contentPanel.add(scrollPane1, cc.xywh(3, 11, 7, 1));
 
 				//---- label3 ----
 				label3.setText(bundle.getString("JReadTags.label3.text"));
 				label3.setHorizontalAlignment(SwingConstants.RIGHT);
-				contentPanel.add(label3, cc.xy(3, 17));
-				contentPanel.add(tidTextField, cc.xywh(5, 17, 3, 1));
+				label3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(label3, cc.xy(3, 13));
 
-				//---- label4 ----
-				label4.setText(bundle.getString("JReadTags.label4.text"));
-				label4.setHorizontalAlignment(SwingConstants.RIGHT);
-				contentPanel.add(label4, cc.xy(3, 19));
-				contentPanel.add(epcTextField, cc.xywh(5, 19, 3, 1));
+				//---- tidTextField ----
+				tidTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(tidTextField, cc.xy(5, 13));
 
 				//---- deleteSelectedButton ----
 				deleteSelectedButton.setText(bundle.getString("JReadTags.deleteSelectedButton.text"));
+				deleteSelectedButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				deleteSelectedButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						deleteSelectedButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(deleteSelectedButton, cc.xy(3, 21));
+				contentPanel.add(deleteSelectedButton, cc.xy(9, 13));
+
+				//---- label4 ----
+				label4.setText(bundle.getString("JReadTags.label4.text"));
+				label4.setHorizontalAlignment(SwingConstants.RIGHT);
+				label4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(label4, cc.xy(3, 15));
+
+				//---- epcTextField ----
+				epcTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(epcTextField, cc.xy(5, 15));
 
 				//---- deleteReadButton ----
 				deleteReadButton.setText(bundle.getString("JReadTags.deleteReadButton.text"));
+				deleteReadButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				deleteReadButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						deleteReadButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(deleteReadButton, cc.xy(3, 23));
+				contentPanel.add(deleteReadButton, cc.xy(9, 15));
+
+				//---- label1 ----
+				label1.setText(bundle.getString("JReadTags.label1.text"));
+				label1.setHorizontalAlignment(SwingConstants.RIGHT);
+				label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(label1, cc.xy(3, 17));
+
+				//---- dataToStoreComboBox ----
+				dataToStoreComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
+					"EPC",
+					"TID"
+				}));
+				dataToStoreComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(dataToStoreComboBox, cc.xy(5, 17));
 
 				//---- deleteAllButton ----
 				deleteAllButton.setText(bundle.getString("JReadTags.deleteAllButton.text"));
+				deleteAllButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				deleteAllButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						deleteAllButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(deleteAllButton, cc.xy(3, 25));
+				contentPanel.add(deleteAllButton, cc.xy(9, 17));
+
+				//---- allowDuplicateBibsCheckBox ----
+				allowDuplicateBibsCheckBox.setText(bundle.getString("JReadTags.allowDuplicateBibsCheckBox.text"));
+				contentPanel.add(allowDuplicateBibsCheckBox, cc.xy(5, 19));
 			}
 			dialogPane.add(contentPanel, BorderLayout.CENTER);
 
@@ -357,6 +375,7 @@ public class JReadTags extends JDialog implements TagReadListener {
 
 				//---- closeButton ----
 				closeButton.setText("Cerrar");
+				closeButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				closeButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -368,7 +387,7 @@ public class JReadTags extends JDialog implements TagReadListener {
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
 		contentPane.add(dialogPane, BorderLayout.CENTER);
-		pack();
+		setSize(710, 675);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
 	}
@@ -380,20 +399,20 @@ public class JReadTags extends JDialog implements TagReadListener {
 	private JLabel label2;
 	private JTextField nextBibTextField;
 	private JLabel statusLabel;
+	private JButton startReadingButton;
 	private JLabel bibLabel;
 	private JScrollPane scrollPane1;
 	private JTable tagReadTable;
-	private JLabel label1;
-	private JComboBox<String> dataToStoreComboBox;
-	private JCheckBox allowDuplicateBibsCheckBox;
-	private JButton startReadingButton;
 	private JLabel label3;
 	private JTextField tidTextField;
+	private JButton deleteSelectedButton;
 	private JLabel label4;
 	private JTextField epcTextField;
-	private JButton deleteSelectedButton;
 	private JButton deleteReadButton;
+	private JLabel label1;
+	private JComboBox<String> dataToStoreComboBox;
 	private JButton deleteAllButton;
+	private JCheckBox allowDuplicateBibsCheckBox;
 	private JPanel buttonBar;
 	private JButton closeButton;
 	// JFormDesigner - End of variables declaration //GEN-END:variables

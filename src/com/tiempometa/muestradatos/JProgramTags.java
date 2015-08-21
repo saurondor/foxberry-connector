@@ -48,15 +48,40 @@ public class JProgramTags extends JDialog implements TagReadListener {
 	private Map<String, Rfid> totalRfidMap = new HashMap<String, Rfid>();
 	private TagReadTableDataModel tagTableModel = new TagReadTableDataModel();
 
+	private boolean validatePasswords() {
+		return (accessPasswordTextField.getText().matches("[0-9a-fA-F]{8}") && killPasswordTextField
+				.getText().matches("[0-9a-fA-F]{8}"));
+	}
+
 	private void programButtonActionPerformed(ActionEvent e) {
 		if (ReaderContext.isUsbConnected()) {
 			if (ReaderContext.isUsbReading()) {
 				ReaderContext.stopReading();
-				programButton.setText("Iniciar programación");
+				programButton.setText("Iniciar la programación");
 			} else {
 				try {
-					ReaderContext.startReading();
-					programButton.setText("Detener programación");
+					if (lockCheckbox.isSelected() && (!validatePasswords())) {
+						JOptionPane
+								.showMessageDialog(
+										this,
+										"Se deben establecer contraseñas de 8 caracteres [0-9],[a-f].",
+										"Iniciar lectura",
+										JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					try {
+						Integer.valueOf(nextChipnumberTextField.getText());
+						ReaderContext.startReading();
+						programButton.setText("Detener la programación");
+					} catch (NumberFormatException e1) {
+						JOptionPane
+								.showMessageDialog(
+										this,
+										"Se debe establecer un valor para el siguiente chip.",
+										"Iniciar lectura",
+										JOptionPane.ERROR_MESSAGE);
+
+					}
 				} catch (ReaderException e1) {
 					JOptionPane.showMessageDialog(this,
 							"No se pudo iniciar la lectura.",
@@ -122,61 +147,62 @@ public class JProgramTags extends JDialog implements TagReadListener {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle
+				.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		label1 = new JLabel();
 		statusLabel = new JLabel();
 		nextChipnumberTextField = new JTextField();
 		programButton = new JButton();
-		lockCheckbox = new JCheckBox();
 		bibLabel = new JLabel();
-		label2 = new JLabel();
-		accessPasswordTextField = new JTextField();
 		label3 = new JLabel();
 		tidTextField = new JTextField();
-		label6 = new JLabel();
-		killPasswordTextField = new JTextField();
 		label4 = new JLabel();
 		epcTextField = new JTextField();
-		checkBox1 = new JCheckBox();
 		label5 = new JLabel();
 		programmedEpcTextField = new JTextField();
 		scrollPane1 = new JScrollPane();
 		tagReadTable = new JTable();
+		lockCheckbox = new JCheckBox();
+		label2 = new JLabel();
+		accessPasswordTextField = new JTextField();
+		label6 = new JLabel();
+		killPasswordTextField = new JTextField();
+		checkBox1 = new JCheckBox();
 		buttonBar = new JPanel();
 		closeButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
-		//======== this ========
+		// ======== this ========
 		setTitle(bundle.getString("JProgramTags.this.title"));
-		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource(
+				"/com/tiempometa/resources/tiempometa_icon_large_alpha.png"))
+				.getImage());
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
-		//======== dialogPane ========
+		// ======== dialogPane ========
 		{
 			dialogPane.setBorder(Borders.DIALOG_BORDER);
 			dialogPane.setLayout(new BorderLayout());
 
-			//======== contentPanel ========
+			// ======== contentPanel ========
 			{
-				contentPanel.setLayout(new FormLayout(
-					new ColumnSpec[] {
+				contentPanel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
 						new ColumnSpec(Sizes.dluX(12)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(62)),
+						new ColumnSpec(Sizes.dluX(86)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(101)),
+						new ColumnSpec(Sizes.dluX(73)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(71)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(68)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(97))
-					},
-					new RowSpec[] {
+						new ColumnSpec(Sizes.dluX(97)) }, new RowSpec[] {
 						new RowSpec(Sizes.dluY(10)),
 						FormFactory.LINE_GAP_ROWSPEC,
 						new RowSpec(Sizes.dluY(15)),
@@ -197,28 +223,31 @@ public class JProgramTags extends JDialog implements TagReadListener {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC
-					}));
+						FormFactory.DEFAULT_ROWSPEC }));
 
-				//---- label1 ----
+				// ---- label1 ----
 				label1.setText(bundle.getString("JProgramTags.label1.text"));
 				label1.setFont(new Font("Tahoma", Font.PLAIN, 36));
 				contentPanel.add(label1, cc.xywh(3, 5, 3, 1));
 
-				//---- statusLabel ----
-				statusLabel.setText(bundle.getString("JProgramTags.statusLabel.text"));
+				// ---- statusLabel ----
+				statusLabel.setText(bundle
+						.getString("JProgramTags.statusLabel.text"));
 				statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				statusLabel.setBackground(Color.yellow);
 				statusLabel.setOpaque(true);
 				statusLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 				contentPanel.add(statusLabel, cc.xywh(9, 3, 3, 5));
 
-				//---- nextChipnumberTextField ----
-				nextChipnumberTextField.setFont(new Font("Tahoma", Font.PLAIN, 36));
+				// ---- nextChipnumberTextField ----
+				nextChipnumberTextField.setFont(new Font("Tahoma", Font.PLAIN,
+						36));
 				contentPanel.add(nextChipnumberTextField, cc.xy(7, 5));
 
-				//---- programButton ----
-				programButton.setText(bundle.getString("JProgramTags.programButton.text"));
+				// ---- programButton ----
+				programButton.setText(bundle
+						.getString("JProgramTags.programButton.text"));
+				programButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				programButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -227,82 +256,100 @@ public class JProgramTags extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(programButton, cc.xywh(3, 7, 3, 1));
 
-				//---- lockCheckbox ----
-				lockCheckbox.setText(bundle.getString("JProgramTags.lockCheckbox.text"));
+				// ---- bibLabel ----
+				bibLabel.setForeground(Color.red);
+				bibLabel.setFont(new Font("Tahoma", Font.BOLD, 36));
+				bibLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				contentPanel.add(bibLabel, cc.xy(11, 9));
+
+				// ---- label3 ----
+				label3.setText(bundle.getString("JProgramTags.label3.text"));
+				label3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(label3, cc.xy(7, 11));
+
+				// ---- tidTextField ----
+				tidTextField.setEditable(false);
+				tidTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(tidTextField, cc.xywh(9, 11, 3, 1));
+
+				// ---- label4 ----
+				label4.setText(bundle.getString("JProgramTags.label4.text"));
+				label4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(label4, cc.xy(7, 13));
+
+				// ---- epcTextField ----
+				epcTextField.setEditable(false);
+				epcTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(epcTextField, cc.xywh(9, 13, 3, 1));
+
+				// ---- label5 ----
+				label5.setText(bundle.getString("JProgramTags.label5.text"));
+				label5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(label5, cc.xy(7, 15));
+
+				// ---- programmedEpcTextField ----
+				programmedEpcTextField.setEditable(false);
+				programmedEpcTextField.setFont(new Font("Tahoma", Font.PLAIN,
+						14));
+				contentPanel.add(programmedEpcTextField, cc.xywh(9, 15, 3, 1));
+
+				// ======== scrollPane1 ========
+				{
+					scrollPane1.setViewportView(tagReadTable);
+				}
+				contentPanel.add(scrollPane1, cc.xywh(3, 17, 9, 1));
+
+				// ---- lockCheckbox ----
+				lockCheckbox.setText(bundle
+						.getString("JProgramTags.lockCheckbox.text"));
 				lockCheckbox.setSelected(true);
+				lockCheckbox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				lockCheckbox.addItemListener(new ItemListener() {
 					@Override
 					public void itemStateChanged(ItemEvent e) {
 						checkBox2ItemStateChanged(e);
 					}
 				});
-				contentPanel.add(lockCheckbox, cc.xy(3, 9));
+				contentPanel.add(lockCheckbox, cc.xy(3, 19));
 
-				//---- bibLabel ----
-				bibLabel.setForeground(Color.red);
-				bibLabel.setFont(new Font("Tahoma", Font.BOLD, 36));
-				bibLabel.setHorizontalAlignment(SwingConstants.CENTER);
-				contentPanel.add(bibLabel, cc.xy(11, 9));
-
-				//---- label2 ----
+				// ---- label2 ----
 				label2.setText(bundle.getString("JProgramTags.label2.text"));
-				contentPanel.add(label2, cc.xy(3, 11));
-				contentPanel.add(accessPasswordTextField, cc.xy(5, 11));
+				label2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(label2, cc.xy(5, 19));
 
-				//---- label3 ----
-				label3.setText(bundle.getString("JProgramTags.label3.text"));
-				contentPanel.add(label3, cc.xy(7, 11));
+				// ---- accessPasswordTextField ----
+				accessPasswordTextField.setFont(new Font("Tahoma", Font.PLAIN,
+						14));
+				contentPanel.add(accessPasswordTextField, cc.xy(7, 19));
 
-				//---- tidTextField ----
-				tidTextField.setEditable(false);
-				contentPanel.add(tidTextField, cc.xywh(9, 11, 3, 1));
-
-				//---- label6 ----
+				// ---- label6 ----
 				label6.setText(bundle.getString("JProgramTags.label6.text"));
-				contentPanel.add(label6, cc.xy(3, 13));
-				contentPanel.add(killPasswordTextField, cc.xy(5, 13));
+				label6.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(label6, cc.xy(5, 21));
 
-				//---- label4 ----
-				label4.setText(bundle.getString("JProgramTags.label4.text"));
-				contentPanel.add(label4, cc.xy(7, 13));
+				// ---- killPasswordTextField ----
+				killPasswordTextField
+						.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(killPasswordTextField, cc.xy(7, 21));
 
-				//---- epcTextField ----
-				epcTextField.setEditable(false);
-				contentPanel.add(epcTextField, cc.xywh(9, 13, 3, 1));
-
-				//---- checkBox1 ----
-				checkBox1.setText(bundle.getString("JProgramTags.checkBox1.text"));
+				// ---- checkBox1 ----
+				checkBox1.setText(bundle
+						.getString("JProgramTags.checkBox1.text"));
 				checkBox1.setEnabled(false);
-				contentPanel.add(checkBox1, cc.xy(3, 15));
-
-				//---- label5 ----
-				label5.setText(bundle.getString("JProgramTags.label5.text"));
-				contentPanel.add(label5, cc.xy(7, 15));
-
-				//---- programmedEpcTextField ----
-				programmedEpcTextField.setEditable(false);
-				contentPanel.add(programmedEpcTextField, cc.xywh(9, 15, 3, 1));
-
-				//======== scrollPane1 ========
-				{
-					scrollPane1.setViewportView(tagReadTable);
-				}
-				contentPanel.add(scrollPane1, cc.xywh(3, 17, 9, 1));
+				contentPanel.add(checkBox1, cc.xy(9, 21));
 			}
 			dialogPane.add(contentPanel, BorderLayout.EAST);
 
-			//======== buttonBar ========
+			// ======== buttonBar ========
 			{
 				buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
-				buttonBar.setLayout(new FormLayout(
-					new ColumnSpec[] {
-						FormFactory.GLUE_COLSPEC,
-						FormFactory.BUTTON_COLSPEC
-					},
-					RowSpec.decodeSpecs("pref")));
+				buttonBar.setLayout(new FormLayout(new ColumnSpec[] {
+						FormFactory.GLUE_COLSPEC, FormFactory.BUTTON_COLSPEC },
+						RowSpec.decodeSpecs("pref")));
 
-				//---- closeButton ----
+				// ---- closeButton ----
 				closeButton.setText("Cerrar");
+				closeButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				closeButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -314,7 +361,7 @@ public class JProgramTags extends JDialog implements TagReadListener {
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
 		contentPane.add(dialogPane, BorderLayout.CENTER);
-		pack();
+		setSize(700, 625);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
 	}
@@ -327,23 +374,24 @@ public class JProgramTags extends JDialog implements TagReadListener {
 	private JLabel statusLabel;
 	private JTextField nextChipnumberTextField;
 	private JButton programButton;
-	private JCheckBox lockCheckbox;
 	private JLabel bibLabel;
-	private JLabel label2;
-	private JTextField accessPasswordTextField;
 	private JLabel label3;
 	private JTextField tidTextField;
-	private JLabel label6;
-	private JTextField killPasswordTextField;
 	private JLabel label4;
 	private JTextField epcTextField;
-	private JCheckBox checkBox1;
 	private JLabel label5;
 	private JTextField programmedEpcTextField;
 	private JScrollPane scrollPane1;
 	private JTable tagReadTable;
+	private JCheckBox lockCheckbox;
+	private JLabel label2;
+	private JTextField accessPasswordTextField;
+	private JLabel label6;
+	private JTextField killPasswordTextField;
+	private JCheckBox checkBox1;
 	private JPanel buttonBar;
 	private JButton closeButton;
+
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
 	@Override
@@ -388,8 +436,10 @@ public class JProgramTags extends JDialog implements TagReadListener {
 							// try {
 							statusLabel.setBackground(Color.green);
 							statusLabel.setText("Tag leido");
-							tidTextField.setText(tagReading.getTid());
-							epcTextField.setText(tagReading.getEpc());
+							tidTextField.setText(tagReading.getTid()
+									.toLowerCase());
+							epcTextField.setText(tagReading.getEpc()
+									.toLowerCase());
 							programmedEpcTextField.setText("");
 							// find tag by EPC/TID in database
 							logger.debug("Looking up rfid by epc "
@@ -415,7 +465,10 @@ public class JProgramTags extends JDialog implements TagReadListener {
 									int response = JOptionPane
 											.showConfirmDialog(
 													this,
-													"Este tag tiene un código que existe en el evento actual.\nDesea sobreescribir este tag?",
+													"Este tag tiene un código que existe en el evento actual.\n"
+															+ "Corresponde al número "
+															+ rfid.getBib()
+															+ "\n¿Desea sobreescribir este tag?",
 													"Tag ya programado",
 													JOptionPane.YES_NO_OPTION,
 													JOptionPane.WARNING_MESSAGE);
@@ -497,7 +550,7 @@ public class JProgramTags extends JDialog implements TagReadListener {
 					tagTableModel.getData().add(rfid);
 					tagTableModel.fireTableDataChanged();
 					rfidMap.put(rfid.getRfid(), rfid);
-					programmedEpcTextField.setText(rfidString);
+					programmedEpcTextField.setText(rfidString.toLowerCase());
 					chipNumber = chipNumber + 1;
 					nextChipnumberTextField.setText(chipNumber.toString());
 					if (lockCheckbox.isSelected()) {

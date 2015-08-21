@@ -13,12 +13,13 @@ new FormModel {
 			"defaultCloseOperation": 2
 			"resizable": false
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_large_alpha.png" )
+			"$sizePolicy": 1
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 				name: "dialogPane"
 				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-					"$columnSpecs": "default, labelcompgap, default, labelcompgap, 85dlu, labelcompgap, 143dlu"
-					"$rowSpecs": "17dlu, linegap, 20dlu, linegap, default, linegap, 20dlu, linegap, 25dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+					"$columnSpecs": "15dlu, labelcompgap, 52dlu, labelcompgap, 138dlu, labelcompgap, 71dlu, labelcompgap, 155dlu"
+					"$rowSpecs": "17dlu, linegap, 20dlu, linegap, default, linegap, 20dlu, linegap, 25dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 				} ) {
 					name: "contentPanel"
 					add( new FormComponent( "javax.swing.JLabel" ) {
@@ -28,6 +29,7 @@ new FormModel {
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 5
+						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "nextBibTextField"
@@ -35,7 +37,7 @@ new FormModel {
 						"horizontalAlignment": 4
 						"text": new FormMessage( null, "JReadTags.nextBibTextField.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
+						"gridX": 7
 						"gridY": 5
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
@@ -46,9 +48,19 @@ new FormModel {
 						"opaque": true
 						"font": new java.awt.Font( "Tahoma", 1, 20 )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 7
+						"gridX": 9
 						"gridY": 3
 						"gridHeight": 5
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "startReadingButton"
+						"text": new FormMessage( null, "JReadTags.startReadingButton.text" )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "startReadingButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 3
+						"gridY": 7
+						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "bibLabel"
@@ -56,7 +68,7 @@ new FormModel {
 						"font": new java.awt.Font( "Tahoma", 1, 36 )
 						"horizontalAlignment": 0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 7
+						"gridX": 9
 						"gridY": 9
 					} )
 					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
@@ -67,15 +79,66 @@ new FormModel {
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 11
-						"gridWidth": 5
+						"gridWidth": 7
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label3"
+						"text": new FormMessage( null, "JReadTags.label3.text" )
+						"horizontalAlignment": 4
+						"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 3
+						"gridY": 13
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "tidTextField"
+						"font": #Font0
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 5
+						"gridY": 13
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "deleteSelectedButton"
+						"text": new FormMessage( null, "JReadTags.deleteSelectedButton.text" )
+						"font": &Font1 new java.awt.Font( "Tahoma", 0, 14 )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteSelectedButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 9
+						"gridY": 13
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label4"
+						"text": new FormMessage( null, "JReadTags.label4.text" )
+						"horizontalAlignment": 4
+						"font": #Font0
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 3
+						"gridY": 15
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "epcTextField"
+						"font": #Font0
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 5
+						"gridY": 15
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "deleteReadButton"
+						"text": new FormMessage( null, "JReadTags.deleteReadButton.text" )
+						"font": #Font1
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteReadButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 9
+						"gridY": 15
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label1"
 						"text": new FormMessage( null, "JReadTags.label1.text" )
 						"horizontalAlignment": 4
+						"font": &Font2 new java.awt.Font( "Tahoma", 0, 14 )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 13
+						"gridY": 17
 					} )
 					add( new FormComponent( "javax.swing.JComboBox" ) {
 						name: "dataToStoreComboBox"
@@ -84,79 +147,26 @@ new FormModel {
 							addElement( "EPC" )
 							addElement( "TID" )
 						}
+						"font": #Font2
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
-						"gridY": 13
+						"gridY": 17
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "deleteAllButton"
+						"text": new FormMessage( null, "JReadTags.deleteAllButton.text" )
+						"font": #Font1
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteAllButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 9
+						"gridY": 17
 					} )
 					add( new FormComponent( "javax.swing.JCheckBox" ) {
 						name: "allowDuplicateBibsCheckBox"
 						"text": new FormMessage( null, "JReadTags.allowDuplicateBibsCheckBox.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 7
-						"gridY": 13
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "startReadingButton"
-						"text": new FormMessage( null, "JReadTags.startReadingButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "startReadingButtonActionPerformed", true ) )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 15
-						"gridWidth": 5
-					} )
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label3"
-						"text": new FormMessage( null, "JReadTags.label3.text" )
-						"horizontalAlignment": 4
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 17
-					} )
-					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "tidTextField"
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
-						"gridY": 17
-						"gridWidth": 3
-					} )
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label4"
-						"text": new FormMessage( null, "JReadTags.label4.text" )
-						"horizontalAlignment": 4
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 19
-					} )
-					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "epcTextField"
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
 						"gridY": 19
-						"gridWidth": 3
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "deleteSelectedButton"
-						"text": new FormMessage( null, "JReadTags.deleteSelectedButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteSelectedButtonActionPerformed", true ) )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 21
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "deleteReadButton"
-						"text": new FormMessage( null, "JReadTags.deleteReadButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteReadButtonActionPerformed", true ) )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 23
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "deleteAllButton"
-						"text": new FormMessage( null, "JReadTags.deleteAllButton.text" )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteAllButtonActionPerformed", true ) )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 25
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
 					"value": "Center"
@@ -170,6 +180,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "closeButton"
 						"text": "Cerrar"
+						"font": #Font1
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "closeButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 2
@@ -183,7 +194,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 710, 525 )
+			"size": new java.awt.Dimension( 710, 675 )
 		} )
 	}
 }

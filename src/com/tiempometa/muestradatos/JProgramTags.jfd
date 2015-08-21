@@ -12,14 +12,16 @@ new FormModel {
 			"title": new FormMessage( null, "JProgramTags.this.title" )
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_large_alpha.png" )
 			"defaultCloseOperation": 2
+			"$sizePolicy": 1
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 				name: "dialogPane"
 				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-					"$columnSpecs": "12dlu, labelcompgap, 62dlu, labelcompgap, 101dlu, labelcompgap, 71dlu, labelcompgap, 68dlu, labelcompgap, 97dlu"
+					"$columnSpecs": "12dlu, labelcompgap, 86dlu, labelcompgap, 73dlu, labelcompgap, 71dlu, labelcompgap, 68dlu, labelcompgap, 97dlu"
 					"$rowSpecs": "10dlu, linegap, 15dlu, linegap, default, linegap, default, linegap, 17dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 				} ) {
 					name: "contentPanel"
+					"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label1"
 						"text": new FormMessage( null, "JProgramTags.label1.text" )
@@ -52,20 +54,12 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "programButton"
 						"text": new FormMessage( null, "JProgramTags.programButton.text" )
+						"font": #Font0
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "programButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 7
 						"gridWidth": 3
-					} )
-					add( new FormComponent( "javax.swing.JCheckBox" ) {
-						name: "lockCheckbox"
-						"text": new FormMessage( null, "JProgramTags.lockCheckbox.text" )
-						"selected": true
-						addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "checkBox2ItemStateChanged", true ) )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 9
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "bibLabel"
@@ -77,21 +71,9 @@ new FormModel {
 						"gridY": 9
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label2"
-						"text": new FormMessage( null, "JProgramTags.label2.text" )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 11
-					} )
-					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "accessPasswordTextField"
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
-						"gridY": 11
-					} )
-					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label3"
 						"text": new FormMessage( null, "JProgramTags.label3.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 7
 						"gridY": 11
@@ -99,27 +81,16 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "tidTextField"
 						"editable": false
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 9
 						"gridY": 11
 						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label6"
-						"text": new FormMessage( null, "JProgramTags.label6.text" )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 13
-					} )
-					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "killPasswordTextField"
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
-						"gridY": 13
-					} )
-					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label4"
 						"text": new FormMessage( null, "JProgramTags.label4.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 7
 						"gridY": 13
@@ -127,22 +98,16 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "epcTextField"
 						"editable": false
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 9
 						"gridY": 13
 						"gridWidth": 3
 					} )
-					add( new FormComponent( "javax.swing.JCheckBox" ) {
-						name: "checkBox1"
-						"text": new FormMessage( null, "JProgramTags.checkBox1.text" )
-						"enabled": false
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 15
-					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label5"
 						"text": new FormMessage( null, "JProgramTags.label5.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridY": 15
 						"gridX": 7
@@ -150,6 +115,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "programmedEpcTextField"
 						"editable": false
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 9
 						"gridY": 15
@@ -165,6 +131,54 @@ new FormModel {
 						"gridY": 17
 						"gridWidth": 9
 					} )
+					add( new FormComponent( "javax.swing.JCheckBox" ) {
+						name: "lockCheckbox"
+						"text": new FormMessage( null, "JProgramTags.lockCheckbox.text" )
+						"selected": true
+						"font": #Font0
+						addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "checkBox2ItemStateChanged", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 3
+						"gridY": 19
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label2"
+						"text": new FormMessage( null, "JProgramTags.label2.text" )
+						"font": #Font0
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 5
+						"gridY": 19
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "accessPasswordTextField"
+						"font": #Font0
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 7
+						"gridY": 19
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label6"
+						"text": new FormMessage( null, "JProgramTags.label6.text" )
+						"font": #Font0
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 5
+						"gridY": 21
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "killPasswordTextField"
+						"font": #Font0
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 7
+						"gridY": 21
+					} )
+					add( new FormComponent( "javax.swing.JCheckBox" ) {
+						name: "checkBox1"
+						"text": new FormMessage( null, "JProgramTags.checkBox1.text" )
+						"enabled": false
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 9
+						"gridY": 21
+					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
 					"value": "East"
 				} )
@@ -177,6 +191,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "closeButton"
 						"text": "Cerrar"
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "closeButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 2
@@ -190,7 +205,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 700, 475 )
+			"size": new java.awt.Dimension( 700, 625 )
 		} )
 	}
 }
