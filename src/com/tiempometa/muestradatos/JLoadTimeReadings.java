@@ -179,7 +179,7 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 		scrollPane1 = new JScrollPane();
 		readingsTable = new JTable();
 		buttonBar = new JPanel();
-		okButton = new JButton();
+		closeButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
 		//======== this ========
@@ -198,13 +198,13 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 			{
 				contentPanel.setLayout(new FormLayout(
 					new ColumnSpec[] {
-						FormFactory.DEFAULT_COLSPEC,
+						new ColumnSpec(Sizes.dluX(15)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(115)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC
+						new ColumnSpec(Sizes.dluX(85))
 					},
 					new RowSpec[] {
 						FormFactory.DEFAULT_ROWSPEC,
@@ -235,11 +235,16 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 
 				//---- label1 ----
 				label1.setText(bundle.getString("JLoadTimeReadings.label1.text"));
+				label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label1, cc.xy(3, 3));
+
+				//---- checkpointTextField ----
+				checkpointTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(checkpointTextField, cc.xy(5, 3));
 
 				//---- applyCheckpointButton ----
 				applyCheckpointButton.setText(bundle.getString("JLoadTimeReadings.applyCheckpointButton.text"));
+				applyCheckpointButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				applyCheckpointButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -250,15 +255,18 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 
 				//---- label2 ----
 				label2.setText(bundle.getString("JLoadTimeReadings.label2.text"));
+				label2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label2, cc.xy(3, 5));
 				contentPanel.add(timeWindowTextField, cc.xy(5, 5));
 
 				//---- label3 ----
 				label3.setText(bundle.getString("JLoadTimeReadings.label3.text"));
+				label3.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label3, cc.xy(7, 5));
 
 				//---- label4 ----
 				label4.setText(bundle.getString("JLoadTimeReadings.label4.text"));
+				label4.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label4, cc.xy(3, 7));
 
 				//---- comboBox1 ----
@@ -266,20 +274,24 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 					"Si",
 					"No"
 				}));
+				comboBox1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(comboBox1, cc.xy(5, 7));
 
 				//---- label5 ----
 				label5.setText(bundle.getString("JLoadTimeReadings.label5.text"));
+				label5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label5, cc.xy(3, 9));
 				contentPanel.add(totalReadingsLabel, cc.xy(5, 9));
 
 				//---- label6 ----
 				label6.setText(bundle.getString("JLoadTimeReadings.label6.text"));
+				label6.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label6, cc.xy(3, 11));
 				contentPanel.add(lastReadingLabel, cc.xy(5, 11));
 
 				//---- rewindButton ----
 				rewindButton.setText(bundle.getString("JLoadTimeReadings.rewindButton.text"));
+				rewindButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				rewindButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -290,6 +302,7 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 
 				//---- clearReadingsButton ----
 				clearReadingsButton.setText(bundle.getString("JLoadTimeReadings.clearReadingsButton.text"));
+				clearReadingsButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				clearReadingsButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -321,14 +334,14 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 					},
 					RowSpec.decodeSpecs("pref")));
 
-				//---- okButton ----
-				okButton.setText("OK");
-				buttonBar.add(okButton, cc.xy(2, 1));
+				//---- closeButton ----
+				closeButton.setText("Cerrar");
+				buttonBar.add(closeButton, cc.xy(2, 1));
 			}
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
 		contentPane.add(dialogPane, BorderLayout.CENTER);
-		pack();
+		setSize(525, 520);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
 	}
@@ -356,7 +369,7 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 	private JScrollPane scrollPane1;
 	private JTable readingsTable;
 	private JPanel buttonBar;
-	private JButton okButton;
+	private JButton closeButton;
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 	@Override
 	public void handleReadings(List<TagReading> readings) {

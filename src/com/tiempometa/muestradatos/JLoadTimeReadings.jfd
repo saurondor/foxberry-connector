@@ -12,11 +12,12 @@ new FormModel {
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/tiempometa/resources/tiempometa_icon_large_alpha.png" )
 			"title": new FormMessage( null, "JLoadTimeReadings.this.title" )
 			"defaultCloseOperation": 2
+			"$sizePolicy": 1
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 				name: "dialogPane"
 				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-					"$columnSpecs": "default, labelcompgap, default, labelcompgap, 115dlu, labelcompgap, default"
+					"$columnSpecs": "15dlu, labelcompgap, default, labelcompgap, 115dlu, labelcompgap, 85dlu"
 					"$rowSpecs": "default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 				} ) {
 					name: "contentPanel"
@@ -31,12 +32,14 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label1"
 						"text": new FormMessage( null, "JLoadTimeReadings.label1.text" )
+						"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 3
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
 						name: "checkpointTextField"
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
 						"gridY": 3
@@ -44,6 +47,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "applyCheckpointButton"
 						"text": new FormMessage( null, "JLoadTimeReadings.applyCheckpointButton.text" )
+						"font": #Font0
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "applyCheckpointButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 7
@@ -52,6 +56,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label2"
 						"text": new FormMessage( null, "JLoadTimeReadings.label2.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 5
@@ -65,6 +70,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label3"
 						"text": new FormMessage( null, "JLoadTimeReadings.label3.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 7
 						"gridY": 5
@@ -72,6 +78,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label4"
 						"text": new FormMessage( null, "JLoadTimeReadings.label4.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 7
@@ -83,6 +90,7 @@ new FormModel {
 							addElement( "Si" )
 							addElement( "No" )
 						}
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
 						"gridY": 7
@@ -90,6 +98,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label5"
 						"text": new FormMessage( null, "JLoadTimeReadings.label5.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 9
@@ -103,6 +112,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label6"
 						"text": new FormMessage( null, "JLoadTimeReadings.label6.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
 						"gridY": 11
@@ -116,6 +126,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "rewindButton"
 						"text": new FormMessage( null, "JLoadTimeReadings.rewindButton.text" )
+						"font": #Font0
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "rewindButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
@@ -124,6 +135,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "clearReadingsButton"
 						"text": new FormMessage( null, "JLoadTimeReadings.clearReadingsButton.text" )
+						"font": #Font0
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clearReadingsButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
@@ -157,8 +169,8 @@ new FormModel {
 					name: "buttonBar"
 					"border": sfield com.jgoodies.forms.factories.Borders BUTTON_BAR_GAP_BORDER
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "okButton"
-						"text": "OK"
+						name: "closeButton"
+						"text": "Cerrar"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 2
 						"gridY": 1
@@ -171,7 +183,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 525, 395 )
+			"size": new java.awt.Dimension( 525, 520 )
 		} )
 	}
 }
