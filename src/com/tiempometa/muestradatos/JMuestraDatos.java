@@ -9,6 +9,7 @@ package com.tiempometa.muestradatos;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
@@ -35,6 +36,7 @@ import com.thingmagic.TagData;
 import com.thingmagic.Reader.GpioPin;
 import com.tiempometa.foxberry.FoxberryReader;
 import com.tiempometa.timing.dao.CategoriesDao;
+import com.tiempometa.timing.dao.JdbcConnector;
 import com.tiempometa.timing.dao.ParticipantRegistrationDao;
 import com.tiempometa.timing.dao.ParticipantsDao;
 import com.tiempometa.timing.dao.RegistrationDao;
@@ -127,10 +129,31 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			}
 		});
 		loadSettings();
+		setDatabase(new File(ReaderContext.getSettings().getDatabaseName()));
 		ReaderContext.addReadingListener(this);
 		ReaderContext.addReaderStatusListener(this);
 		Thread thread = new Thread(systemTime);
 		thread.start();
+	}
+
+	private void setDatabase(File database) {
+		ReaderContext.setDatabaseFile(database);
+		try {
+			JdbcConnector.connect(ReaderContext.getDatabaseFile()
+					.getAbsolutePath(), null, null);
+			JOptionPane
+					.showMessageDialog(
+							this,
+							"Se abrió exitosamente la base de datos: "
+									+ ReaderContext.getDatabaseFile().getName(),
+							"Conexión a base de datos",
+							JOptionPane.INFORMATION_MESSAGE);
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException | SQLException e1) {
+			JOptionPane.showMessageDialog(this,
+					"Error conectando a la base de datos " + e1.getMessage(),
+					"Error de base de datos", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
@@ -1108,8 +1131,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					TagReading.TYPE_COMMAND_RESPONSE)) {
 				foxberryTimeLabel.setText(dateFormat.format(tagReading
 						.getTime()));
-				foxberryTimeDiffLabel.setText("Diferencia : " + tagReading.getEpc()
-						+ " ms");
+				foxberryTimeDiffLabel.setText("Diferencia : "
+						+ tagReading.getEpc() + " ms");
 			}
 		}
 		// try {
