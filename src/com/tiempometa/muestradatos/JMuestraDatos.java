@@ -436,7 +436,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	}
 
 	private void clearTagsMenuItemActionPerformed(ActionEvent e) {
-		// TODO add your code here
+		int response = JOptionPane.showConfirmDialog(this, "¿Seguro que desea borrar todos los tags? Esta operación no se puede deshacer", "Borrar tags", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		if (response == JOptionPane.YES_OPTION) {
+			try {
+				rfidDao.deleteAll();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	private void initComponents() {
