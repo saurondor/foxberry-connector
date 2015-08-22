@@ -6,11 +6,16 @@ package com.tiempometa.muestradatos;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
+
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 import org.apache.log4j.Logger;
 
@@ -34,6 +39,7 @@ public class JCountTags extends JDialog implements TagReadListener {
 	private Map<String, Rfid> totalRfidMap = new HashMap<String, Rfid>();
 	private RfidDao rfidDao = new RfidDaoImpl();
 	private boolean isCounting = false;
+	private File exportFile = null;
 
 	public JCountTags(Frame owner) {
 		super(owner);
@@ -97,6 +103,65 @@ public class JCountTags extends JDialog implements TagReadListener {
 		} else {
 			isCounting = true;
 			countButton.setText("Detener Conteo");
+		}
+	}
+
+	private void exportCountButtonActionPerformed(ActionEvent e) {
+		JFileChooser fc = new JFileChooser(exportFile);
+		int response = fc.showOpenDialog(this);
+		if (response == JFileChooser.APPROVE_OPTION) {
+			exportFile = fc.getSelectedFile();
+			if (!exportFile.getAbsolutePath().endsWith(".xls")) {
+				exportFile = new File(exportFile.getAbsolutePath() + ".xls");
+			}
+			if (exportFile.exists()) {
+				int overwriteResponse = JOptionPane.showConfirmDialog(this,
+						"El archivo ya existe. ¿Desea reemplazarlo?",
+						"Archivo ya existe", JOptionPane.WARNING_MESSAGE);
+				if (overwriteResponse == JOptionPane.NO_OPTION) {
+					return;
+				}
+			}
+			try {
+				populateBibs();
+				ExportTagsToExcel exporter = new ExportTagsToExcel();
+				exporter.open(exportFile);
+				Map<String, Map<String, TagReading>> readings = new HashMap<String, Map<String, TagReading>>();
+				readings.put("en evento", eventTagMap);
+				readings.put("no en evento", nonEventTagMap);
+				exporter.export(readings);
+				JOptionPane
+						.showMessageDialog(this, "Se exportó con exito",
+								"Exportación de datos",
+								JOptionPane.INFORMATION_MESSAGE);
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(this,
+						"Error de SQL " + e1.getMessage(),
+						"Exportación de datos", JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e1) {
+				JOptionPane.showMessageDialog(this,
+						"Error de datos " + e1.getMessage(),
+						"Exportación de datos", JOptionPane.ERROR_MESSAGE);
+			} catch (RowsExceededException e1) {
+				JOptionPane.showMessageDialog(this,
+						"Error de Excel " + e1.getMessage(),
+						"Exportación de datos", JOptionPane.ERROR_MESSAGE);
+			} catch (WriteException e1) {
+				JOptionPane.showMessageDialog(this,
+						"Error de datos " + e1.getMessage(),
+						"Exportación de datos", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	private void populateBibs() throws SQLException {
+		Set<String> keys = eventTagMap.keySet();
+		for (String scanCode : keys) {
+			TagReading reading = eventTagMap.get(scanCode);			
+			List<Rfid> rfid = rfidDao.findByRfid(reading.getEpc());
+			if (rfid.size() > 0) {
+				reading.setBib(rfid.get(0).getBib());
+			}
 		}
 	}
 
@@ -221,6 +286,12 @@ public class JCountTags extends JDialog implements TagReadListener {
 				exportCountButton.setText(bundle
 						.getString("JCountTags.exportCountButton.text"));
 				exportCountButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				exportCountButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						exportCountButtonActionPerformed(e);
+					}
+				});
 				contentPanel.add(exportCountButton, cc.xywh(1, 15, 3, 1));
 
 				// ---- countTidCheckBox ----

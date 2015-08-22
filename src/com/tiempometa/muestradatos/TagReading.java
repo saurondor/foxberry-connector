@@ -27,6 +27,7 @@ public class TagReading {
 	private String epc;
 	private String tid;
 	private String userData;
+	private String bib;
 	private Long timeMillis;
 	private Date time;
 	private Integer peakRssi;
@@ -285,6 +286,20 @@ public class TagReading {
 	 */
 	public String getReadingType() {
 		return readingType;
+	}
+
+	/**
+	 * @return the bib
+	 */
+	public String getBib() {
+		return bib;
+	}
+
+	/**
+	 * @param bib the bib to set
+	 */
+	public void setBib(String bib) {
+		this.bib = bib;
 	}
 
 }
