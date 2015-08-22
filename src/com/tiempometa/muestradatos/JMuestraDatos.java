@@ -418,18 +418,15 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				exporter.open(fc.getSelectedFile());
 				List<Rfid> rfidList = rfidDao.findAll();
 				exporter.export(rfidList);
+				JOptionPane.showMessageDialog(this, "Se exportaron los tags con éxito", "Exportar Tags", JOptionPane.PLAIN_MESSAGE);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Error exportando "+e1.getMessage(), "Exportar Tags", JOptionPane.ERROR_MESSAGE);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Error exportando "+e1.getMessage(), "Exportar Tags", JOptionPane.ERROR_MESSAGE);
 			} catch (RowsExceededException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Error exportando "+e1.getMessage(), "Exportar Tags", JOptionPane.ERROR_MESSAGE);
 			} catch (WriteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Error exportando "+e1.getMessage(), "Exportar Tags", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		}
@@ -440,9 +437,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		if (response == JOptionPane.YES_OPTION) {
 			try {
 				rfidDao.deleteAll();
+				JOptionPane.showMessageDialog(this, "Se borraron todos los tags", "Despejar Tags", JOptionPane.PLAIN_MESSAGE);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Error despejando tags "+e1.getMessage(), "Despejar Tags", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

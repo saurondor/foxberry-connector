@@ -52,7 +52,7 @@ public class TagExcelImporter {
 		return columnNames;
 	}
 
-	public void importTags(Integer sheetNumber, Integer bibColumn,
+	public int importTags(Integer sheetNumber, Integer bibColumn,
 			Integer epcColumn) throws SQLException {
 		Sheet sheet = workbook.getSheet(sheetNumber);
 		int rows = sheet.getRows();
@@ -63,6 +63,7 @@ public class TagExcelImporter {
 			rfid.setRfid(row[epcColumn].getContents());
 			rfidDao.save(rfid);
 		}
+		return rows - 1;
 	}
 
 	@Override
