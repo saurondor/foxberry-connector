@@ -20,6 +20,9 @@ import java.util.Timer;
 
 import javax.swing.*;
 
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
@@ -69,6 +72,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			"dd/MM/yyyy HH:mm:ss");
 
 	private Integer lastTagCount = 0;
+	private RfidDao rfidDao = new RfidDaoImpl();
 
 	class TimeRunner implements Runnable {
 
@@ -405,6 +409,36 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		importTags.setVisible(true);
 	}
 
+	private void exportTagsMenuItemActionPerformed(ActionEvent e) {
+		JFileChooser fc = new JFileChooser();
+		int response = fc.showSaveDialog(this);
+		if (response == JFileChooser.APPROVE_OPTION) {
+			TagExcelExporter exporter = new TagExcelExporter();
+			try {
+				exporter.open(fc.getSelectedFile());
+				List<Rfid> rfidList = rfidDao.findAll();
+				exporter.export(rfidList);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (RowsExceededException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (WriteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
+	}
+
+	private void clearTagsMenuItemActionPerformed(ActionEvent e) {
+		// TODO add your code here
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -413,6 +447,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		menu1 = new JMenu();
 		configMenuItem = new JMenuItem();
 		importTagsMenuItem = new JMenuItem();
+		exportTagsMenuItem = new JMenuItem();
+		clearTagsMenuItem = new JMenuItem();
 		exitMenuItem = new JMenuItem();
 		menu3 = new JMenu();
 		aboutUsMenuItem = new JMenuItem();
@@ -504,6 +540,26 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					}
 				});
 				menu1.add(importTagsMenuItem);
+
+				//---- exportTagsMenuItem ----
+				exportTagsMenuItem.setText(bundle.getString("JMuestraDatos.exportTagsMenuItem.text"));
+				exportTagsMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						exportTagsMenuItemActionPerformed(e);
+					}
+				});
+				menu1.add(exportTagsMenuItem);
+
+				//---- clearTagsMenuItem ----
+				clearTagsMenuItem.setText(bundle.getString("JMuestraDatos.clearTagsMenuItem.text"));
+				clearTagsMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						clearTagsMenuItemActionPerformed(e);
+					}
+				});
+				menu1.add(clearTagsMenuItem);
 				menu1.addSeparator();
 
 				//---- exitMenuItem ----
@@ -1022,6 +1078,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenu menu1;
 	private JMenuItem configMenuItem;
 	private JMenuItem importTagsMenuItem;
+	private JMenuItem exportTagsMenuItem;
+	private JMenuItem clearTagsMenuItem;
 	private JMenuItem exitMenuItem;
 	private JMenu menu3;
 	private JMenuItem aboutUsMenuItem;

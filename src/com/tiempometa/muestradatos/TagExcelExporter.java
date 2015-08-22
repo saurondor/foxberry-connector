@@ -24,7 +24,7 @@ import com.tiempometa.timing.models.Rfid;
  *         License, v. 2.0
  * 
  */
-public class TaxExcelExporter {
+public class TagExcelExporter {
 
 	WritableWorkbook workbook = null;
 	String[] header = { "número", "epc" };

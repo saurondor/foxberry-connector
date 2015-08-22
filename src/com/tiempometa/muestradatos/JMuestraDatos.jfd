@@ -472,6 +472,16 @@ new FormModel {
 						"text": new FormMessage( null, "JMuestraDatos.importTagsMenuItem.text" )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "importTagsMenuItemActionPerformed", true ) )
 					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "exportTagsMenuItem"
+						"text": new FormMessage( null, "JMuestraDatos.exportTagsMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "exportTagsMenuItemActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "clearTagsMenuItem"
+						"text": new FormMessage( null, "JMuestraDatos.clearTagsMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clearTagsMenuItemActionPerformed", true ) )
+					} )
 					add( new FormComponent( "javax.swing.JPopupMenu$Separator" ) {
 						name: "separator1"
 					} )

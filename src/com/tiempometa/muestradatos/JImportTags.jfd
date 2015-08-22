@@ -116,6 +116,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "closeButton"
 						"text": "Cerrar"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "closeButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 2
 						"gridY": 1
