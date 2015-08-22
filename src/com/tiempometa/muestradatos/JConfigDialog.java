@@ -135,6 +135,9 @@ public class JConfigDialog extends JDialog {
 						"La base de datos no existe. ¿Desea crear una nueva?",
 						"Nueva base de datos", JOptionPane.YES_NO_OPTION);
 				if (response == JOptionPane.YES_OPTION) {
+					if (!database.getAbsolutePath().endsWith(".mdb")) {
+						database = new File(database.getAbsolutePath() + ".mdb");
+					}
 					createNewDatabase(database);
 				} else {
 					return;
@@ -167,7 +170,8 @@ public class JConfigDialog extends JDialog {
 	private void createNewDatabase(File database) {
 		try {
 			FileOutputStream foStream = new FileOutputStream(database);
-			InputStream fiStream = this.getClass().getResourceAsStream("/com/tiempometa/resources/empty_v1x.mdb");
+			InputStream fiStream = this.getClass().getResourceAsStream(
+					"/com/tiempometa/resources/empty_v1x.mdb");
 			if (fiStream == null) {
 				logger.error("Unable to find database resource file ");
 			} else {
