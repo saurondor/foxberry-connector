@@ -168,8 +168,7 @@ public class JCountTags extends JDialog implements TagReadListener {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle
-				.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		label1 = new JLabel();
@@ -186,22 +185,25 @@ public class JCountTags extends JDialog implements TagReadListener {
 		closeButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
-		// ======== this ========
+		//======== this ========
 		setTitle(bundle.getString("JCountTags.this.title"));
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
-		// ======== dialogPane ========
+		//======== dialogPane ========
 		{
 			dialogPane.setBorder(Borders.DIALOG_BORDER);
 			dialogPane.setLayout(new BorderLayout());
 
-			// ======== contentPanel ========
+			//======== contentPanel ========
 			{
-				contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
+				contentPanel.setLayout(new FormLayout(
+					new ColumnSpec[] {
 						new ColumnSpec(Sizes.dluX(88)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(37)) }, new RowSpec[] {
+						new ColumnSpec(Sizes.dluX(37))
+					},
+					new RowSpec[] {
 						new RowSpec(Sizes.dluY(15)),
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
@@ -218,49 +220,44 @@ public class JCountTags extends JDialog implements TagReadListener {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC }));
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
-				// ---- label1 ----
+				//---- label1 ----
 				label1.setText(bundle.getString("JCountTags.label1.text"));
 				label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label1, cc.xy(1, 3));
 
-				// ---- eventTagCountLabel ----
-				eventTagCountLabel.setText(bundle
-						.getString("JCountTags.eventTagCountLabel.text"));
+				//---- eventTagCountLabel ----
+				eventTagCountLabel.setText(bundle.getString("JCountTags.eventTagCountLabel.text"));
 				eventTagCountLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				eventTagCountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 				contentPanel.add(eventTagCountLabel, cc.xy(3, 3));
 
-				// ---- label2 ----
+				//---- label2 ----
 				label2.setText(bundle.getString("JCountTags.label2.text"));
 				label2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label2, cc.xy(1, 5));
 
-				// ---- nonEventTagCountLabel ----
-				nonEventTagCountLabel.setText(bundle
-						.getString("JCountTags.nonEventTagCountLabel.text"));
-				nonEventTagCountLabel
-						.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				nonEventTagCountLabel
-						.setHorizontalAlignment(SwingConstants.RIGHT);
+				//---- nonEventTagCountLabel ----
+				nonEventTagCountLabel.setText(bundle.getString("JCountTags.nonEventTagCountLabel.text"));
+				nonEventTagCountLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				nonEventTagCountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 				contentPanel.add(nonEventTagCountLabel, cc.xy(3, 5));
 
-				// ---- label3 ----
+				//---- label3 ----
 				label3.setText(bundle.getString("JCountTags.label3.text"));
 				label3.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label3, cc.xy(1, 7));
 
-				// ---- totalTagCountLabel ----
-				totalTagCountLabel.setText(bundle
-						.getString("JCountTags.totalTagCountLabel.text"));
+				//---- totalTagCountLabel ----
+				totalTagCountLabel.setText(bundle.getString("JCountTags.totalTagCountLabel.text"));
 				totalTagCountLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				totalTagCountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 				contentPanel.add(totalTagCountLabel, cc.xy(3, 7));
 
-				// ---- countButton ----
-				countButton.setText(bundle
-						.getString("JCountTags.countButton.text"));
+				//---- countButton ----
+				countButton.setText(bundle.getString("JCountTags.countButton.text"));
 				countButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				countButton.addActionListener(new ActionListener() {
 					@Override
@@ -270,9 +267,8 @@ public class JCountTags extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(countButton, cc.xywh(1, 9, 3, 1));
 
-				// ---- clearCountButton ----
-				clearCountButton.setText(bundle
-						.getString("JCountTags.clearCountButton.text"));
+				//---- clearCountButton ----
+				clearCountButton.setText(bundle.getString("JCountTags.clearCountButton.text"));
 				clearCountButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				clearCountButton.addActionListener(new ActionListener() {
 					@Override
@@ -282,9 +278,8 @@ public class JCountTags extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(clearCountButton, cc.xywh(1, 11, 3, 1));
 
-				// ---- exportCountButton ----
-				exportCountButton.setText(bundle
-						.getString("JCountTags.exportCountButton.text"));
+				//---- exportCountButton ----
+				exportCountButton.setText(bundle.getString("JCountTags.exportCountButton.text"));
 				exportCountButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				exportCountButton.addActionListener(new ActionListener() {
 					@Override
@@ -294,21 +289,23 @@ public class JCountTags extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(exportCountButton, cc.xywh(1, 15, 3, 1));
 
-				// ---- countTidCheckBox ----
-				countTidCheckBox.setText(bundle
-						.getString("JCountTags.countTidCheckBox.text"));
+				//---- countTidCheckBox ----
+				countTidCheckBox.setText(bundle.getString("JCountTags.countTidCheckBox.text"));
 				contentPanel.add(countTidCheckBox, cc.xy(1, 17));
 			}
 			dialogPane.add(contentPanel, BorderLayout.NORTH);
 
-			// ======== buttonBar ========
+			//======== buttonBar ========
 			{
 				buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
-				buttonBar.setLayout(new FormLayout(new ColumnSpec[] {
-						FormFactory.GLUE_COLSPEC, FormFactory.BUTTON_COLSPEC },
-						RowSpec.decodeSpecs("pref")));
+				buttonBar.setLayout(new FormLayout(
+					new ColumnSpec[] {
+						FormFactory.GLUE_COLSPEC,
+						FormFactory.BUTTON_COLSPEC
+					},
+					RowSpec.decodeSpecs("pref")));
 
-				// ---- closeButton ----
+				//---- closeButton ----
 				closeButton.setText("Cerrar");
 				closeButton.addActionListener(new ActionListener() {
 					@Override
@@ -342,7 +339,6 @@ public class JCountTags extends JDialog implements TagReadListener {
 	private JCheckBox countTidCheckBox;
 	private JPanel buttonBar;
 	private JButton closeButton;
-
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 	@Override
 	public void handleReadings(List<TagReading> readings) {

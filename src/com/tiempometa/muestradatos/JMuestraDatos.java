@@ -407,6 +407,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		menuBar1 = new JMenuBar();
 		menu1 = new JMenu();
 		configMenuItem = new JMenuItem();
+		importTagsMenuItem = new JMenuItem();
 		exitMenuItem = new JMenuItem();
 		menu3 = new JMenu();
 		aboutUsMenuItem = new JMenuItem();
@@ -488,6 +489,10 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					}
 				});
 				menu1.add(configMenuItem);
+
+				//---- importTagsMenuItem ----
+				importTagsMenuItem.setText(bundle.getString("JMuestraDatos.importTagsMenuItem.text"));
+				menu1.add(importTagsMenuItem);
 				menu1.addSeparator();
 
 				//---- exitMenuItem ----
@@ -610,12 +615,14 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					label9.setText(bundle.getString("JMuestraDatos.label9.text"));
 					label9.setFont(new Font("Tahoma", Font.BOLD, 16));
 					label9.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/usb_128.png")));
+					label9.setHorizontalAlignment(SwingConstants.CENTER);
 					panel2.add(label9, cc.xywh(3, 3, 3, 1));
 
 					//---- label10 ----
 					label10.setText(bundle.getString("JMuestraDatos.label10.text"));
 					label10.setFont(new Font("Tahoma", Font.BOLD, 16));
 					label10.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/briefcase_128.png")));
+					label10.setHorizontalAlignment(SwingConstants.CENTER);
 					panel2.add(label10, cc.xywh(9, 3, 3, 1));
 
 					//---- label3 ----
@@ -1003,6 +1010,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenuBar menuBar1;
 	private JMenu menu1;
 	private JMenuItem configMenuItem;
+	private JMenuItem importTagsMenuItem;
 	private JMenuItem exitMenuItem;
 	private JMenu menu3;
 	private JMenuItem aboutUsMenuItem;
