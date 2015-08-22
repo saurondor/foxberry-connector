@@ -400,6 +400,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		}
 	}
 
+	private void importTagsMenuItemActionPerformed(ActionEvent e) {
+		JImportTags importTags = new JImportTags(this);
+		importTags.setVisible(true);
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -492,6 +497,12 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 				//---- importTagsMenuItem ----
 				importTagsMenuItem.setText(bundle.getString("JMuestraDatos.importTagsMenuItem.text"));
+				importTagsMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						importTagsMenuItemActionPerformed(e);
+					}
+				});
 				menu1.add(importTagsMenuItem);
 				menu1.addSeparator();
 

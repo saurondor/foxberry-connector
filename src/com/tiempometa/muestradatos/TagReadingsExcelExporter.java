@@ -19,11 +19,11 @@ import jxl.write.biff.RowsExceededException;
 /**
  * @author Gerardo Tasistro
  * 
- *         Copyright 2015 Gerardo Tasistro Licensed un the Mozilla Public
+ *         Copyright 2015 Gerardo Tasistro Licensed under the Mozilla Public
  *         License, v. 2.0
  * 
  */
-public class ExportTagsToExcel {
+public class TagReadingsExcelExporter {
 
 	WritableWorkbook workbook = null;
 	String[] header = { "bib", "epc", "tid" };

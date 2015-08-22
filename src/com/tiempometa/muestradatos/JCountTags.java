@@ -124,7 +124,7 @@ public class JCountTags extends JDialog implements TagReadListener {
 			}
 			try {
 				populateBibs();
-				ExportTagsToExcel exporter = new ExportTagsToExcel();
+				TagReadingsExcelExporter exporter = new TagReadingsExcelExporter();
 				exporter.open(exportFile);
 				Map<String, Map<String, TagReading>> readings = new HashMap<String, Map<String, TagReading>>();
 				readings.put("en evento", eventTagMap);
