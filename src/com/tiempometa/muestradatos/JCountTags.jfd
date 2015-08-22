@@ -14,82 +14,96 @@ new FormModel {
 				name: "dialogPane"
 				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-					"$columnSpecs": "default, labelcompgap, default"
-					"$rowSpecs": "default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+					"$columnSpecs": "88dlu, labelcompgap, 37dlu"
+					"$rowSpecs": "15dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, 17dlu, linegap, default, linegap, default"
 				} ) {
 					name: "contentPanel"
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "countButton"
-						"text": new FormMessage( null, "JCountTags.countButton.text" )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 1
-						"gridY": 1
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "clearCountButton"
-						"text": new FormMessage( null, "JCountTags.clearCountButton.text" )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "label1"
+						"text": new FormMessage( null, "JCountTags.label1.text" )
+						"font": &Font0 new java.awt.Font( "Tahoma", 0, 14 )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 1
 						"gridY": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label1"
-						"text": new FormMessage( null, "JCountTags.label1.text" )
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 1
-						"gridY": 5
-					} )
-					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "eventTagCountLabel"
 						"text": new FormMessage( null, "JCountTags.eventTagCountLabel.text" )
+						"font": #Font0
+						"horizontalAlignment": 4
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 5
+						"gridY": 3
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label2"
 						"text": new FormMessage( null, "JCountTags.label2.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 1
-						"gridY": 7
+						"gridY": 5
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "noEventTagCountLabel"
-						"text": new FormMessage( null, "JCountTags.noEventTagCountLabel.text" )
+						name: "nonEventTagCountLabel"
+						"text": new FormMessage( null, "JCountTags.nonEventTagCountLabel.text" )
+						"font": #Font0
+						"horizontalAlignment": 4
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
-						"gridY": 7
+						"gridY": 5
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "label3"
 						"text": new FormMessage( null, "JCountTags.label3.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 1
-						"gridY": 9
+						"gridY": 7
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "totalTagCountLabel"
 						"text": new FormMessage( null, "JCountTags.totalTagCountLabel.text" )
+						"font": #Font0
+						"horizontalAlignment": 4
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 3
+						"gridY": 7
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "countButton"
+						"text": new FormMessage( null, "JCountTags.countButton.text" )
+						"font": #Font0
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "countButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridWidth": 3
 						"gridY": 9
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "clearCountButton"
+						"text": new FormMessage( null, "JCountTags.clearCountButton.text" )
+						"font": #Font0
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clearCountButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridY": 11
+						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "exportCountButton"
 						"text": new FormMessage( null, "JCountTags.exportCountButton.text" )
+						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 1
-						"gridY": 11
+						"gridY": 15
+						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JCheckBox" ) {
 						name: "countTidCheckBox"
 						"text": new FormMessage( null, "JCountTags.countTidCheckBox.text" )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 1
-						"gridY": 13
+						"gridY": 17
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
-					"value": "Center"
+					"value": "North"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 					"$columnSpecs": "glue, button"
@@ -98,8 +112,9 @@ new FormModel {
 					name: "buttonBar"
 					"border": sfield com.jgoodies.forms.factories.Borders BUTTON_BAR_GAP_BORDER
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "okButton"
-						"text": "OK"
+						name: "closeButton"
+						"text": "Cerrar"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "closeButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 2
 						"gridY": 1
@@ -112,7 +127,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 400, 300 )
+			"size": new java.awt.Dimension( 400, 350 )
 		} )
 	}
 }

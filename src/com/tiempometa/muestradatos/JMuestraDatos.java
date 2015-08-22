@@ -372,8 +372,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	}
 
 	private void countTagsButtonActionPerformed(ActionEvent e) {
-		if (ReaderContext.isFoxberryConnected()
-				|| (ReaderContext.isUsbConnected())) {
+		if (ReaderContext.isFoxberryConnected()) {
+			JCountTags countTags = new JCountTags(this);
+			countTags.setVisible(true);
 		} else {
 			JOptionPane.showConfirmDialog(this,
 					"Se debe conectar a un lector primero",
