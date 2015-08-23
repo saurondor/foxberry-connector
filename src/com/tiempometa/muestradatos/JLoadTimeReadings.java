@@ -177,6 +177,10 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 		filterThread.start();
 	}
 
+	private void closeButtonActionPerformed(ActionEvent e) {
+		dispose();
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -385,6 +389,12 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 				//---- closeButton ----
 				closeButton.setText("Cerrar");
 				closeButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				closeButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						closeButtonActionPerformed(e);
+					}
+				});
 				buttonBar.add(closeButton, cc.xy(2, 1));
 			}
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
