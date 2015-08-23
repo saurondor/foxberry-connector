@@ -85,7 +85,7 @@ public abstract class ReadFilter implements Runnable {
 		}
 	}
 
-	private void saveReading(TagReading tagReading) {
+	protected void saveReading(TagReading tagReading) {
 		ChipReadRaw chipReading = new ChipReadRaw(null, tagReading.getEpc()
 				.toLowerCase(), tagReading.getTime(),
 				tagReading.getTimeMillis() / 1000, checkPoint, checkPoint,
