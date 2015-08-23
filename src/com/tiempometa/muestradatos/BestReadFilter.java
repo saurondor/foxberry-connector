@@ -28,4 +28,12 @@ public class BestReadFilter extends ReadFilter {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Mejor Lectura";
+	}
+
 }

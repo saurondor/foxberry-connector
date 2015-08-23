@@ -110,11 +110,6 @@ new FormModel {
 					} )
 					add( new FormComponent( "javax.swing.JComboBox" ) {
 						name: "filterComboBox"
-						"model": new javax.swing.DefaultComboBoxModel {
-							selectedItem: "Si"
-							addElement( "Si" )
-							addElement( "No" )
-						}
 						"font": #Font0
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5

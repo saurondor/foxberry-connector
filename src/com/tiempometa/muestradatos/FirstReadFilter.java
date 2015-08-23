@@ -28,4 +28,12 @@ public class FirstReadFilter extends ReadFilter {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Primera Lectura";
+	}
+
 }

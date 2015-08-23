@@ -86,11 +86,15 @@ public abstract class ReadFilter implements Runnable {
 	}
 
 	protected void saveReading(TagReading tagReading) {
-		ChipReadRaw chipReading = new ChipReadRaw(null, tagReading.getEpc()
-				.toLowerCase(), tagReading.getTime(),
-				tagReading.getTimeMillis() / 1000, checkPoint, checkPoint,
-				null, ChipReadRaw.STATUS_RAW, ChipReadRaw.FILTERED_READER,
-				loadName, null);
+		ChipReadRaw chipReading = null;
+		synchronized (this) {
+			chipReading = new ChipReadRaw(null, tagReading.getEpc()
+					.toLowerCase(), tagReading.getTime(),
+					tagReading.getTimeMillis() / 1000, checkPoint, checkPoint,
+					null, ChipReadRaw.STATUS_RAW, ChipReadRaw.FILTERED_READER,
+					loadName, null);
+
+		}
 		try {
 			chipReadRawDao.save(chipReading);
 		} catch (SQLException e) {
@@ -100,5 +104,20 @@ public abstract class ReadFilter implements Runnable {
 	}
 
 	public abstract void addReading(TagReading reading);
+
+	/**
+	 * @return the checkPoint
+	 */
+	public synchronized String getCheckPoint() {
+		return checkPoint;
+	}
+
+	/**
+	 * @param checkPoint
+	 *            the checkPoint to set
+	 */
+	public synchronized void setCheckPoint(String checkPoint) {
+		this.checkPoint = checkPoint;
+	}
 
 }

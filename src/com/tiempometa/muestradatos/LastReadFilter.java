@@ -26,4 +26,12 @@ public class LastReadFilter extends ReadFilter {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Última Lectura";
+	}
+
 }

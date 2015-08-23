@@ -972,17 +972,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					label19.setText(bundle.getString("JMuestraDatos.label19.text"));
 					label19.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel8.add(label19, cc.xy(5, 5));
-
-					//---- systemTimeLabel ----
-					systemTimeLabel.setText(bundle.getString("JMuestraDatos.systemTimeLabel.text"));
 					panel8.add(systemTimeLabel, cc.xy(3, 7));
-
-					//---- foxberryTimeLabel ----
-					foxberryTimeLabel.setText(bundle.getString("JMuestraDatos.foxberryTimeLabel.text"));
 					panel8.add(foxberryTimeLabel, cc.xy(5, 7));
-
-					//---- foxberryTimeDiffLabel ----
-					foxberryTimeDiffLabel.setText(bundle.getString("JMuestraDatos.foxberryTimeDiffLabel.text"));
 					panel8.add(foxberryTimeDiffLabel, cc.xy(5, 9));
 				}
 				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel8.tab.title"), panel8);
