@@ -4,6 +4,7 @@
 package com.tiempometa.muestradatos;
 
 import java.sql.Savepoint;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -24,9 +25,12 @@ public class NoReadFilter extends ReadFilter {
 	@Override
 	public void addReading(TagReading reading) {
 		// don't filter, just save directly
+		synchronized (this) {
+			lastTagRead = reading.getTimeMillis();
+		}
+		reading.setProcessedMillis((new Date()).getTime());
 		logger.debug("Passtrough reading, saving data without filtering.");
 		saveReading(reading);
-
 	}
 	
 

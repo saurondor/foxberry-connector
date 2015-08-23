@@ -29,6 +29,7 @@ public abstract class ReadFilter implements Runnable {
 	protected Map<String, TagReading> tagReads = Collections
 			.synchronizedMap(new HashMap<String, TagReading>());
 	Long timeWindowMillis = 2000l;
+	Long lastTagRead = null;
 	ChipReadRawDao chipReadRawDao = new ChipReadRawDaoImpl();
 	boolean run = true;
 	String checkPoint = null;
@@ -76,11 +77,15 @@ public abstract class ReadFilter implements Runnable {
 			// reading.getTime().toGMTString());
 			// logger.debug(">>> now time " + now.toGMTString());
 			// logger.debug(">>> now millis " + now.getTime());
-			Long timeLimit = (now.getTime() - timeWindowMillis) * 1000;
+			Long timeLimit = null;
+			synchronized (this) {
+				timeLimit = (lastTagRead - timeWindowMillis * 1000);
+			}
+			Long systemLimit = (now.getTime() - timeWindowMillis * 2);
 			// logger.debug(">>> millis " + timeLimit + " vs reading "
 			// + reading.getTimeMillis() + " delta "
 			// + (timeLimit - reading.getTimeMillis()));
-			if (reading.getTimeMillis() < timeLimit) {
+			if ((reading.getTimeMillis() < timeLimit)||(reading.getProcessedMillis() < systemLimit)) {
 				logger.debug("*** Reading is stale, flushing " + key);
 				saveReading(reading);
 				tagReads.remove(key);
