@@ -34,12 +34,15 @@ public abstract class ReadFilter implements Runnable {
 	String checkPoint = null;
 	String loadName = null;
 
-	public void initialize(Long timeWindow) {
-		logger.info("Init First Read Filter");
+	public void initialize(Long timeWindow, String checkPoint, String loadName) {
+		logger.info("Initialize filter with time window: " + timeWindow
+				+ " check point: " + checkPoint + " load name: " + loadName);
 		timeWindowMillis = timeWindow;
+		this.checkPoint = checkPoint;
+		this.loadName = loadName;
 	}
 
-	public void close() {
+	public void stop() {
 		synchronized (this) {
 			run = false;
 		}
@@ -79,8 +82,8 @@ public abstract class ReadFilter implements Runnable {
 			// + (timeLimit - reading.getTimeMillis()));
 			if (reading.getTimeMillis() < timeLimit) {
 				logger.debug("*** Reading is stale, flushing " + key);
-				tagReads.remove(key);
 				saveReading(reading);
+				tagReads.remove(key);
 			}
 		}
 	}
@@ -92,8 +95,10 @@ public abstract class ReadFilter implements Runnable {
 					.toLowerCase(), tagReading.getTime(),
 					tagReading.getTimeMillis() / 1000, checkPoint, checkPoint,
 					null, ChipReadRaw.STATUS_RAW, ChipReadRaw.FILTERED_READER,
-					loadName, null);
-
+					tagReading.getPeakRssi().toString(), null);
+			if (logger.isDebugEnabled()) {
+				logger.debug("Saving reading " + chipReading);
+			}
 		}
 		try {
 			chipReadRawDao.save(chipReading);

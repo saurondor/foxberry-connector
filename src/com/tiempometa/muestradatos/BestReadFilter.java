@@ -3,6 +3,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package com.tiempometa.muestradatos;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author Gerardo Tasistro
  *
@@ -12,6 +14,8 @@ package com.tiempometa.muestradatos;
  */
 public class BestReadFilter extends ReadFilter {
 
+	private static final Logger logger = Logger.getLogger(BestReadFilter.class);
+	
 	@Override
 	public void addReading(TagReading reading) {
 		logger.debug("Adding reading to filter");
@@ -34,6 +38,16 @@ public class BestReadFilter extends ReadFilter {
 	@Override
 	public String toString() {
 		return "Mejor Lectura";
+	}
+
+	/* (non-Javadoc)
+	 * @see com.tiempometa.muestradatos.ReadFilter#initialize(java.lang.Long)
+	 */
+	@Override
+	public void initialize(Long timeWindow, String checkPoint, String loadName) {
+		logger.info("Initialize Best Read Filter");
+		super.initialize(timeWindow, checkPoint, loadName);
+		run = true;
 	}
 
 }

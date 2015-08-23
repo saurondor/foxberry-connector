@@ -87,7 +87,7 @@ new FormModel {
 						"gridY": 9
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "timeWindowTextField"
+						name: "filterWindowTextField"
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
 						"gridY": 9
@@ -111,6 +111,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JComboBox" ) {
 						name: "filterComboBox"
 						"font": #Font0
+						addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "filterComboBoxItemStateChanged", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 						"gridX": 5
 						"gridY": 11
