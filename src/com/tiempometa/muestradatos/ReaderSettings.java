@@ -21,6 +21,7 @@ public class ReaderSettings {
 	public static final String PROPERTY_PREFERRED_ANTENNA = "PREFERRED_ANTENNA";
 	public static final String PROPERTY_USB_PORT = "USB_PORT";
 	public static final String PROPERTY_USB_REGION = "USB_REGION";
+	public static final String PROPERTY_FILTER_WINDOW = "FILTER_WINDOW";
 
 	private String databaseName;
 	private String foxberryReaderAddress;
@@ -29,6 +30,7 @@ public class ReaderSettings {
 	private String preferredAntenna;
 	private String usbPort;
 	private String usbRegion;
+	private Integer filterWindow = 5000;
 
 	public void loadSettings(String settingsFile) {
 		databaseName = TiempometaUtils.getProperty(PROPERTY_DATABASENAME,
@@ -44,17 +46,30 @@ public class ReaderSettings {
 		usbPort = TiempometaUtils.getProperty(PROPERTY_USB_PORT, settingsFile);
 		usbRegion = TiempometaUtils.getProperty(PROPERTY_USB_REGION,
 				settingsFile);
+		try {
+			filterWindow = Integer.valueOf(TiempometaUtils.getProperty(
+					PROPERTY_FILTER_WINDOW, settingsFile));
+		} catch (NumberFormatException e) {
+
+		}
 	}
 
 	public void saveSettings(String settingsFile) {
 		TiempometaUtils.setProperty(PROPERTY_DATABASENAME, databaseName,
 				settingsFile);
-		TiempometaUtils.setProperty(PROPERTY_FOXBERRY_ADDRESS, foxberryReaderAddress, settingsFile);
-		TiempometaUtils.setProperty(PROPERTY_TCPIP_READER_TYPE, tcpIpReaderType, settingsFile);
-		TiempometaUtils.setProperty(PROPERTY_PREFERRED_READER, preferredReader, settingsFile);
-		TiempometaUtils.setProperty(PROPERTY_PREFERRED_ANTENNA, preferredAntenna, settingsFile);
+		TiempometaUtils.setProperty(PROPERTY_FOXBERRY_ADDRESS,
+				foxberryReaderAddress, settingsFile);
+		TiempometaUtils.setProperty(PROPERTY_TCPIP_READER_TYPE,
+				tcpIpReaderType, settingsFile);
+		TiempometaUtils.setProperty(PROPERTY_PREFERRED_READER, preferredReader,
+				settingsFile);
+		TiempometaUtils.setProperty(PROPERTY_PREFERRED_ANTENNA,
+				preferredAntenna, settingsFile);
 		TiempometaUtils.setProperty(PROPERTY_USB_PORT, usbPort, settingsFile);
-		TiempometaUtils.setProperty(PROPERTY_USB_REGION, usbRegion, settingsFile);
+		TiempometaUtils.setProperty(PROPERTY_USB_REGION, usbRegion,
+				settingsFile);
+		TiempometaUtils.setProperty(PROPERTY_FILTER_WINDOW, filterWindow.toString(),
+				settingsFile);
 	}
 
 	/**
@@ -160,6 +175,21 @@ public class ReaderSettings {
 	 */
 	public void setUsbRegion(String usbRegion) {
 		this.usbRegion = usbRegion;
+	}
+
+	/**
+	 * @return the filterWindow
+	 */
+	public synchronized Integer getFilterWindow() {
+		return filterWindow;
+	}
+
+	/**
+	 * @param filterWindow
+	 *            the filterWindow to set
+	 */
+	public synchronized void setFilterWindow(Integer filterWindow) {
+		this.filterWindow = filterWindow;
 	}
 
 }

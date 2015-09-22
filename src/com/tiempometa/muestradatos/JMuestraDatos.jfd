@@ -360,21 +360,18 @@ new FormModel {
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "systemTimeLabel"
-							"text": new FormMessage( null, "JMuestraDatos.systemTimeLabel.text" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
 							"gridY": 7
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "foxberryTimeLabel"
-							"text": new FormMessage( null, "JMuestraDatos.foxberryTimeLabel.text" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 5
 							"gridY": 7
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "foxberryTimeDiffLabel"
-							"text": new FormMessage( null, "JMuestraDatos.foxberryTimeDiffLabel.text" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 5
 							"gridY": 9

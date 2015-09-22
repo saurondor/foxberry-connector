@@ -30,6 +30,7 @@ public class TagReading {
 	private String bib;
 	private Long timeMillis;
 	private Date time;
+	private Long processedMillis;
 	private Integer peakRssi;
 	private Boolean valid = false;
 	private String stringData = null;
@@ -300,6 +301,20 @@ public class TagReading {
 	 */
 	public void setBib(String bib) {
 		this.bib = bib;
+	}
+
+	/**
+	 * @return the processedMillis
+	 */
+	public Long getProcessedMillis() {
+		return processedMillis;
+	}
+
+	/**
+	 * @param processedMillis the processedMillis to set
+	 */
+	public void setProcessedMillis(Long processedMillis) {
+		this.processedMillis = processedMillis;
 	}
 
 }
