@@ -44,14 +44,18 @@ public class JConfigDialog extends JDialog {
 
 	private void loadSettings() {
 		String databaseName = ReaderContext.getSettings().getDatabaseName();
-		File databaseFile = new File(databaseName);
-		if (databaseFile.exists()) {
-			setDatabase(databaseFile);
+		if (databaseName == null) {
+
 		} else {
-			JOptionPane.showMessageDialog(this,
-					"La base de datos no es válida o no existe",
-					"Error de base de datos", JOptionPane.ERROR_MESSAGE);
-			setDatabase(null);
+			File databaseFile = new File(databaseName);
+			if (databaseFile.exists()) {
+				setDatabase(databaseFile);
+			} else {
+				JOptionPane.showMessageDialog(this,
+						"La base de datos no es válida o no existe",
+						"Error de base de datos", JOptionPane.ERROR_MESSAGE);
+				setDatabase(null);
+			}
 		}
 		readerBoxAddressTextField.setText(ReaderContext.getSettings()
 				.getFoxberryReaderAddress());

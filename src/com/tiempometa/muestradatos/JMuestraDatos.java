@@ -73,6 +73,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 	private Integer lastTagCount = 0;
 	private RfidDao rfidDao = new RfidDaoImpl();
+	private static SystemProperties systemProperties = new SystemProperties();
 
 	class TimeRunner implements Runnable {
 
@@ -133,7 +134,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			}
 		});
 		loadSettings();
-		setDatabase(new File(ReaderContext.getSettings().getDatabaseName()));
+		if (!(ReaderContext.getSettings().getDatabaseName() == null)) {
+			setDatabase(new File(ReaderContext.getSettings().getDatabaseName()));
+		}
 		ReaderContext.addReadingListener(this);
 		ReaderContext.addReaderStatusListener(this);
 		Thread thread = new Thread(systemTime);
@@ -179,8 +182,30 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			// handle exception
 		}
 
-		JMuestraDatos reader = new JMuestraDatos();
-		reader.setVisible(true);
+		logger.info(systemProperties.java_version);
+		logger.info(systemProperties.arch_data_model);
+		logger.info(systemProperties.java_home);
+		logger.info(systemProperties.user_dir);
+		if (systemProperties.arch_data_model.equals(InstallUtils.AMD64)) {
+			JOptionPane.showMessageDialog(null,
+					"Se requiere Java 32bits para ejecutar este programa",
+					"Systema de 64 bits", JOptionPane.WARNING_MESSAGE);
+			JInstaller installer = new JInstaller(null);
+			installer.setVisible(true);
+		} else {
+			if (!(systemProperties.getJava_version().startsWith("1.6") || systemProperties
+					.getJava_version().startsWith("1.7"))) {
+				JOptionPane.showMessageDialog(null,
+						"Se requiere Java 6 o 7 para ejecutar este programa",
+						"Versión de Java no soportada",
+						JOptionPane.WARNING_MESSAGE);
+				JInstaller installer = new JInstaller(null);
+				installer.setVisible(true);
+			} else {
+				JMuestraDatos reader = new JMuestraDatos();
+				reader.setVisible(true);
+			}
+		}
 	}
 
 	private void configMenuItemActionPerformed(ActionEvent e) {
@@ -418,28 +443,47 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				exporter.open(fc.getSelectedFile());
 				List<Rfid> rfidList = rfidDao.findAll();
 				exporter.export(rfidList);
-				JOptionPane.showMessageDialog(this, "Se exportaron los tags con éxito", "Exportar Tags", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						"Se exportaron los tags con éxito", "Exportar Tags",
+						JOptionPane.PLAIN_MESSAGE);
 			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(this, "Error exportando "+e1.getMessage(), "Exportar Tags", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						"Error exportando " + e1.getMessage(), "Exportar Tags",
+						JOptionPane.ERROR_MESSAGE);
 			} catch (SQLException e1) {
-				JOptionPane.showMessageDialog(this, "Error exportando "+e1.getMessage(), "Exportar Tags", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						"Error exportando " + e1.getMessage(), "Exportar Tags",
+						JOptionPane.ERROR_MESSAGE);
 			} catch (RowsExceededException e1) {
-				JOptionPane.showMessageDialog(this, "Error exportando "+e1.getMessage(), "Exportar Tags", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						"Error exportando " + e1.getMessage(), "Exportar Tags",
+						JOptionPane.ERROR_MESSAGE);
 			} catch (WriteException e1) {
-				JOptionPane.showMessageDialog(this, "Error exportando "+e1.getMessage(), "Exportar Tags", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						"Error exportando " + e1.getMessage(), "Exportar Tags",
+						JOptionPane.ERROR_MESSAGE);
 			}
-			
+
 		}
 	}
 
 	private void clearTagsMenuItemActionPerformed(ActionEvent e) {
-		int response = JOptionPane.showConfirmDialog(this, "¿Seguro que desea borrar todos los tags? Esta operación no se puede deshacer", "Borrar tags", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		int response = JOptionPane
+				.showConfirmDialog(
+						this,
+						"¿Seguro que desea borrar todos los tags? Esta operación no se puede deshacer",
+						"Borrar tags", JOptionPane.YES_NO_OPTION,
+						JOptionPane.WARNING_MESSAGE);
 		if (response == JOptionPane.YES_OPTION) {
 			try {
 				rfidDao.deleteAll();
-				JOptionPane.showMessageDialog(this, "Se borraron todos los tags", "Despejar Tags", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						"Se borraron todos los tags", "Despejar Tags",
+						JOptionPane.PLAIN_MESSAGE);
 			} catch (SQLException e1) {
-				JOptionPane.showMessageDialog(this, "Error despejando tags "+e1.getMessage(), "Despejar Tags", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error despejando tags "
+						+ e1.getMessage(), "Despejar Tags",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -447,7 +491,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle
+				.getBundle("com.tiempometa.muestradatos.muestradatos");
 		menuBar1 = new JMenuBar();
 		menu1 = new JMenu();
 		configMenuItem = new JMenuItem();
@@ -457,6 +502,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		exitMenuItem = new JMenuItem();
 		menu3 = new JMenu();
 		aboutUsMenuItem = new JMenuItem();
+		configureJavaMenuItem = new JMenuItem();
 		panel5 = new JPanel();
 		panel3 = new JPanel();
 		panel4 = new JPanel();
@@ -511,23 +557,26 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		panel7 = new JPanel();
 		CellConstraints cc = new CellConstraints();
 
-		//======== this ========
+		// ======== this ========
 		setTitle(bundle.getString("JMuestraDatos.this.title"));
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")).getImage());
+		setIconImage(new ImageIcon(getClass().getResource(
+				"/com/tiempometa/resources/tiempometa_icon_large_alpha.png"))
+				.getImage());
 		setResizable(false);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
-		//======== menuBar1 ========
+		// ======== menuBar1 ========
 		{
 
-			//======== menu1 ========
+			// ======== menu1 ========
 			{
 				menu1.setText(bundle.getString("JMuestraDatos.menu1.text"));
 
-				//---- configMenuItem ----
-				configMenuItem.setText(bundle.getString("JMuestraDatos.configMenuItem.text"));
+				// ---- configMenuItem ----
+				configMenuItem.setText(bundle
+						.getString("JMuestraDatos.configMenuItem.text"));
 				configMenuItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -536,8 +585,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				});
 				menu1.add(configMenuItem);
 
-				//---- importTagsMenuItem ----
-				importTagsMenuItem.setText(bundle.getString("JMuestraDatos.importTagsMenuItem.text"));
+				// ---- importTagsMenuItem ----
+				importTagsMenuItem.setText(bundle
+						.getString("JMuestraDatos.importTagsMenuItem.text"));
 				importTagsMenuItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -546,8 +596,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				});
 				menu1.add(importTagsMenuItem);
 
-				//---- exportTagsMenuItem ----
-				exportTagsMenuItem.setText(bundle.getString("JMuestraDatos.exportTagsMenuItem.text"));
+				// ---- exportTagsMenuItem ----
+				exportTagsMenuItem.setText(bundle
+						.getString("JMuestraDatos.exportTagsMenuItem.text"));
 				exportTagsMenuItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -556,8 +607,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				});
 				menu1.add(exportTagsMenuItem);
 
-				//---- clearTagsMenuItem ----
-				clearTagsMenuItem.setText(bundle.getString("JMuestraDatos.clearTagsMenuItem.text"));
+				// ---- clearTagsMenuItem ----
+				clearTagsMenuItem.setText(bundle
+						.getString("JMuestraDatos.clearTagsMenuItem.text"));
 				clearTagsMenuItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -567,8 +619,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				menu1.add(clearTagsMenuItem);
 				menu1.addSeparator();
 
-				//---- exitMenuItem ----
-				exitMenuItem.setText(bundle.getString("JMuestraDatos.exitMenuItem.text"));
+				// ---- exitMenuItem ----
+				exitMenuItem.setText(bundle
+						.getString("JMuestraDatos.exitMenuItem.text"));
 				exitMenuItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -579,12 +632,13 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			}
 			menuBar1.add(menu1);
 
-			//======== menu3 ========
+			// ======== menu3 ========
 			{
 				menu3.setText(bundle.getString("JMuestraDatos.menu3.text"));
 
-				//---- aboutUsMenuItem ----
-				aboutUsMenuItem.setText(bundle.getString("JMuestraDatos.aboutUsMenuItem.text"));
+				// ---- aboutUsMenuItem ----
+				aboutUsMenuItem.setText(bundle
+						.getString("JMuestraDatos.aboutUsMenuItem.text"));
 				aboutUsMenuItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -592,63 +646,54 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					}
 				});
 				menu3.add(aboutUsMenuItem);
+
+				// ---- configureJavaMenuItem ----
+				configureJavaMenuItem.setText(bundle
+						.getString("JMuestraDatos.configureJavaMenuItem.text"));
+				menu3.add(configureJavaMenuItem);
 			}
 			menuBar1.add(menu3);
 		}
 		setJMenuBar(menuBar1);
 
-		//======== panel5 ========
+		// ======== panel5 ========
 		{
-			panel5.setLayout(new FormLayout(
-				new ColumnSpec[] {
+			panel5.setLayout(new FormLayout(new ColumnSpec[] {
 					new ColumnSpec(Sizes.dluX(18)),
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-					new ColumnSpec(Sizes.dluX(343))
-				},
-				new RowSpec[] {
-					new RowSpec(Sizes.dluY(17)),
-					FormFactory.LINE_GAP_ROWSPEC,
-					new RowSpec(Sizes.dluY(17))
-				}));
+					new ColumnSpec(Sizes.dluX(343)) }, new RowSpec[] {
+					new RowSpec(Sizes.dluY(17)), FormFactory.LINE_GAP_ROWSPEC,
+					new RowSpec(Sizes.dluY(17)) }));
 		}
 		contentPane.add(panel5, BorderLayout.NORTH);
 
-		//======== panel3 ========
+		// ======== panel3 ========
 		{
-			panel3.setLayout(new FormLayout(
-				new ColumnSpec[] {
+			panel3.setLayout(new FormLayout(new ColumnSpec[] {
 					new ColumnSpec(Sizes.dluX(16)),
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-					FormFactory.DEFAULT_COLSPEC
-				},
-				new RowSpec[] {
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC
-				}));
+					FormFactory.DEFAULT_COLSPEC }, new RowSpec[] {
+					FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC }));
 		}
 		contentPane.add(panel3, BorderLayout.WEST);
 
-		//======== panel4 ========
+		// ======== panel4 ========
 		{
-			panel4.setLayout(new FormLayout(
-				new ColumnSpec[] {
+			panel4.setLayout(new FormLayout(new ColumnSpec[] {
 					new ColumnSpec(Sizes.dluX(410)),
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-					FormFactory.DEFAULT_COLSPEC
-				},
-				RowSpec.decodeSpecs("245dlu")));
+					FormFactory.DEFAULT_COLSPEC }, RowSpec
+					.decodeSpecs("245dlu")));
 
-			//======== tabbedPane1 ========
+			// ======== tabbedPane1 ========
 			{
 				tabbedPane1.setFont(new Font("Tahoma", Font.BOLD, 16));
 
-				//======== panel2 ========
+				// ======== panel2 ========
 				{
-					panel2.setLayout(new FormLayout(
-						new ColumnSpec[] {
+					panel2.setLayout(new FormLayout(new ColumnSpec[] {
 							new ColumnSpec(Sizes.dluX(25)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(89)),
@@ -659,9 +704,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(84)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(Sizes.dluX(80))
-						},
-						new RowSpec[] {
+							new ColumnSpec(Sizes.dluX(80)) }, new RowSpec[] {
 							new RowSpec(Sizes.dluY(20)),
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
@@ -680,115 +723,141 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
 							FormFactory.LINE_GAP_ROWSPEC,
-							new RowSpec(Sizes.DLUY8)
-						}));
+							new RowSpec(Sizes.DLUY8) }));
 
-					//---- label9 ----
-					label9.setText(bundle.getString("JMuestraDatos.label9.text"));
+					// ---- label9 ----
+					label9.setText(bundle
+							.getString("JMuestraDatos.label9.text"));
 					label9.setFont(new Font("Tahoma", Font.BOLD, 16));
-					label9.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/usb_128.png")));
+					label9.setIcon(new ImageIcon(getClass().getResource(
+							"/com/tiempometa/resources/usb_128.png")));
 					label9.setHorizontalAlignment(SwingConstants.CENTER);
 					panel2.add(label9, cc.xywh(3, 3, 3, 1));
 
-					//---- label10 ----
-					label10.setText(bundle.getString("JMuestraDatos.label10.text"));
+					// ---- label10 ----
+					label10.setText(bundle
+							.getString("JMuestraDatos.label10.text"));
 					label10.setFont(new Font("Tahoma", Font.BOLD, 16));
-					label10.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/briefcase_128.png")));
+					label10.setIcon(new ImageIcon(getClass().getResource(
+							"/com/tiempometa/resources/briefcase_128.png")));
 					label10.setHorizontalAlignment(SwingConstants.CENTER);
 					panel2.add(label10, cc.xywh(9, 3, 3, 1));
 
-					//---- label3 ----
-					label3.setText(bundle.getString("JMuestraDatos.label3.text"));
+					// ---- label3 ----
+					label3.setText(bundle
+							.getString("JMuestraDatos.label3.text"));
 					label3.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label3, cc.xy(3, 5));
 
-					//---- readerPortLabel ----
-					readerPortLabel.setText(bundle.getString("JMuestraDatos.readerPortLabel.text"));
+					// ---- readerPortLabel ----
+					readerPortLabel.setText(bundle
+							.getString("JMuestraDatos.readerPortLabel.text"));
 					panel2.add(readerPortLabel, cc.xy(5, 5));
 
-					//---- label11 ----
-					label11.setText(bundle.getString("JMuestraDatos.label11.text"));
+					// ---- label11 ----
+					label11.setText(bundle
+							.getString("JMuestraDatos.label11.text"));
 					label11.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label11, cc.xy(9, 5));
 
-					//---- boxIpAddressLabel ----
-					boxIpAddressLabel.setText(bundle.getString("JMuestraDatos.boxIpAddressLabel.text"));
+					// ---- boxIpAddressLabel ----
+					boxIpAddressLabel.setText(bundle
+							.getString("JMuestraDatos.boxIpAddressLabel.text"));
 					panel2.add(boxIpAddressLabel, cc.xy(11, 5));
 
-					//---- label4 ----
-					label4.setText(bundle.getString("JMuestraDatos.label4.text"));
+					// ---- label4 ----
+					label4.setText(bundle
+							.getString("JMuestraDatos.label4.text"));
 					label4.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label4, cc.xy(3, 7));
 
-					//---- readerStatusLabel ----
-					readerStatusLabel.setText(bundle.getString("JMuestraDatos.readerStatusLabel.text"));
+					// ---- readerStatusLabel ----
+					readerStatusLabel.setText(bundle
+							.getString("JMuestraDatos.readerStatusLabel.text"));
 					panel2.add(readerStatusLabel, cc.xy(5, 7));
 
-					//---- label12 ----
-					label12.setText(bundle.getString("JMuestraDatos.label12.text"));
+					// ---- label12 ----
+					label12.setText(bundle
+							.getString("JMuestraDatos.label12.text"));
 					label12.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label12, cc.xy(9, 7));
 
-					//---- boxTypeLabel ----
-					boxTypeLabel.setText(bundle.getString("JMuestraDatos.boxTypeLabel.text"));
+					// ---- boxTypeLabel ----
+					boxTypeLabel.setText(bundle
+							.getString("JMuestraDatos.boxTypeLabel.text"));
 					panel2.add(boxTypeLabel, cc.xy(11, 7));
 
-					//---- label2 ----
-					label2.setText(bundle.getString("JMuestraDatos.label2.text"));
+					// ---- label2 ----
+					label2.setText(bundle
+							.getString("JMuestraDatos.label2.text"));
 					label2.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label2, cc.xy(3, 9));
 
-					//---- rssiLevelLabel ----
-					rssiLevelLabel.setText(bundle.getString("JMuestraDatos.rssiLevelLabel.text"));
+					// ---- rssiLevelLabel ----
+					rssiLevelLabel.setText(bundle
+							.getString("JMuestraDatos.rssiLevelLabel.text"));
 					panel2.add(rssiLevelLabel, cc.xy(5, 9));
 
-					//---- label13 ----
-					label13.setText(bundle.getString("JMuestraDatos.label13.text"));
+					// ---- label13 ----
+					label13.setText(bundle
+							.getString("JMuestraDatos.label13.text"));
 					label13.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label13, cc.xy(9, 9));
 
-					//---- preferredReaderLabel ----
-					preferredReaderLabel.setText(bundle.getString("JMuestraDatos.preferredReaderLabel.text"));
+					// ---- preferredReaderLabel ----
+					preferredReaderLabel
+							.setText(bundle
+									.getString("JMuestraDatos.preferredReaderLabel.text"));
 					panel2.add(preferredReaderLabel, cc.xy(11, 9));
 
-					//---- label5 ----
-					label5.setText(bundle.getString("JMuestraDatos.label5.text"));
+					// ---- label5 ----
+					label5.setText(bundle
+							.getString("JMuestraDatos.label5.text"));
 					label5.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label5, cc.xy(3, 11));
 
-					//---- regionLabel ----
-					regionLabel.setText(bundle.getString("JMuestraDatos.regionLabel.text"));
+					// ---- regionLabel ----
+					regionLabel.setText(bundle
+							.getString("JMuestraDatos.regionLabel.text"));
 					panel2.add(regionLabel, cc.xy(5, 11));
 
-					//---- label14 ----
-					label14.setText(bundle.getString("JMuestraDatos.label14.text"));
+					// ---- label14 ----
+					label14.setText(bundle
+							.getString("JMuestraDatos.label14.text"));
 					label14.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label14, cc.xy(9, 11));
 
-					//---- preferredAntenaLabel ----
-					preferredAntenaLabel.setText(bundle.getString("JMuestraDatos.preferredAntenaLabel.text"));
+					// ---- preferredAntenaLabel ----
+					preferredAntenaLabel
+							.setText(bundle
+									.getString("JMuestraDatos.preferredAntenaLabel.text"));
 					panel2.add(preferredAntenaLabel, cc.xy(11, 11));
 
-					//---- label6 ----
-					label6.setText(bundle.getString("JMuestraDatos.label6.text"));
+					// ---- label6 ----
+					label6.setText(bundle
+							.getString("JMuestraDatos.label6.text"));
 					label6.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label6, cc.xy(3, 13));
 
-					//---- readPowerLabel ----
-					readPowerLabel.setText(bundle.getString("JMuestraDatos.readPowerLabel.text"));
+					// ---- readPowerLabel ----
+					readPowerLabel.setText(bundle
+							.getString("JMuestraDatos.readPowerLabel.text"));
 					panel2.add(readPowerLabel, cc.xy(5, 13));
 
-					//---- label7 ----
-					label7.setText(bundle.getString("JMuestraDatos.label7.text"));
+					// ---- label7 ----
+					label7.setText(bundle
+							.getString("JMuestraDatos.label7.text"));
 					label7.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel2.add(label7, cc.xy(3, 15));
 
-					//---- writePowerLevel ----
-					writePowerLevel.setText(bundle.getString("JMuestraDatos.writePowerLevel.text"));
+					// ---- writePowerLevel ----
+					writePowerLevel.setText(bundle
+							.getString("JMuestraDatos.writePowerLevel.text"));
 					panel2.add(writePowerLevel, cc.xy(5, 15));
 
-					//---- usbConnectButton ----
-					usbConnectButton.setText(bundle.getString("JMuestraDatos.usbConnectButton.text"));
+					// ---- usbConnectButton ----
+					usbConnectButton.setText(bundle
+							.getString("JMuestraDatos.usbConnectButton.text"));
 					usbConnectButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 					usbConnectButton.addActionListener(new ActionListener() {
 						@Override
@@ -798,8 +867,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					});
 					panel2.add(usbConnectButton, cc.xywh(3, 17, 3, 1));
 
-					//---- boxConnectButton ----
-					boxConnectButton.setText(bundle.getString("JMuestraDatos.boxConnectButton.text"));
+					// ---- boxConnectButton ----
+					boxConnectButton.setText(bundle
+							.getString("JMuestraDatos.boxConnectButton.text"));
 					boxConnectButton.setFont(new Font("Tahoma", Font.BOLD, 14));
 					boxConnectButton.addActionListener(new ActionListener() {
 						@Override
@@ -809,12 +879,13 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					});
 					panel2.add(boxConnectButton, cc.xywh(9, 17, 3, 1));
 				}
-				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel2.tab.title"), panel2);
+				tabbedPane1.addTab(
+						bundle.getString("JMuestraDatos.panel2.tab.title"),
+						panel2);
 
-				//======== panel1 ========
+				// ======== panel1 ========
 				{
-					panel1.setLayout(new FormLayout(
-						new ColumnSpec[] {
+					panel1.setLayout(new FormLayout(new ColumnSpec[] {
 							new ColumnSpec(Sizes.dluX(35)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(120)),
@@ -823,9 +894,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(130)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(Sizes.dluX(28))
-						},
-						new RowSpec[] {
+							new ColumnSpec(Sizes.dluX(28)) }, new RowSpec[] {
 							new RowSpec(Sizes.dluY(15)),
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
@@ -836,13 +905,16 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
 							FormFactory.LINE_GAP_ROWSPEC,
-							FormFactory.DEFAULT_ROWSPEC
-						}));
+							FormFactory.DEFAULT_ROWSPEC }));
 
-					//---- verifyDataButton ----
-					verifyDataButton.setText(bundle.getString("JMuestraDatos.verifyDataButton.text"));
-					verifyDataButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/check_64.png")));
-					verifyDataButton.setHorizontalAlignment(SwingConstants.LEFT);
+					// ---- verifyDataButton ----
+					verifyDataButton.setText(bundle
+							.getString("JMuestraDatos.verifyDataButton.text"));
+					verifyDataButton.setIcon(new ImageIcon(getClass()
+							.getResource(
+									"/com/tiempometa/resources/check_64.png")));
+					verifyDataButton
+							.setHorizontalAlignment(SwingConstants.LEFT);
 					verifyDataButton.setRolloverIcon(null);
 					verifyDataButton.setPressedIcon(null);
 					verifyDataButton.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -855,11 +927,17 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					});
 					panel1.add(verifyDataButton, cc.xywh(3, 3, 3, 1));
 
-					//---- loadReadingsButton ----
-					loadReadingsButton.setText(bundle.getString("JMuestraDatos.loadReadingsButton.text"));
-					loadReadingsButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/load_64.png")));
-					loadReadingsButton.setHorizontalAlignment(SwingConstants.LEFT);
-					loadReadingsButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+					// ---- loadReadingsButton ----
+					loadReadingsButton
+							.setText(bundle
+									.getString("JMuestraDatos.loadReadingsButton.text"));
+					loadReadingsButton.setIcon(new ImageIcon(getClass()
+							.getResource(
+									"/com/tiempometa/resources/load_64.png")));
+					loadReadingsButton
+							.setHorizontalAlignment(SwingConstants.LEFT);
+					loadReadingsButton
+							.setFont(new Font("Tahoma", Font.BOLD, 16));
 					loadReadingsButton.setEnabled(false);
 					loadReadingsButton.addActionListener(new ActionListener() {
 						@Override
@@ -869,9 +947,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					});
 					panel1.add(loadReadingsButton, cc.xywh(7, 3, 3, 1));
 
-					//---- readTagButton ----
-					readTagButton.setText(bundle.getString("JMuestraDatos.readTagButton.text"));
-					readTagButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/scan_64.png")));
+					// ---- readTagButton ----
+					readTagButton.setText(bundle
+							.getString("JMuestraDatos.readTagButton.text"));
+					readTagButton.setIcon(new ImageIcon(getClass().getResource(
+							"/com/tiempometa/resources/scan_64.png")));
 					readTagButton.setHorizontalAlignment(SwingConstants.LEFT);
 					readTagButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 					readTagButton.setEnabled(false);
@@ -883,9 +963,12 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					});
 					panel1.add(readTagButton, cc.xywh(3, 5, 3, 1));
 
-					//---- countTagsButton ----
-					countTagsButton.setText(bundle.getString("JMuestraDatos.countTagsButton.text"));
-					countTagsButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/counter_64.png")));
+					// ---- countTagsButton ----
+					countTagsButton.setText(bundle
+							.getString("JMuestraDatos.countTagsButton.text"));
+					countTagsButton
+							.setIcon(new ImageIcon(getClass().getResource(
+									"/com/tiempometa/resources/counter_64.png")));
 					countTagsButton.setHorizontalAlignment(SwingConstants.LEFT);
 					countTagsButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 					countTagsButton.setEnabled(false);
@@ -897,10 +980,14 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					});
 					panel1.add(countTagsButton, cc.xywh(7, 5, 3, 1));
 
-					//---- programTagButton ----
-					programTagButton.setText(bundle.getString("JMuestraDatos.programTagButton.text"));
-					programTagButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/record_64.png")));
-					programTagButton.setHorizontalAlignment(SwingConstants.LEFT);
+					// ---- programTagButton ----
+					programTagButton.setText(bundle
+							.getString("JMuestraDatos.programTagButton.text"));
+					programTagButton
+							.setIcon(new ImageIcon(getClass().getResource(
+									"/com/tiempometa/resources/record_64.png")));
+					programTagButton
+							.setHorizontalAlignment(SwingConstants.LEFT);
 					programTagButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 					programTagButton.setEnabled(false);
 					programTagButton.addActionListener(new ActionListener() {
@@ -911,19 +998,18 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					});
 					panel1.add(programTagButton, cc.xywh(3, 7, 3, 1));
 				}
-				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel1.tab.title"), panel1);
+				tabbedPane1.addTab(
+						bundle.getString("JMuestraDatos.panel1.tab.title"),
+						panel1);
 
-				//======== panel8 ========
+				// ======== panel8 ========
 				{
-					panel8.setLayout(new FormLayout(
-						new ColumnSpec[] {
+					panel8.setLayout(new FormLayout(new ColumnSpec[] {
 							new ColumnSpec(Sizes.dluX(35)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 							new ColumnSpec(Sizes.dluX(160)),
 							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-							new ColumnSpec(Sizes.dluX(160))
-						},
-						new RowSpec[] {
+							new ColumnSpec(Sizes.dluX(160)) }, new RowSpec[] {
 							new RowSpec(Sizes.dluY(15)),
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
@@ -932,13 +1018,18 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
 							FormFactory.LINE_GAP_ROWSPEC,
-							FormFactory.DEFAULT_ROWSPEC
-						}));
+							FormFactory.DEFAULT_ROWSPEC }));
 
-					//---- setBoxTimeButton ----
-					setBoxTimeButton.setText(bundle.getString("JMuestraDatos.setBoxTimeButton.text"));
-					setBoxTimeButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/set_time_64.png")));
-					setBoxTimeButton.setHorizontalAlignment(SwingConstants.LEFT);
+					// ---- setBoxTimeButton ----
+					setBoxTimeButton.setText(bundle
+							.getString("JMuestraDatos.setBoxTimeButton.text"));
+					setBoxTimeButton
+							.setIcon(new ImageIcon(
+									getClass()
+											.getResource(
+													"/com/tiempometa/resources/set_time_64.png")));
+					setBoxTimeButton
+							.setHorizontalAlignment(SwingConstants.LEFT);
 					setBoxTimeButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 					setBoxTimeButton.setEnabled(false);
 					setBoxTimeButton.addActionListener(new ActionListener() {
@@ -949,10 +1040,16 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					});
 					panel8.add(setBoxTimeButton, cc.xy(3, 3));
 
-					//---- getBoxTimeButton ----
-					getBoxTimeButton.setText(bundle.getString("JMuestraDatos.getBoxTimeButton.text"));
-					getBoxTimeButton.setIcon(new ImageIcon(getClass().getResource("/com/tiempometa/resources/get_time_64.png")));
-					getBoxTimeButton.setHorizontalAlignment(SwingConstants.LEFT);
+					// ---- getBoxTimeButton ----
+					getBoxTimeButton.setText(bundle
+							.getString("JMuestraDatos.getBoxTimeButton.text"));
+					getBoxTimeButton
+							.setIcon(new ImageIcon(
+									getClass()
+											.getResource(
+													"/com/tiempometa/resources/get_time_64.png")));
+					getBoxTimeButton
+							.setHorizontalAlignment(SwingConstants.LEFT);
 					getBoxTimeButton.setFont(new Font("Tahoma", Font.BOLD, 16));
 					getBoxTimeButton.setEnabled(false);
 					getBoxTimeButton.addActionListener(new ActionListener() {
@@ -963,38 +1060,45 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					});
 					panel8.add(getBoxTimeButton, cc.xy(5, 3));
 
-					//---- label20 ----
-					label20.setText(bundle.getString("JMuestraDatos.label20.text"));
+					// ---- label20 ----
+					label20.setText(bundle
+							.getString("JMuestraDatos.label20.text"));
 					label20.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel8.add(label20, cc.xy(3, 5));
 
-					//---- label19 ----
-					label19.setText(bundle.getString("JMuestraDatos.label19.text"));
+					// ---- label19 ----
+					label19.setText(bundle
+							.getString("JMuestraDatos.label19.text"));
 					label19.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel8.add(label19, cc.xy(5, 5));
 
-					//---- systemTimeLabel ----
-					systemTimeLabel.setText(bundle.getString("JMuestraDatos.systemTimeLabel.text"));
+					// ---- systemTimeLabel ----
+					systemTimeLabel.setText(bundle
+							.getString("JMuestraDatos.systemTimeLabel.text"));
 					panel8.add(systemTimeLabel, cc.xy(3, 7));
 
-					//---- foxberryTimeLabel ----
-					foxberryTimeLabel.setText(bundle.getString("JMuestraDatos.foxberryTimeLabel.text"));
+					// ---- foxberryTimeLabel ----
+					foxberryTimeLabel.setText(bundle
+							.getString("JMuestraDatos.foxberryTimeLabel.text"));
 					panel8.add(foxberryTimeLabel, cc.xy(5, 7));
 
-					//---- foxberryTimeDiffLabel ----
-					foxberryTimeDiffLabel.setText(bundle.getString("JMuestraDatos.foxberryTimeDiffLabel.text"));
+					// ---- foxberryTimeDiffLabel ----
+					foxberryTimeDiffLabel
+							.setText(bundle
+									.getString("JMuestraDatos.foxberryTimeDiffLabel.text"));
 					panel8.add(foxberryTimeDiffLabel, cc.xy(5, 9));
 				}
-				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel8.tab.title"), panel8);
+				tabbedPane1.addTab(
+						bundle.getString("JMuestraDatos.panel8.tab.title"),
+						panel8);
 			}
 			panel4.add(tabbedPane1, cc.xy(1, 1));
 		}
 		contentPane.add(panel4, BorderLayout.CENTER);
 
-		//======== panel6 ========
+		// ======== panel6 ========
 		{
-			panel6.setLayout(new FormLayout(
-				new ColumnSpec[] {
+			panel6.setLayout(new FormLayout(new ColumnSpec[] {
 					new ColumnSpec(Sizes.dluX(17)),
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 					FormFactory.DEFAULT_COLSPEC,
@@ -1007,69 +1111,60 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 					new ColumnSpec(Sizes.dluX(65)),
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-					new ColumnSpec(Sizes.dluX(199))
-				},
-				new RowSpec[] {
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					new RowSpec(Sizes.dluY(10))
-				}));
+					new ColumnSpec(Sizes.dluX(199)) }, new RowSpec[] {
+					FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
+					new RowSpec(Sizes.dluY(10)) }));
 
-			//---- label21 ----
+			// ---- label21 ----
 			label21.setText(bundle.getString("JMuestraDatos.label21.text"));
 			label21.setFont(new Font("Tahoma", Font.BOLD, 16));
 			panel6.add(label21, cc.xy(3, 1));
 
-			//---- label1 ----
+			// ---- label1 ----
 			label1.setText(bundle.getString("JMuestraDatos.label1.text"));
 			label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			panel6.add(label1, cc.xy(5, 1));
 
-			//---- usbStatusLabel ----
-			usbStatusLabel.setText(bundle.getString("JMuestraDatos.usbStatusLabel.text"));
+			// ---- usbStatusLabel ----
+			usbStatusLabel.setText(bundle
+					.getString("JMuestraDatos.usbStatusLabel.text"));
 			usbStatusLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			panel6.add(usbStatusLabel, cc.xy(7, 1));
 
-			//---- label16 ----
+			// ---- label16 ----
 			label16.setText(bundle.getString("JMuestraDatos.label16.text"));
 			label16.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			panel6.add(label16, cc.xy(9, 1));
 
-			//---- tcpStatusLabel ----
-			tcpStatusLabel.setText(bundle.getString("JMuestraDatos.tcpStatusLabel.text"));
+			// ---- tcpStatusLabel ----
+			tcpStatusLabel.setText(bundle
+					.getString("JMuestraDatos.tcpStatusLabel.text"));
 			tcpStatusLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			panel6.add(tcpStatusLabel, cc.xy(11, 1));
 
-			//---- label8 ----
+			// ---- label8 ----
 			label8.setText(bundle.getString("JMuestraDatos.label8.text"));
 			label8.setFont(new Font("Tahoma", Font.BOLD, 16));
 			panel6.add(label8, cc.xy(3, 3));
 
-			//---- databaseLabel ----
-			databaseLabel.setText(bundle.getString("JMuestraDatos.databaseLabel.text"));
+			// ---- databaseLabel ----
+			databaseLabel.setText(bundle
+					.getString("JMuestraDatos.databaseLabel.text"));
 			panel6.add(databaseLabel, cc.xywh(3, 5, 11, 1));
 		}
 		contentPane.add(panel6, BorderLayout.SOUTH);
 
-		//======== panel7 ========
+		// ======== panel7 ========
 		{
-			panel7.setLayout(new FormLayout(
-				new ColumnSpec[] {
+			panel7.setLayout(new FormLayout(new ColumnSpec[] {
 					FormFactory.DEFAULT_COLSPEC,
 					FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-					FormFactory.DEFAULT_COLSPEC
-				},
-				new RowSpec[] {
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC,
-					FormFactory.LINE_GAP_ROWSPEC,
-					FormFactory.DEFAULT_ROWSPEC
-				}));
+					FormFactory.DEFAULT_COLSPEC }, new RowSpec[] {
+					FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
+					FormFactory.DEFAULT_ROWSPEC }));
 		}
 		contentPane.add(panel7, BorderLayout.EAST);
 		setSize(740, 620);
@@ -1088,6 +1183,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenuItem exitMenuItem;
 	private JMenu menu3;
 	private JMenuItem aboutUsMenuItem;
+	private JMenuItem configureJavaMenuItem;
 	private JPanel panel5;
 	private JPanel panel3;
 	private JPanel panel4;
@@ -1140,6 +1236,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JLabel label8;
 	private JLabel databaseLabel;
 	private JPanel panel7;
+
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 
 	private void redLedOn() {
