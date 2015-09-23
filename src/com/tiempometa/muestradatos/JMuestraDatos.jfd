@@ -499,6 +499,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "configureJavaMenuItem"
 						"text": new FormMessage( null, "JMuestraDatos.configureJavaMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "configureJavaMenuItemActionPerformed", true ) )
 					} )
 				} )
 			}

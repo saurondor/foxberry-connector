@@ -12,6 +12,8 @@ import java.util.*;
 
 import javax.swing.*;
 
+import org.apache.log4j.Logger;
+
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 
@@ -24,6 +26,7 @@ public class JInstaller extends JDialog {
 	 */
 	private static final long serialVersionUID = -2481725143415385012L;
 	private static SystemProperties systemProperties = new SystemProperties();
+	private static final Logger logger = Logger.getLogger(JInstaller.class);
 
 	private void loadJavaSettings() {
 		javaArchitectureLabel.setText(systemProperties.getArch_data_model());
@@ -37,6 +40,7 @@ public class JInstaller extends JDialog {
 		super(owner);
 		initComponents();
 		loadJavaSettings();
+		verifySettings();
 	}
 
 	private void selectJavaButtonActionPerformed(ActionEvent e) {
@@ -51,33 +55,35 @@ public class JInstaller extends JDialog {
 	}
 
 	private void verifySettings() {
-		// verify install path
-		// verify java runtime
-		// verify java 32bit
+		logger.info("Verifying java settings");
 		try {
 			if (InstallUtils.isJava32Bit(javaInstallPathLabel.getText()
 					+ "\\bin\\java")) {
+				logger.info("Java is 32bit");
 				javaVersionLabel.setText(InstallUtils
 						.getJavaVersion(javaInstallPathLabel.getText()
 								+ "\\bin\\java"));
-				if (javaVersionLabel.getText().startsWith("1.6")||javaVersionLabel.getText().startsWith("1.7")||javaVersionLabel.getText().startsWith("1.8")) {
+				if (javaVersionLabel.getText().startsWith("1.6")||javaVersionLabel.getText().startsWith("1.7")) {
+					logger.info("Java is version 6 o 7");
 					JOptionPane.showMessageDialog(this,
-							"Se está usando Java 6 de 32 bits",
+							"Se está usando Java 6 o Java 7 de 32 bits",
 							"Versión de Java Correcta",
 							JOptionPane.INFORMATION_MESSAGE);
 					okButton.setEnabled(true);
 					javaArchitectureLabel.setText("32");
 				} else {
+					logger.error("Java is not version 6 o 7");
 					JOptionPane
 							.showMessageDialog(
 									this,
-									"Se ha seleccionado Java 7 de 32 bits, se requiere Java 6 de 32 bits para usar Access como base de datos.\nFavor de indicar la instalación de Java 6 de 32bits",
+									"Se requiere Java 6 o Java 7 de 32 bits para usar Access como base de datos.\nFavor de indicar la instalación de Java 6 de 32bits",
 									"Versión de Java Incorrecta",
 									JOptionPane.ERROR_MESSAGE);
 					okButton.setEnabled(false);
 					javaArchitectureLabel.setText("32");
 				}
 			} else {
+				logger.error("Java is not 32 bit");
 				JOptionPane
 						.showMessageDialog(
 								this,
@@ -146,7 +152,7 @@ public class JInstaller extends JDialog {
 	}
 
 	private void appInstallPathSelectButtonActionPerformed(ActionEvent e) {
-		JFileChooser fc = new JFileChooser(javaInstallPathLabel.getText());
+		JFileChooser fc = new JFileChooser(appInstallPathLabel.getText());
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int response = fc.showOpenDialog(this);
 		if (response == JFileChooser.APPROVE_OPTION) {
@@ -158,8 +164,7 @@ public class JInstaller extends JDialog {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle
-				.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		label1 = new JLabel();
@@ -180,27 +185,30 @@ public class JInstaller extends JDialog {
 		cancelButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
-		// ======== this ========
+		//======== this ========
 		setTitle(bundle.getString("JInstaller.this.title"));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
-		// ======== dialogPane ========
+		//======== dialogPane ========
 		{
 			dialogPane.setBorder(Borders.DIALOG_BORDER);
 			dialogPane.setLayout(new BorderLayout());
 
-			// ======== contentPanel ========
+			//======== contentPanel ========
 			{
-				contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
+				contentPanel.setLayout(new FormLayout(
+					new ColumnSpec[] {
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(185)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC }, new RowSpec[] {
+						FormFactory.DEFAULT_COLSPEC
+					},
+					new RowSpec[] {
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
@@ -213,31 +221,31 @@ public class JInstaller extends JDialog {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC }));
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
-				// ---- label1 ----
+				//---- label1 ----
 				label1.setText(bundle.getString("JInstaller.label1.text"));
 				contentPanel.add(label1, cc.xy(3, 3));
 				contentPanel.add(javaLabel, cc.xy(5, 3));
 
-				// ---- label2 ----
+				//---- label2 ----
 				label2.setText(bundle.getString("JInstaller.label2.text"));
 				contentPanel.add(label2, cc.xy(3, 5));
 				contentPanel.add(javaVersionLabel, cc.xy(5, 5));
 
-				// ---- label3 ----
+				//---- label3 ----
 				label3.setText(bundle.getString("JInstaller.label3.text"));
 				contentPanel.add(label3, cc.xy(3, 7));
 				contentPanel.add(javaArchitectureLabel, cc.xy(5, 7));
 
-				// ---- label4 ----
+				//---- label4 ----
 				label4.setText(bundle.getString("JInstaller.label4.text"));
 				contentPanel.add(label4, cc.xy(3, 9));
 				contentPanel.add(javaInstallPathLabel, cc.xy(5, 9));
 
-				// ---- selectJavaButton ----
-				selectJavaButton.setText(bundle
-						.getString("JInstaller.selectJavaButton.text"));
+				//---- selectJavaButton ----
+				selectJavaButton.setText(bundle.getString("JInstaller.selectJavaButton.text"));
 				selectJavaButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -246,41 +254,40 @@ public class JInstaller extends JDialog {
 				});
 				contentPanel.add(selectJavaButton, cc.xy(7, 9));
 
-				// ---- label5 ----
+				//---- label5 ----
 				label5.setText(bundle.getString("JInstaller.label5.text"));
 				contentPanel.add(label5, cc.xy(3, 11));
 				contentPanel.add(appInstallPathLabel, cc.xy(5, 11));
 
-				// ---- appInstallPathSelectButton ----
-				appInstallPathSelectButton
-						.setText(bundle
-								.getString("JInstaller.appInstallPathSelectButton.text"));
-				appInstallPathSelectButton
-						.addActionListener(new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								appInstallPathSelectButtonActionPerformed(e);
-							}
-						});
+				//---- appInstallPathSelectButton ----
+				appInstallPathSelectButton.setText(bundle.getString("JInstaller.appInstallPathSelectButton.text"));
+				appInstallPathSelectButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						appInstallPathSelectButtonActionPerformed(e);
+					}
+				});
 				contentPanel.add(appInstallPathSelectButton, cc.xy(7, 11));
 
-				// ---- createDesktopShortcut ----
-				createDesktopShortcut.setText(bundle
-						.getString("JInstaller.createDesktopShortcut.text"));
+				//---- createDesktopShortcut ----
+				createDesktopShortcut.setText(bundle.getString("JInstaller.createDesktopShortcut.text"));
 				contentPanel.add(createDesktopShortcut, cc.xy(3, 13));
 			}
 			dialogPane.add(contentPanel, BorderLayout.CENTER);
 
-			// ======== buttonBar ========
+			//======== buttonBar ========
 			{
 				buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
-				buttonBar.setLayout(new FormLayout(new ColumnSpec[] {
-						FormFactory.GLUE_COLSPEC, FormFactory.BUTTON_COLSPEC,
+				buttonBar.setLayout(new FormLayout(
+					new ColumnSpec[] {
+						FormFactory.GLUE_COLSPEC,
+						FormFactory.BUTTON_COLSPEC,
 						FormFactory.RELATED_GAP_COLSPEC,
-						FormFactory.BUTTON_COLSPEC }, RowSpec
-						.decodeSpecs("pref")));
+						FormFactory.BUTTON_COLSPEC
+					},
+					RowSpec.decodeSpecs("pref")));
 
-				// ---- okButton ----
+				//---- okButton ----
 				okButton.setText("OK");
 				okButton.setEnabled(false);
 				okButton.addActionListener(new ActionListener() {
@@ -291,7 +298,7 @@ public class JInstaller extends JDialog {
 				});
 				buttonBar.add(okButton, cc.xy(2, 1));
 
-				// ---- cancelButton ----
+				//---- cancelButton ----
 				cancelButton.setText("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					@Override
