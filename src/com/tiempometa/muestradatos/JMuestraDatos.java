@@ -231,17 +231,23 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		readPowerLabel.setText("ND");
 		writePowerLevel.setText("ND");
 		rssiLevelLabel.setText("ND");
-		ReaderContext.loadSettings();
-		regionLabel.setText(ReaderContext.getSettings().getUsbRegion());
-		readerPortLabel.setText(ReaderContext.getSettings().getUsbPort());
-		databaseLabel.setText(ReaderContext.getSettings().getDatabaseName());
-		boxIpAddressLabel.setText(ReaderContext.getSettings()
-				.getFoxberryReaderAddress());
-		boxTypeLabel.setText(ReaderContext.getSettings().getTcpIpReaderType());
-		preferredAntenaLabel.setText(ReaderContext.getSettings()
-				.getPreferredAntenna());
-		preferredReaderLabel.setText(ReaderContext.getSettings()
-				.getPreferredReader());
+		try {
+			ReaderContext.loadSettings();
+			regionLabel.setText(ReaderContext.getSettings().getUsbRegion());
+			readerPortLabel.setText(ReaderContext.getSettings().getUsbPort());
+			databaseLabel.setText(ReaderContext.getSettings().getDatabaseName());
+			boxIpAddressLabel.setText(ReaderContext.getSettings()
+					.getFoxberryReaderAddress());
+			boxTypeLabel.setText(ReaderContext.getSettings().getTcpIpReaderType());
+			preferredAntenaLabel.setText(ReaderContext.getSettings()
+					.getPreferredAntenna());
+			preferredReaderLabel.setText(ReaderContext.getSettings()
+					.getPreferredReader());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Error cargando configuración "
+					+ e.getMessage(), "Error configuración",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private void menuItem2ActionPerformed(ActionEvent e) {

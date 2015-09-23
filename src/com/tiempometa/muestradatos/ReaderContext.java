@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
@@ -49,14 +51,12 @@ public class ReaderContext {
 	private static File databaseFile = null;
 	private static Integer readerType = null;
 	private static ReaderSettings readerSettings = new ReaderSettings();
-	
-	
-	
+
 	public static ReaderSettings getSettings() {
 		return readerSettings;
 	}
 
-	public static void loadSettings() {
+	public static void loadSettings() throws Exception {
 		readerSettings.loadSettings("foxberry_settings");
 	}
 
@@ -339,25 +339,28 @@ public class ReaderContext {
 
 	public static void rewindFoxberry() throws IOException {
 		foxberryReader.rewind();
-		
+
 	}
 
 	public static void clearFoxberry() throws IOException {
 		foxberryReader.clear();
-		
+
 	}
 
-	public static void connectFoxberry() throws UnknownHostException, IOException {
-		connectFoxberry(getSettings().getFoxberryReaderAddress(), 10201, getSettings().getPreferredReader(), getSettings().getPreferredAntenna());
-		
+	public static void connectFoxberry() throws UnknownHostException,
+			IOException {
+		connectFoxberry(getSettings().getFoxberryReaderAddress(), 10201,
+				getSettings().getPreferredReader(), getSettings()
+						.getPreferredAntenna());
+
 	}
 
 	public static Long getFoxberryTime() throws IOException {
-		return foxberryReader.getTime();	
+		return foxberryReader.getTime();
 	}
 
 	public static void setFoxberryTime() throws IOException {
 		foxberryReader.setTime();
-		
+
 	}
 }

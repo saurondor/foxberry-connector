@@ -3,6 +3,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package com.tiempometa.muestradatos;
 
+import javax.swing.JOptionPane;
+
 import com.tiempometa.utils.TiempometaUtils;
 
 /**
@@ -32,7 +34,12 @@ public class ReaderSettings {
 	private String usbRegion;
 	private Integer filterWindow = 5000;
 
-	public void loadSettings(String settingsFile) {
+	public void loadSettings(String settingsFile) throws Exception {
+		if (!TiempometaUtils.verifyPropertyFile(settingsFile)) {
+			if (!TiempometaUtils.verifySettingsDirectory()) {
+				TiempometaUtils.createSettingsDirectory();
+			}
+		}
 		databaseName = TiempometaUtils.getProperty(PROPERTY_DATABASENAME,
 				settingsFile);
 		foxberryReaderAddress = TiempometaUtils.getProperty(
@@ -68,8 +75,8 @@ public class ReaderSettings {
 		TiempometaUtils.setProperty(PROPERTY_USB_PORT, usbPort, settingsFile);
 		TiempometaUtils.setProperty(PROPERTY_USB_REGION, usbRegion,
 				settingsFile);
-		TiempometaUtils.setProperty(PROPERTY_FILTER_WINDOW, filterWindow.toString(),
-				settingsFile);
+		TiempometaUtils.setProperty(PROPERTY_FILTER_WINDOW,
+				filterWindow.toString(), settingsFile);
 	}
 
 	/**
