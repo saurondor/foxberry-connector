@@ -64,7 +64,8 @@ public class InstallUtils {
 		return false;
 	}
 
-	public static void unpackDll(String osArch, String userDir) throws IOException {
+	public static void unpackDll(String osArch, String userDir)
+			throws IOException {
 		if (osArch.equals(X86)) {
 			logger.info("Unpacking dll for 32 bit architecture");
 			saveResouce("/com/tiempometa/installer/dll/jshortcut.dll", userDir
@@ -86,10 +87,13 @@ public class InstallUtils {
 
 	private static void saveResouce(String resourceName, String outputFile)
 			throws IOException {
-		InputStream input = resourceName.getClass().getResourceAsStream(resourceName);
+		InputStream input = resourceName.getClass().getResourceAsStream(
+				resourceName);
 		OutputStream output;
 		output = new FileOutputStream(outputFile);
 		writeFile(input, output);
+		output.flush();
+		output.close();
 	}
 
 	private static void writeFile(InputStream input, OutputStream output)
@@ -99,12 +103,10 @@ public class InstallUtils {
 		while ((bytesRead = input.read(buffer)) != -1) {
 			output.write(buffer, 0, bytesRead);
 		}
-		output.flush();
-		output.close();
 	}
 
-	public static void createShortcut(String programName, String argumentString,
-			String workingDirectory, String linkName) {
+	public static void createShortcut(String programName,
+			String argumentString, String workingDirectory, String linkName) {
 		String desktopPath = JShellLink.getDirectory("desktop");
 		File linkFile = new File(desktopPath + "\\" + linkName + ".lnk");
 		System.out.println("Verify " + linkFile);
@@ -119,25 +121,25 @@ public class InstallUtils {
 		link.setArguments(argumentString);
 		link.save();
 	}
-	
 
 	/**
 	 * Retrieves the version of the java vm indicated by the command string.
+	 * 
 	 * @param command
 	 * @return
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static String getJavaVersion(String command) throws IOException, InterruptedException {
-		String run_command = "'" + command+"' -version";
+	public static String getJavaVersion(String command) throws IOException,
+			InterruptedException {
+		String run_command = "'" + command + "' -version";
 		System.out.println(run_command);
 		Process p;
-		String[] args = {command,"-version"};
+		String[] args = { command, "-version" };
 		p = Runtime.getRuntime().exec(args);
 		p.waitFor();
-		BufferedReader reader = 
-				new BufferedReader(new InputStreamReader(
-						p.getErrorStream()));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				p.getErrorStream()));
 		String line = reader.readLine();
 		int row = 0;
 		while (line != null) {
@@ -146,7 +148,8 @@ public class InstallUtils {
 				if (line.contains("build")) {
 					int start = line.indexOf("build");
 					System.out.println(start);
-					return line.substring(start + "build".length()).replace(")", "").trim();
+					return line.substring(start + "build".length())
+							.replace(")", "").trim();
 				} else {
 					return null;
 				}

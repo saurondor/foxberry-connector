@@ -29,6 +29,7 @@ public class JInstaller extends JDialog {
 	private static final Logger logger = Logger.getLogger(JInstaller.class);
 
 	private void loadJavaSettings() {
+		logger.info("Architecture is " + systemProperties.getArch_data_model());
 		javaArchitectureLabel.setText(systemProperties.getArch_data_model());
 		javaInstallPathLabel.setText(systemProperties.getJava_home());
 		javaVersionLabel.setText(systemProperties.getJava_version());
@@ -63,7 +64,8 @@ public class JInstaller extends JDialog {
 				javaVersionLabel.setText(InstallUtils
 						.getJavaVersion(javaInstallPathLabel.getText()
 								+ "\\bin\\java"));
-				if (javaVersionLabel.getText().startsWith("1.6")||javaVersionLabel.getText().startsWith("1.7")) {
+				if (javaVersionLabel.getText().startsWith("1.6")
+						|| javaVersionLabel.getText().startsWith("1.7")) {
 					logger.info("Java is version 6 o 7");
 					JOptionPane.showMessageDialog(this,
 							"Se está usando Java 6 o Java 7 de 32 bits",
@@ -123,8 +125,14 @@ public class JInstaller extends JDialog {
 				JOptionPane.YES_NO_OPTION);
 		if (response == JOptionPane.YES_OPTION) {
 			try {
-				InstallUtils.unpackDll(InstallUtils.AMD64,
-						systemProperties.getUser_dir());
+				if (systemProperties.getArch_data_model().equals("32")) {
+					InstallUtils.unpackDll(InstallUtils.X86,
+							systemProperties.getUser_dir());
+				}
+				if (systemProperties.getArch_data_model().equals("64")) {
+					InstallUtils.unpackDll(InstallUtils.AMD64,
+							systemProperties.getUser_dir());
+				}
 				// create symbolic links
 				if (createDesktopShortcut.isSelected()) {
 					JOptionPane.showMessageDialog(this,
@@ -139,15 +147,19 @@ public class JInstaller extends JDialog {
 						"El sofware de cronometraje se instaló con éxito",
 						"Instalación exitosa", JOptionPane.INFORMATION_MESSAGE);
 			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(this, "No se pudo extraer el instalador " + e1.getMessage(), "Error de instalación", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						"No se pudo extraer el instalador " + e1.getMessage(),
+						"Error de instalación", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
 
 	private void createDesktopShortcuts(String java_home, String app_home) {
 		String jarFileName = java_home + "\\bin\\java.exe";
-		InstallUtils.createShortcut(jarFileName, "-jar \"" + app_home
-				+ "\\foxberry_reader_1_0_beta.jar" + "\"", app_home,
+		String argument = "-jar \"" + app_home + "\\foxberry_reader_1_0.jar"
+				+ "\"";
+		logger.info("Creating shortcut in " + app_home + " to " + argument);
+		InstallUtils.createShortcut(jarFileName, argument, app_home,
 				"Foxberry Connector");
 	}
 
@@ -164,7 +176,8 @@ public class JInstaller extends JDialog {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle
+				.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		label1 = new JLabel();
@@ -185,30 +198,27 @@ public class JInstaller extends JDialog {
 		cancelButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
-		//======== this ========
+		// ======== this ========
 		setTitle(bundle.getString("JInstaller.this.title"));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
-		//======== dialogPane ========
+		// ======== dialogPane ========
 		{
 			dialogPane.setBorder(Borders.DIALOG_BORDER);
 			dialogPane.setLayout(new BorderLayout());
 
-			//======== contentPanel ========
+			// ======== contentPanel ========
 			{
-				contentPanel.setLayout(new FormLayout(
-					new ColumnSpec[] {
+				contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						FormFactory.DEFAULT_COLSPEC,
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(185)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC
-					},
-					new RowSpec[] {
+						FormFactory.DEFAULT_COLSPEC }, new RowSpec[] {
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
@@ -221,31 +231,31 @@ public class JInstaller extends JDialog {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC
-					}));
+						FormFactory.DEFAULT_ROWSPEC }));
 
-				//---- label1 ----
+				// ---- label1 ----
 				label1.setText(bundle.getString("JInstaller.label1.text"));
 				contentPanel.add(label1, cc.xy(3, 3));
 				contentPanel.add(javaLabel, cc.xy(5, 3));
 
-				//---- label2 ----
+				// ---- label2 ----
 				label2.setText(bundle.getString("JInstaller.label2.text"));
 				contentPanel.add(label2, cc.xy(3, 5));
 				contentPanel.add(javaVersionLabel, cc.xy(5, 5));
 
-				//---- label3 ----
+				// ---- label3 ----
 				label3.setText(bundle.getString("JInstaller.label3.text"));
 				contentPanel.add(label3, cc.xy(3, 7));
 				contentPanel.add(javaArchitectureLabel, cc.xy(5, 7));
 
-				//---- label4 ----
+				// ---- label4 ----
 				label4.setText(bundle.getString("JInstaller.label4.text"));
 				contentPanel.add(label4, cc.xy(3, 9));
 				contentPanel.add(javaInstallPathLabel, cc.xy(5, 9));
 
-				//---- selectJavaButton ----
-				selectJavaButton.setText(bundle.getString("JInstaller.selectJavaButton.text"));
+				// ---- selectJavaButton ----
+				selectJavaButton.setText(bundle
+						.getString("JInstaller.selectJavaButton.text"));
 				selectJavaButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -254,40 +264,41 @@ public class JInstaller extends JDialog {
 				});
 				contentPanel.add(selectJavaButton, cc.xy(7, 9));
 
-				//---- label5 ----
+				// ---- label5 ----
 				label5.setText(bundle.getString("JInstaller.label5.text"));
 				contentPanel.add(label5, cc.xy(3, 11));
 				contentPanel.add(appInstallPathLabel, cc.xy(5, 11));
 
-				//---- appInstallPathSelectButton ----
-				appInstallPathSelectButton.setText(bundle.getString("JInstaller.appInstallPathSelectButton.text"));
-				appInstallPathSelectButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						appInstallPathSelectButtonActionPerformed(e);
-					}
-				});
+				// ---- appInstallPathSelectButton ----
+				appInstallPathSelectButton
+						.setText(bundle
+								.getString("JInstaller.appInstallPathSelectButton.text"));
+				appInstallPathSelectButton
+						.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								appInstallPathSelectButtonActionPerformed(e);
+							}
+						});
 				contentPanel.add(appInstallPathSelectButton, cc.xy(7, 11));
 
-				//---- createDesktopShortcut ----
-				createDesktopShortcut.setText(bundle.getString("JInstaller.createDesktopShortcut.text"));
+				// ---- createDesktopShortcut ----
+				createDesktopShortcut.setText(bundle
+						.getString("JInstaller.createDesktopShortcut.text"));
 				contentPanel.add(createDesktopShortcut, cc.xy(3, 13));
 			}
 			dialogPane.add(contentPanel, BorderLayout.CENTER);
 
-			//======== buttonBar ========
+			// ======== buttonBar ========
 			{
 				buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
-				buttonBar.setLayout(new FormLayout(
-					new ColumnSpec[] {
-						FormFactory.GLUE_COLSPEC,
-						FormFactory.BUTTON_COLSPEC,
+				buttonBar.setLayout(new FormLayout(new ColumnSpec[] {
+						FormFactory.GLUE_COLSPEC, FormFactory.BUTTON_COLSPEC,
 						FormFactory.RELATED_GAP_COLSPEC,
-						FormFactory.BUTTON_COLSPEC
-					},
-					RowSpec.decodeSpecs("pref")));
+						FormFactory.BUTTON_COLSPEC }, RowSpec
+						.decodeSpecs("pref")));
 
-				//---- okButton ----
+				// ---- okButton ----
 				okButton.setText("OK");
 				okButton.setEnabled(false);
 				okButton.addActionListener(new ActionListener() {
@@ -298,7 +309,7 @@ public class JInstaller extends JDialog {
 				});
 				buttonBar.add(okButton, cc.xy(2, 1));
 
-				//---- cancelButton ----
+				// ---- cancelButton ----
 				cancelButton.setText("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					@Override
