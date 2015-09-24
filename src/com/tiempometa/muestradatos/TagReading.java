@@ -35,6 +35,11 @@ public class TagReading {
 	private Boolean valid = false;
 	private String stringData = null;
 	private String readingType = null;
+	private String firstName = null;
+	private String lastName = null;
+	private String middleName = null;
+	private String eventTitle = null;
+	private String categoryTitle = null;
 
 	public TagReading() {
 		super();
@@ -253,19 +258,6 @@ public class TagReading {
 		return valid;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "TagReading [reader=" + reader + ", antenna=" + antenna
-				+ ", epc=" + epc + ", tid=" + tid + ", userData=" + userData
-				+ ", timeMillis=" + timeMillis + ", time=" + time
-				+ ", peakRssi=" + peakRssi + ", isKeepAlive()=" + isKeepAlive()
-				+ ", isValid()=" + isValid() + "] \n Data: " + stringData;
-	}
 
 	/**
 	 * @return the tagReadData
@@ -297,7 +289,8 @@ public class TagReading {
 	}
 
 	/**
-	 * @param bib the bib to set
+	 * @param bib
+	 *            the bib to set
 	 */
 	public void setBib(String bib) {
 		this.bib = bib;
@@ -311,10 +304,114 @@ public class TagReading {
 	}
 
 	/**
-	 * @param processedMillis the processedMillis to set
+	 * @param processedMillis
+	 *            the processedMillis to set
 	 */
 	public void setProcessedMillis(Long processedMillis) {
 		this.processedMillis = processedMillis;
+	}
+
+	private String prettyName(String nameValue) {
+		if (nameValue == null) {
+			return "";
+		}
+		return nameValue.trim();
+	}
+
+	public String getParticipantFullName() {
+		return (prettyName(firstName) + " " + prettyName(lastName) + " " + prettyName(middleName))
+				.trim();
+	}
+
+	/**
+	 * @return the firstName
+	 */
+	public synchronized String getFirstName() {
+		return firstName;
+	}
+
+	/**
+	 * @param firstName
+	 *            the firstName to set
+	 */
+	public synchronized void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @return the lastName
+	 */
+	public synchronized String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @param lastName
+	 *            the lastName to set
+	 */
+	public synchronized void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	/**
+	 * @return the middleName
+	 */
+	public synchronized String getMiddleName() {
+		return middleName;
+	}
+
+	/**
+	 * @param middleName
+	 *            the middleName to set
+	 */
+	public synchronized void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	/**
+	 * @return the eventTitle
+	 */
+	public synchronized String getEventTitle() {
+		return eventTitle;
+	}
+
+	/**
+	 * @param eventTitle
+	 *            the eventTitle to set
+	 */
+	public synchronized void setEventTitle(String eventTitle) {
+		this.eventTitle = eventTitle;
+	}
+
+	/**
+	 * @return the categoryTitle
+	 */
+	public synchronized String getCategoryTitle() {
+		return categoryTitle;
+	}
+
+	/**
+	 * @param categoryTitle
+	 *            the categoryTitle to set
+	 */
+	public synchronized void setCategoryTitle(String categoryTitle) {
+		this.categoryTitle = categoryTitle;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "TagReading [tagReadData=" + tagReadData + ", reader=" + reader
+				+ ", antenna=" + antenna + ", epc=" + epc + ", tid=" + tid
+				+ ", userData=" + userData + ", bib=" + bib + ", timeMillis="
+				+ timeMillis + ", time=" + time + ", processedMillis="
+				+ processedMillis + ", peakRssi=" + peakRssi + ", valid="
+				+ valid + ", stringData=" + stringData + ", readingType="
+				+ readingType + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", middleName=" + middleName + ", eventTitle="
+				+ eventTitle + ", categoryTitle=" + categoryTitle + "]";
 	}
 
 }
