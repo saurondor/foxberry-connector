@@ -188,26 +188,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		logger.info(systemProperties.arch_data_model);
 		logger.info(systemProperties.java_home);
 		logger.info(systemProperties.user_dir);
-		if (systemProperties.arch_data_model.equals(InstallUtils.AMD64)) {
-			JOptionPane.showMessageDialog(null,
-					"Se requiere Java 32bits para ejecutar este programa",
-					"Systema de 64 bits", JOptionPane.WARNING_MESSAGE);
-			JInstaller installer = new JInstaller(null);
-			installer.setVisible(true);
-		} else {
-			if (!(systemProperties.getJava_version().startsWith("1.6") || systemProperties
-					.getJava_version().startsWith("1.7"))) {
-				JOptionPane.showMessageDialog(null,
-						"Se requiere Java 6 o 7 para ejecutar este programa",
-						"Versión de Java no soportada",
-						JOptionPane.WARNING_MESSAGE);
-				JInstaller installer = new JInstaller(null);
-				installer.setVisible(true);
-			} else {
-				JMuestraDatos reader = new JMuestraDatos();
-				reader.setVisible(true);
-			}
-		}
+		JMuestraDatos reader = new JMuestraDatos();
+		reader.setVisible(true);
 	}
 
 	private void configMenuItemActionPerformed(ActionEvent e) {
@@ -514,7 +496,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		exitMenuItem = new JMenuItem();
 		menu3 = new JMenu();
 		aboutUsMenuItem = new JMenuItem();
-		configureJavaMenuItem = new JMenuItem();
 		panel5 = new JPanel();
 		panel3 = new JPanel();
 		panel4 = new JPanel();
@@ -650,16 +631,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					}
 				});
 				menu3.add(aboutUsMenuItem);
-
-				//---- configureJavaMenuItem ----
-				configureJavaMenuItem.setText(bundle.getString("JMuestraDatos.configureJavaMenuItem.text"));
-				configureJavaMenuItem.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						configureJavaMenuItemActionPerformed(e);
-					}
-				});
-				menu3.add(configureJavaMenuItem);
 			}
 			menuBar1.add(menu3);
 		}
@@ -1147,7 +1118,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenuItem exitMenuItem;
 	private JMenu menu3;
 	private JMenuItem aboutUsMenuItem;
-	private JMenuItem configureJavaMenuItem;
 	private JPanel panel5;
 	private JPanel panel3;
 	private JPanel panel4;
