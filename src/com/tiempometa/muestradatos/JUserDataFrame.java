@@ -21,17 +21,19 @@ import org.apache.log4j.Logger;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.thingmagic.Reader;
 import com.thingmagic.ReaderException;
 import com.tiempometa.timing.dao.CategoriesDao;
+import com.tiempometa.timing.dao.EventDao;
 import com.tiempometa.timing.dao.ParticipantsDao;
 import com.tiempometa.timing.dao.RegistrationDao;
 import com.tiempometa.timing.dao.RfidDao;
 import com.tiempometa.timing.dao.access.CategoriesDaoImpl;
+import com.tiempometa.timing.dao.access.EventDaoImpl;
 import com.tiempometa.timing.dao.access.ParticipantsDaoImpl;
 import com.tiempometa.timing.dao.access.RegistrationDaoImpl;
 import com.tiempometa.timing.dao.access.RfidDaoImpl;
 import com.tiempometa.timing.models.Categories;
+import com.tiempometa.timing.models.Event;
 import com.tiempometa.timing.models.Participants;
 import com.tiempometa.timing.models.Registration;
 import com.tiempometa.timing.models.Rfid;
@@ -52,7 +54,8 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 	private RegistrationDao registrationDao = new RegistrationDaoImpl();
 	private ParticipantsDao participantDao = new ParticipantsDaoImpl();
 	private CategoriesDao categoryDao = new CategoriesDaoImpl();
-
+	private EventDao eventDao = new EventDaoImpl();
+	
 	public JUserDataFrame() {
 		initComponents();
 		clearData();
@@ -90,7 +93,20 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 					Participants participant = participantDao
 							.findById(registration.getParticipantId());
 					// Categories category = categoryDao.findById();
-					Categories category = null;
+					List<Categories> categoryList = categoryDao.categoryForKey(registration.getCategory());
+					if (categoryList.size() == 0) {
+						
+					} else {
+						Categories category = categoryList.get(0);
+						categoryLabel.setText(category.getCategory());
+						colorLabel.setText(category.getIdField0());
+						Event event = eventDao.fetchById(category.getEvent());
+						if (event == null) {
+							
+						} else {
+							distanceLabel.setText(event.getTitle());
+						}
+					}
 					if (participant == null) {
 						clearData();
 					} else {
