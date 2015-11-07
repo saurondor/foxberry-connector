@@ -483,6 +483,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		installer.setVisible(true);
 	}
 
+	private void importCSVReadingsMenuItemActionPerformed(ActionEvent e) {
+		JImportCSVFrame csvImporter = new JImportCSVFrame();
+		csvImporter.setVisible(true);
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -609,6 +614,12 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 				//---- importCSVReadingsMenuItem ----
 				importCSVReadingsMenuItem.setText(bundle.getString("JMuestraDatos.importCSVReadingsMenuItem.text"));
+				importCSVReadingsMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						importCSVReadingsMenuItemActionPerformed(e);
+					}
+				});
 				menu1.add(importCSVReadingsMenuItem);
 				menu1.addSeparator();
 

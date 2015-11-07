@@ -485,6 +485,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "importCSVReadingsMenuItem"
 						"text": new FormMessage( null, "JMuestraDatos.importCSVReadingsMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "importCSVReadingsMenuItemActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JPopupMenu$Separator" ) {
 						name: "separator1"
