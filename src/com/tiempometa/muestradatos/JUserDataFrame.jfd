@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "5.1.2.0.134" Java: "1.7.0_67" encoding: "UTF-8"
+JFDML JFormDesigner: "5.1.2.0.134" Java: "1.8.0_65" encoding: "UTF-8"
 
 new FormModel {
 	"i18n.autoExternalize": true
@@ -64,6 +64,7 @@ new FormModel {
 				name: "label3"
 				"text": new FormMessage( null, "JUserDataFrame.label3.text" )
 				"font": #Font0
+				"visible": false
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 3
 				"gridY": 11
@@ -72,6 +73,7 @@ new FormModel {
 				name: "genderLabel"
 				"text": new FormMessage( null, "JUserDataFrame.genderLabel.text" )
 				"font": #Font1
+				"visible": false
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 11
@@ -81,6 +83,7 @@ new FormModel {
 				name: "label4"
 				"text": new FormMessage( null, "JUserDataFrame.label4.text" )
 				"font": #Font0
+				"visible": false
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 3
 				"gridY": 13
@@ -89,6 +92,7 @@ new FormModel {
 				name: "distanceLabel"
 				"text": new FormMessage( null, "JUserDataFrame.distanceLabel.text" )
 				"font": #Font1
+				"visible": false
 			}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 				"gridX": 5
 				"gridY": 13

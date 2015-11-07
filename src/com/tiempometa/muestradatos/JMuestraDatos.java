@@ -493,6 +493,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		importTagsMenuItem = new JMenuItem();
 		exportTagsMenuItem = new JMenuItem();
 		clearTagsMenuItem = new JMenuItem();
+		importCSVReadingsMenuItem = new JMenuItem();
 		exitMenuItem = new JMenuItem();
 		menu3 = new JMenu();
 		aboutUsMenuItem = new JMenuItem();
@@ -604,6 +605,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					}
 				});
 				menu1.add(clearTagsMenuItem);
+				menu1.addSeparator();
+
+				//---- importCSVReadingsMenuItem ----
+				importCSVReadingsMenuItem.setText(bundle.getString("JMuestraDatos.importCSVReadingsMenuItem.text"));
+				menu1.add(importCSVReadingsMenuItem);
 				menu1.addSeparator();
 
 				//---- exitMenuItem ----
@@ -1115,6 +1121,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenuItem importTagsMenuItem;
 	private JMenuItem exportTagsMenuItem;
 	private JMenuItem clearTagsMenuItem;
+	private JMenuItem importCSVReadingsMenuItem;
 	private JMenuItem exitMenuItem;
 	private JMenu menu3;
 	private JMenuItem aboutUsMenuItem;

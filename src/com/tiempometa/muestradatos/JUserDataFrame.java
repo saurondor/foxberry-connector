@@ -231,21 +231,25 @@ public class JUserDataFrame extends JFrame implements TagReadListener {
 		//---- label3 ----
 		label3.setText(bundle.getString("JUserDataFrame.label3.text"));
 		label3.setFont(new Font("Tahoma", Font.BOLD, 48));
+		label3.setVisible(false);
 		contentPane.add(label3, cc.xy(3, 11));
 
 		//---- genderLabel ----
 		genderLabel.setText(bundle.getString("JUserDataFrame.genderLabel.text"));
 		genderLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
+		genderLabel.setVisible(false);
 		contentPane.add(genderLabel, cc.xywh(5, 11, 3, 1));
 
 		//---- label4 ----
 		label4.setText(bundle.getString("JUserDataFrame.label4.text"));
 		label4.setFont(new Font("Tahoma", Font.BOLD, 48));
+		label4.setVisible(false);
 		contentPane.add(label4, cc.xy(3, 13));
 
 		//---- distanceLabel ----
 		distanceLabel.setText(bundle.getString("JUserDataFrame.distanceLabel.text"));
 		distanceLabel.setFont(new Font("Tahoma", Font.PLAIN, 48));
+		distanceLabel.setVisible(false);
 		contentPane.add(distanceLabel, cc.xywh(5, 13, 3, 1));
 
 		//---- label5 ----
