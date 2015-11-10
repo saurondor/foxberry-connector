@@ -135,7 +135,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		});
 		loadSettings();
 		if (ReaderContext.getSettings().getDatabaseName() == null) {
-			JOptionPane.showMessageDialog(this, "No se ha configurado la aplicación.\nFavor de configurar antes de continuar", "Sin configuración", JOptionPane.WARNING_MESSAGE);
+			JOptionPane
+					.showMessageDialog(
+							this,
+							"No se ha configurado la aplicación.\nFavor de configurar antes de continuar",
+							"Sin configuración", JOptionPane.WARNING_MESSAGE);
 		} else {
 			setDatabase(new File(ReaderContext.getSettings().getDatabaseName()));
 		}
@@ -217,7 +221,8 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			ReaderContext.loadSettings();
 			regionLabel.setText(ReaderContext.getSettings().getUsbRegion());
 			readerPortLabel.setText(ReaderContext.getSettings().getUsbPort());
-			databaseLabel.setText(ReaderContext.getSettings().getDatabaseName());
+			databaseLabel
+					.setText(ReaderContext.getSettings().getDatabaseName());
 			boxIpAddressLabel.setText(ReaderContext.getSettings()
 					.getFoxberryReaderAddress());
 			preferredAntenaLabel.setText(ReaderContext.getSettings()
@@ -243,11 +248,13 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			try {
-				ReaderContext.disconnectUsbReader();
-			} catch (ReaderException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if (ReaderContext.isUsbConnected()) {
+				try {
+					ReaderContext.disconnectUsbReader();
+				} catch (ReaderException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			this.dispose();
 		}
@@ -269,11 +276,12 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			} else {
 				try {
 					ReaderContext.disconnectUsbReader();
+					usbConnectButton.setText("Conectar");
+					usbStatusLabel.setForeground(Color.RED);
 					JOptionPane.showMessageDialog(this,
 							"Se desconectó con éxito del lector usb",
 							"Desconexión exitosa",
 							JOptionPane.INFORMATION_MESSAGE);
-					usbConnectButton.setText("Conectar");
 				} catch (ReaderException e1) {
 					JOptionPane.showMessageDialog(this,
 							"Error de desconexión: " + e1.getMessage(),
@@ -283,13 +291,16 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			}
 		} else {
 			try {
+				logger.info("Connecting to USB reader...");
 				ReaderContext.connectUsbReader(ReaderContext.getSettings()
 						.getUsbPort());
+				usbConnectButton.setText("Desonectar");
+				usbStatusLabel.setForeground(Color.GREEN);
 				JOptionPane.showMessageDialog(this,
 						"Se conectó con éxito al lector usb",
 						"Conexión exitosa", JOptionPane.INFORMATION_MESSAGE);
-				usbConnectButton.setText("Desonectar");
 			} catch (ReaderException e1) {
+				usbConnectButton.setText("Conectar");
 				JOptionPane.showMessageDialog(this,
 						"Error de conexión: " + e1.getMessage(), "Error USB",
 						JOptionPane.ERROR_MESSAGE);
@@ -301,10 +312,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		if (ReaderContext.isFoxberryConnected()) {
 			try {
 				ReaderContext.disconnectFoxberry();
+				boxConnectButton.setText("Conectar");
+				tcpStatusLabel.setForeground(Color.RED);
 				JOptionPane.showMessageDialog(this,
 						"Se desconectó con éxito de la caja",
 						"Desconexión exitosa", JOptionPane.INFORMATION_MESSAGE);
-				boxConnectButton.setText("Conectar");
 			} catch (IOException e1) {
 				JOptionPane.showMessageDialog(this, "Error de desconexión: "
 						+ e1.getMessage(), "Error TCP",
@@ -313,10 +325,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		} else {
 			try {
 				ReaderContext.connectFoxberry();
+				boxConnectButton.setText("Desconectar");
+				tcpStatusLabel.setForeground(Color.GREEN);
 				JOptionPane.showMessageDialog(this,
 						"Se conectó con éxito a la caja", "Conexión exitosa",
 						JOptionPane.INFORMATION_MESSAGE);
-				boxConnectButton.setText("Desconectar");
 			} catch (UnknownHostException e1) {
 				JOptionPane.showMessageDialog(this,
 						"Error de conexión: " + e1.getMessage(), "Error TCP",
@@ -1067,6 +1080,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			//---- usbStatusLabel ----
 			usbStatusLabel.setText(bundle.getString("JMuestraDatos.usbStatusLabel.text"));
 			usbStatusLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			usbStatusLabel.setForeground(Color.red);
 			panel6.add(usbStatusLabel, cc.xy(7, 1));
 
 			//---- label16 ----
@@ -1077,6 +1091,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			//---- tcpStatusLabel ----
 			tcpStatusLabel.setText(bundle.getString("JMuestraDatos.tcpStatusLabel.text"));
 			tcpStatusLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			tcpStatusLabel.setForeground(Color.red);
 			panel6.add(tcpStatusLabel, cc.xy(11, 1));
 
 			//---- label8 ----

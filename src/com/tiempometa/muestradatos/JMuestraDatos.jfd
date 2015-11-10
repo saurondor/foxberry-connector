@@ -392,6 +392,7 @@ new FormModel {
 					name: "usbStatusLabel"
 					"text": new FormMessage( null, "JMuestraDatos.usbStatusLabel.text" )
 					"font": new java.awt.Font( "Tahoma", 0, 14 )
+					"foreground": sfield java.awt.Color red
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 					"gridX": 7
 					"gridY": 1
@@ -408,6 +409,7 @@ new FormModel {
 					name: "tcpStatusLabel"
 					"text": new FormMessage( null, "JMuestraDatos.tcpStatusLabel.text" )
 					"font": new java.awt.Font( "Tahoma", 0, 14 )
+					"foreground": sfield java.awt.Color red
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 					"gridX": 11
 					"gridY": 1
