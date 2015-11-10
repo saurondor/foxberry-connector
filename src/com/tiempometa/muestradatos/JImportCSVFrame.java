@@ -94,7 +94,7 @@ public class JImportCSVFrame extends JFrame {
 
 	private void processCsvLine(String line) {
 		String[] fields = line.split(",");
-		ChipReadRaw readRaw = new ChipReadRaw(null, fields[2], new Date(
+		ChipReadRaw readRaw = new ChipReadRaw(null, fields[2].toLowerCase(), new Date(
 				Long.valueOf(fields[3])/1000), Long.valueOf(fields[3]) / 1000,
 				phase, checkPoint, null, ChipReadRaw.STATUS_RAW,
 				ChipReadRaw.UNFILTERED_READER, "", null);
