@@ -452,6 +452,11 @@ new FormModel {
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "configMenuItemActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "createRfidCodesMenuItem"
+						"text": new FormMessage( null, "JMuestraDatos.createRfidCodesMenuItem.text" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "createRfidCodesMenuItemActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "importTagsMenuItem"
 						"text": new FormMessage( null, "JMuestraDatos.importTagsMenuItem.text" )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "importTagsMenuItemActionPerformed", true ) )

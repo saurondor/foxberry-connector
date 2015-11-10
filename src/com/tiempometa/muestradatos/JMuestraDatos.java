@@ -500,6 +500,11 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		csvImporter.setVisible(true);
 	}
 
+	private void createRfidCodesMenuItemActionPerformed(ActionEvent e) {
+		JCreateTags createTags = new JCreateTags(this);
+		createTags.setVisible(true);
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -507,6 +512,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		menuBar1 = new JMenuBar();
 		menu1 = new JMenu();
 		configMenuItem = new JMenuItem();
+		createRfidCodesMenuItem = new JMenuItem();
 		importTagsMenuItem = new JMenuItem();
 		exportTagsMenuItem = new JMenuItem();
 		clearTagsMenuItem = new JMenuItem();
@@ -590,6 +596,16 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					}
 				});
 				menu1.add(configMenuItem);
+
+				//---- createRfidCodesMenuItem ----
+				createRfidCodesMenuItem.setText(bundle.getString("JMuestraDatos.createRfidCodesMenuItem.text"));
+				createRfidCodesMenuItem.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						createRfidCodesMenuItemActionPerformed(e);
+					}
+				});
+				menu1.add(createRfidCodesMenuItem);
 
 				//---- importTagsMenuItem ----
 				importTagsMenuItem.setText(bundle.getString("JMuestraDatos.importTagsMenuItem.text"));
@@ -1132,6 +1148,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JMenuBar menuBar1;
 	private JMenu menu1;
 	private JMenuItem configMenuItem;
+	private JMenuItem createRfidCodesMenuItem;
 	private JMenuItem importTagsMenuItem;
 	private JMenuItem exportTagsMenuItem;
 	private JMenuItem clearTagsMenuItem;
