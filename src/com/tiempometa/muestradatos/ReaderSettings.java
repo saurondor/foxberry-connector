@@ -27,7 +27,6 @@ public class ReaderSettings {
 
 	private String databaseName;
 	private String foxberryReaderAddress;
-	private String tcpIpReaderType;
 	private String preferredReader;
 	private String preferredAntenna;
 	private String usbPort;
@@ -44,8 +43,6 @@ public class ReaderSettings {
 				settingsFile);
 		foxberryReaderAddress = TiempometaUtils.getProperty(
 				PROPERTY_FOXBERRY_ADDRESS, settingsFile);
-		tcpIpReaderType = TiempometaUtils.getProperty(
-				PROPERTY_TCPIP_READER_TYPE, settingsFile);
 		preferredReader = TiempometaUtils.getProperty(
 				PROPERTY_PREFERRED_READER, settingsFile);
 		preferredAntenna = TiempometaUtils.getProperty(
@@ -66,8 +63,6 @@ public class ReaderSettings {
 				settingsFile);
 		TiempometaUtils.setProperty(PROPERTY_FOXBERRY_ADDRESS,
 				foxberryReaderAddress, settingsFile);
-		TiempometaUtils.setProperty(PROPERTY_TCPIP_READER_TYPE,
-				tcpIpReaderType, settingsFile);
 		TiempometaUtils.setProperty(PROPERTY_PREFERRED_READER, preferredReader,
 				settingsFile);
 		TiempometaUtils.setProperty(PROPERTY_PREFERRED_ANTENNA,
@@ -107,21 +102,6 @@ public class ReaderSettings {
 	 */
 	public void setFoxberryReaderAddress(String foxberryReaderAddress) {
 		this.foxberryReaderAddress = foxberryReaderAddress;
-	}
-
-	/**
-	 * @return the tcpIpReaderType
-	 */
-	public String getTcpIpReaderType() {
-		return tcpIpReaderType;
-	}
-
-	/**
-	 * @param tcpIpReaderType
-	 *            the tcpIpReaderType to set
-	 */
-	public void setTcpIpReaderType(String tcpIpReaderType) {
-		this.tcpIpReaderType = tcpIpReaderType;
 	}
 
 	/**

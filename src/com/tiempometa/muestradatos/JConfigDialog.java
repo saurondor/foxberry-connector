@@ -59,8 +59,6 @@ public class JConfigDialog extends JDialog {
 		}
 		readerBoxAddressTextField.setText(ReaderContext.getSettings()
 				.getFoxberryReaderAddress());
-		readerTypeComboBox.setSelectedItem(ReaderContext.getSettings()
-				.getTcpIpReaderType());
 		readerComboBox.setSelectedItem(ReaderContext.getSettings()
 				.getPreferredReader());
 		antennaComboBox.setSelectedItem(ReaderContext.getSettings()
@@ -80,8 +78,6 @@ public class JConfigDialog extends JDialog {
 				antennaComboBox.getSelectedItem().toString());
 		ReaderContext.getSettings().setPreferredReader(
 				readerComboBox.getSelectedItem().toString());
-		ReaderContext.getSettings().setTcpIpReaderType(
-				readerTypeComboBox.getSelectedItem().toString());
 		ReaderContext.getSettings().setUsbPort(
 				commPortComboBox.getSelectedItem().toString());
 		ReaderContext.getSettings().setUsbRegion(
@@ -116,7 +112,6 @@ public class JConfigDialog extends JDialog {
 		antennaComboBox.setEnabled(false);
 		commPortComboBox.setEnabled(false);
 		regionComboBox.setEnabled(false);
-		readerTypeComboBox.setEnabled(false);
 		readerComboBox.setEnabled(false);
 	}
 
@@ -125,8 +120,6 @@ public class JConfigDialog extends JDialog {
 		antennaComboBox.setEnabled(true);
 		commPortComboBox.setEnabled(true);
 		regionComboBox.setEnabled(true);
-		readerTypeComboBox.setEnabled(true);
-		readerComboBox.setEnabled((readerTypeComboBox.getSelectedIndex() == 0));
 	}
 
 	private void setDatabase(File database) {
@@ -225,16 +218,6 @@ public class JConfigDialog extends JDialog {
 		this.dispose();
 	}
 
-	private void readerTypeComboBoxItemStateChanged(ItemEvent e) {
-		if (e.getStateChange() == ItemEvent.SELECTED) {
-			if (readerTypeComboBox.getSelectedIndex() == 0) {
-				readerComboBox.setEnabled(true);
-			} else {
-				readerComboBox.setEnabled(false);
-			}
-		}
-	}
-
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -250,8 +233,6 @@ public class JConfigDialog extends JDialog {
 		separator2 = new JSeparator();
 		label8 = new JLabel();
 		readerBoxAddressTextField = new JTextField();
-		label6 = new JLabel();
-		readerTypeComboBox = new JComboBox<>();
 		label10 = new JLabel();
 		readerComboBox = new JComboBox<>();
 		label9 = new JLabel();
@@ -290,8 +271,6 @@ public class JConfigDialog extends JDialog {
 						FormFactory.DEFAULT_COLSPEC
 					},
 					new RowSpec[] {
-						FormFactory.DEFAULT_ROWSPEC,
-						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
@@ -351,29 +330,10 @@ public class JConfigDialog extends JDialog {
 				readerBoxAddressTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(readerBoxAddressTextField, cc.xywh(3, 9, 3, 1));
 
-				//---- label6 ----
-				label6.setText(bundle.getString("JConfigDialog.label6.text"));
-				label6.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				contentPanel.add(label6, cc.xy(1, 11));
-
-				//---- readerTypeComboBox ----
-				readerTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
-					"Foxberry",
-					"Speedway"
-				}));
-				readerTypeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				readerTypeComboBox.addItemListener(new ItemListener() {
-					@Override
-					public void itemStateChanged(ItemEvent e) {
-						readerTypeComboBoxItemStateChanged(e);
-					}
-				});
-				contentPanel.add(readerTypeComboBox, cc.xywh(3, 11, 3, 1));
-
 				//---- label10 ----
 				label10.setText(bundle.getString("JConfigDialog.label10.text"));
 				label10.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				contentPanel.add(label10, cc.xy(1, 13));
+				contentPanel.add(label10, cc.xy(1, 11));
 
 				//---- readerComboBox ----
 				readerComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
@@ -382,12 +342,12 @@ public class JConfigDialog extends JDialog {
 					"Lector 2"
 				}));
 				readerComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				contentPanel.add(readerComboBox, cc.xywh(3, 13, 3, 1));
+				contentPanel.add(readerComboBox, cc.xywh(3, 11, 3, 1));
 
 				//---- label9 ----
 				label9.setText(bundle.getString("JConfigDialog.label9.text"));
 				label9.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				contentPanel.add(label9, cc.xy(1, 15));
+				contentPanel.add(label9, cc.xy(1, 13));
 
 				//---- antennaComboBox ----
 				antennaComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
@@ -398,18 +358,18 @@ public class JConfigDialog extends JDialog {
 					"Antena 4"
 				}));
 				antennaComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				contentPanel.add(antennaComboBox, cc.xywh(3, 15, 3, 1));
+				contentPanel.add(antennaComboBox, cc.xywh(3, 13, 3, 1));
 
 				//---- label3 ----
 				label3.setText(bundle.getString("JConfigDialog.label3.text"));
 				label3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				contentPanel.add(label3, cc.xy(1, 17));
-				contentPanel.add(separator1, cc.xywh(3, 17, 3, 1));
+				contentPanel.add(label3, cc.xy(1, 15));
+				contentPanel.add(separator1, cc.xywh(3, 15, 3, 1));
 
 				//---- label2 ----
 				label2.setText(bundle.getString("JConfigDialog.label2.text"));
 				label2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				contentPanel.add(label2, cc.xy(1, 19));
+				contentPanel.add(label2, cc.xy(1, 17));
 
 				//---- commPortComboBox ----
 				commPortComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
@@ -435,12 +395,12 @@ public class JConfigDialog extends JDialog {
 					"COM20"
 				}));
 				commPortComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				contentPanel.add(commPortComboBox, cc.xywh(3, 19, 3, 1));
+				contentPanel.add(commPortComboBox, cc.xywh(3, 17, 3, 1));
 
 				//---- label1 ----
 				label1.setText(bundle.getString("JConfigDialog.label1.text"));
 				label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				contentPanel.add(label1, cc.xy(1, 21));
+				contentPanel.add(label1, cc.xy(1, 19));
 
 				//---- regionComboBox ----
 				regionComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
@@ -457,7 +417,7 @@ public class JConfigDialog extends JDialog {
 					"OPEN"
 				}));
 				regionComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				contentPanel.add(regionComboBox, cc.xywh(3, 21, 3, 1));
+				contentPanel.add(regionComboBox, cc.xywh(3, 19, 3, 1));
 			}
 			dialogPane.add(contentPanel, BorderLayout.NORTH);
 
@@ -516,8 +476,6 @@ public class JConfigDialog extends JDialog {
 	private JSeparator separator2;
 	private JLabel label8;
 	private JTextField readerBoxAddressTextField;
-	private JLabel label6;
-	private JComboBox<String> readerTypeComboBox;
 	private JLabel label10;
 	private JComboBox<String> readerComboBox;
 	private JLabel label9;

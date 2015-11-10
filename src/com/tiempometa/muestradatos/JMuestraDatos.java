@@ -220,7 +220,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 			databaseLabel.setText(ReaderContext.getSettings().getDatabaseName());
 			boxIpAddressLabel.setText(ReaderContext.getSettings()
 					.getFoxberryReaderAddress());
-			boxTypeLabel.setText(ReaderContext.getSettings().getTcpIpReaderType());
 			preferredAntenaLabel.setText(ReaderContext.getSettings()
 					.getPreferredAntenna());
 			preferredReaderLabel.setText(ReaderContext.getSettings()
@@ -515,8 +514,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		boxIpAddressLabel = new JLabel();
 		label4 = new JLabel();
 		readerStatusLabel = new JLabel();
-		label12 = new JLabel();
-		boxTypeLabel = new JLabel();
 		label2 = new JLabel();
 		rssiLevelLabel = new JLabel();
 		label13 = new JLabel();
@@ -779,15 +776,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					//---- readerStatusLabel ----
 					readerStatusLabel.setText(bundle.getString("JMuestraDatos.readerStatusLabel.text"));
 					panel2.add(readerStatusLabel, cc.xy(5, 7));
-
-					//---- label12 ----
-					label12.setText(bundle.getString("JMuestraDatos.label12.text"));
-					label12.setFont(new Font("Tahoma", Font.BOLD, 14));
-					panel2.add(label12, cc.xy(9, 7));
-
-					//---- boxTypeLabel ----
-					boxTypeLabel.setText(bundle.getString("JMuestraDatos.boxTypeLabel.text"));
-					panel2.add(boxTypeLabel, cc.xy(11, 7));
 
 					//---- label2 ----
 					label2.setText(bundle.getString("JMuestraDatos.label2.text"));
@@ -1149,8 +1137,6 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JLabel boxIpAddressLabel;
 	private JLabel label4;
 	private JLabel readerStatusLabel;
-	private JLabel label12;
-	private JLabel boxTypeLabel;
 	private JLabel label2;
 	private JLabel rssiLevelLabel;
 	private JLabel label13;

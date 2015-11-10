@@ -111,21 +111,6 @@ new FormModel {
 							"gridY": 7
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label12"
-							"text": new FormMessage( null, "JMuestraDatos.label12.text" )
-							"font": #Font0
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 9
-							"gridY": 7
-						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "boxTypeLabel"
-							"text": new FormMessage( null, "JMuestraDatos.boxTypeLabel.text" )
-						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 11
-							"gridY": 7
-						} )
-						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label2"
 							"text": new FormMessage( null, "JMuestraDatos.label2.text" )
 							"font": #Font0
