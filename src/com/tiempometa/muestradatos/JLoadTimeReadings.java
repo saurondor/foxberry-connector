@@ -170,7 +170,8 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 
 	private void applyCheckpointButtonActionPerformed(ActionEvent e) {
 		String checkPointValue = checkpointTextField.getText();
-		if (checkPointValue.matches("[a-zA-Z0-9]*")) {
+		if ((checkPointValue.length() > 0)
+				&& (checkPointValue.matches("[a-zA-Z0-9]*"))) {
 			checkPoint = checkPointValue;
 			checkpointTextField.setBackground(Color.WHITE);
 			downloadButton.setEnabled(true);
@@ -268,6 +269,12 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 	}
 
 	private void closeButtonActionPerformed(ActionEvent e) {
+		if (downloading) {
+			JOptionPane.showMessageDialog(this,
+					"Debes detener la descarga antes de cerrar.",
+					"Descarga activa", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		dispose();
 	}
 
