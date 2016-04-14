@@ -169,6 +169,16 @@ new FormModel {
 						"gridWidth": 5
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "labelReadingsButton"
+						"text": new FormMessage( null, "JLoadTimeReadings.labelReadingsButton.text" )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
+						"enabled": false
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "labelReadingsButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 3
+						"gridY": 21
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "clearListButton"
 						"text": new FormMessage( null, "JLoadTimeReadings.clearListButton.text" )
 						"font": new java.awt.Font( "Tahoma", 0, 14 )

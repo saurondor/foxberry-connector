@@ -295,7 +295,6 @@ public class ReaderContext {
 	public static void killTag(int killword, TagData td) throws ReaderException {
 		Gen2.Kill killOp = new Gen2.Kill(killword);
 		reader.executeTagOp(killOp, td);
-
 	}
 
 	public static void writeKill(short[] killword, TagData td)
@@ -339,12 +338,14 @@ public class ReaderContext {
 
 	public static void rewindFoxberry() throws IOException {
 		foxberryReader.rewind();
-
+	}
+	
+	public static void labelReadings(String label) throws IOException {
+		foxberryReader.label(label);
 	}
 
 	public static void clearFoxberry() throws IOException {
 		foxberryReader.clear();
-
 	}
 
 	public static void connectFoxberry() throws UnknownHostException,
@@ -352,7 +353,6 @@ public class ReaderContext {
 		connectFoxberry(getSettings().getFoxberryReaderAddress(), 10201,
 				getSettings().getPreferredReader(), getSettings()
 						.getPreferredAntenna());
-
 	}
 
 	public static Long getFoxberryTime() throws IOException {

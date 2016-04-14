@@ -199,7 +199,6 @@ public class FoxberryReader implements Runnable {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-
 	}
 
 	public void stop() {
@@ -211,13 +210,16 @@ public class FoxberryReader implements Runnable {
 	public void rewind() throws IOException {
 		dataOutputStream.write("rewind\n".getBytes());
 		dataOutputStream.flush();
+	}
 
+	public void label(String label) throws IOException {
+		dataOutputStream.write(("label " + label + "\n").getBytes());
+		dataOutputStream.flush();
 	}
 
 	public void clear() throws IOException {
 		dataOutputStream.write("clear\n".getBytes());
 		dataOutputStream.flush();
-
 	}
 
 	public Long getTime() throws IOException {
@@ -230,8 +232,9 @@ public class FoxberryReader implements Runnable {
 	public void setTime() throws IOException {
 		Date systemTime = new Date();
 		logger.info("SET time " + ((systemTime.getTime() + 1100) / 1000));
-		dataOutputStream.write(("time set " + ((systemTime.getTime() + 1100) / 1000))
-				.getBytes());
+		dataOutputStream
+				.write(("time set " + ((systemTime.getTime() + 1100) / 1000))
+						.getBytes());
 		dataOutputStream.flush();
 	}
 
