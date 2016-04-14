@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "5.1.2.0.134" Java: "1.7.0_67" encoding: "UTF-8"
+JFDML JFormDesigner: "5.1.2.0.134" Java: "1.8.0_65" encoding: "UTF-8"
 
 new FormModel {
 	"i18n.autoExternalize": true
@@ -169,15 +169,13 @@ new FormModel {
 						"gridWidth": 5
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "rewindButton"
-						"text": new FormMessage( null, "JLoadTimeReadings.rewindButton.text" )
-						"font": #Font0
-						"enabled": false
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "rewindButtonActionPerformed", true ) )
+						name: "clearListButton"
+						"text": new FormMessage( null, "JLoadTimeReadings.clearListButton.text" )
+						"font": new java.awt.Font( "Tahoma", 0, 14 )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clearListButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
+						"gridX": 7
 						"gridY": 21
-						"gridWidth": 3
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "clearReadingsButton"
@@ -185,9 +183,18 @@ new FormModel {
 						"font": #Font0
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clearReadingsButtonActionPerformed", true ) )
 					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
+						"gridX": 3
 						"gridY": 23
-						"gridWidth": 3
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "rewindButton"
+						"text": new FormMessage( null, "JLoadTimeReadings.rewindButton.text" )
+						"font": #Font0
+						"enabled": false
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "rewindButtonActionPerformed", true ) )
+					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+						"gridX": 7
+						"gridY": 23
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
 					"value": "Center"

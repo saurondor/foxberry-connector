@@ -177,7 +177,7 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 		int response = JOptionPane
 				.showConfirmDialog(
 						this,
-						"Esto borrará todas las lecturas del lectorr. ¿Seguro que deseas continuar?",
+						"Esto borrará todas las lecturas del lector. ¿Seguro que deseas continuar?",
 						"Confirmar la borrado", JOptionPane.YES_NO_OPTION);
 		if (response == JOptionPane.YES_OPTION) {
 			logger.info("Clearing all readings");
@@ -265,6 +265,16 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 		}
 	}
 
+	private void clearListButtonActionPerformed(ActionEvent e) {
+		tableModel.clearReadings();
+		clearReadingDisplay();
+	}
+
+	private void clearReadingDisplay() {
+		totalReadingsLabel.setText("");
+		lastReadingLabel.setText("");
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -290,8 +300,9 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 		lastReadingLabel = new JLabel();
 		scrollPane1 = new JScrollPane();
 		readingsTable = new JTable();
-		rewindButton = new JButton();
+		clearListButton = new JButton();
 		clearReadingsButton = new JButton();
+		rewindButton = new JButton();
 		buttonBar = new JPanel();
 		closeButton = new JButton();
 		CellConstraints cc = new CellConstraints();
@@ -441,17 +452,16 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 				}
 				contentPanel.add(scrollPane1, cc.xywh(3, 19, 5, 1));
 
-				//---- rewindButton ----
-				rewindButton.setText(bundle.getString("JLoadTimeReadings.rewindButton.text"));
-				rewindButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				rewindButton.setEnabled(false);
-				rewindButton.addActionListener(new ActionListener() {
+				//---- clearListButton ----
+				clearListButton.setText(bundle.getString("JLoadTimeReadings.clearListButton.text"));
+				clearListButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				clearListButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						rewindButtonActionPerformed(e);
+						clearListButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(rewindButton, cc.xywh(5, 21, 3, 1));
+				contentPanel.add(clearListButton, cc.xy(7, 21));
 
 				//---- clearReadingsButton ----
 				clearReadingsButton.setText(bundle.getString("JLoadTimeReadings.clearReadingsButton.text"));
@@ -462,7 +472,19 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 						clearReadingsButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(clearReadingsButton, cc.xywh(5, 23, 3, 1));
+				contentPanel.add(clearReadingsButton, cc.xy(3, 23));
+
+				//---- rewindButton ----
+				rewindButton.setText(bundle.getString("JLoadTimeReadings.rewindButton.text"));
+				rewindButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				rewindButton.setEnabled(false);
+				rewindButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						rewindButtonActionPerformed(e);
+					}
+				});
+				contentPanel.add(rewindButton, cc.xy(7, 23));
 			}
 			dialogPane.add(contentPanel, BorderLayout.CENTER);
 
@@ -543,8 +565,9 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 	private JLabel lastReadingLabel;
 	private JScrollPane scrollPane1;
 	private JTable readingsTable;
-	private JButton rewindButton;
+	private JButton clearListButton;
 	private JButton clearReadingsButton;
+	private JButton rewindButton;
 	private JPanel buttonBar;
 	private JButton closeButton;
 	// JFormDesigner - End of variables declaration //GEN-END:variables

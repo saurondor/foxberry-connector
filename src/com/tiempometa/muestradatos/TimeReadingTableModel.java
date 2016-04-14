@@ -32,6 +32,7 @@ public class TimeReadingTableModel extends AbstractTableModel {
 
 	public void clearReadings() {
 		data = new ArrayList<TagReading>();
+		fireTableDataChanged();
 	}
 	
 	public int getDataSize() {
