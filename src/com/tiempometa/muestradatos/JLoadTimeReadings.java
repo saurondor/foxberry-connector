@@ -285,8 +285,13 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 	}
 
 	private void clearListButtonActionPerformed(ActionEvent e) {
-		tableModel.clearReadings();
-		clearReadingDisplay();
+		int response = JOptionPane.showConfirmDialog(this,
+				"Se borrará la lista de lecturas actuales. No se afectarán las lecturas en la caja ni las ya descargadas",
+				"Confirmar vaciado", JOptionPane.YES_NO_OPTION);
+		if (response == JOptionPane.YES_OPTION) {
+			tableModel.clearReadings();
+			clearReadingDisplay();
+		}
 	}
 
 	private void clearReadingDisplay() {
@@ -298,7 +303,7 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 		int response = JOptionPane.showConfirmDialog(this,
 				"Esto marcará todas las lecturas no etiquetadas con la etiqueta '"
 						+ checkPoint + "'. ¿Seguro que deseas continuar?",
-				"Confirmar la descarga", JOptionPane.YES_NO_OPTION);
+				"Marcar lecturas", JOptionPane.YES_NO_OPTION);
 		if (response == JOptionPane.YES_OPTION) {
 			logger.info("Labeling readings");
 			try {
