@@ -57,11 +57,16 @@ public class TagReading {
 
 	public TagReading(String data) {
 		super();
+		if (data.length() == 0) {
+			valid = false;
+			return;
+		}
 		stringData = data;
 		if (data.startsWith("#")) {
 			readingType = TagReading.TYPE_COMMAND_RESPONSE;
 			// command response
-			String[] fields = data.replaceAll("\\r", "").split(",");
+			String[] fields = data.replaceAll("\\r", "").replaceAll("\\n", "")
+					.split(",");
 			switch (fields.length) {
 			case 0:
 				break;
@@ -258,7 +263,6 @@ public class TagReading {
 		return valid;
 	}
 
-
 	/**
 	 * @return the tagReadData
 	 */
@@ -398,7 +402,9 @@ public class TagReading {
 		this.categoryTitle = categoryTitle;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

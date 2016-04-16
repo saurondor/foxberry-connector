@@ -161,18 +161,25 @@ public class FoxberryReader implements Runnable {
 							StringBuffer buffer = new StringBuffer((new Date())
 									+ " " + dataString);
 							String[] dataRows = dataString.split("\\n");
+							logger.debug(">>> DATA ROW count : "
+									+ dataRows.length);
+							List<TagReading> readings = new ArrayList<TagReading>();
 							for (String string : dataRows) {
+								logger.debug(">>> DATA ROW (" + string.length()
+										+ ")");
 								logger.debug(string);
-								TagReading reading = new TagReading(string);
-								if (reading.isValid()) {
-									logger.debug(reading);
-								} else {
-									logger.debug(reading);
+								logger.debug(Integer.toHexString(string.toCharArray()[0]));
+								if (string.replaceAll("\\r", "").length() > 0) {
+									TagReading reading = new TagReading(string);
+									if (reading.isValid()) {
+										logger.debug(reading);
+									} else {
+										logger.debug(reading);
+									}
+									readings.add(reading);
 								}
-								List<TagReading> readings = new ArrayList<TagReading>();
-								readings.add(reading);
-								notifyListeners(readings);
 							}
+							notifyListeners(readings);
 						} else {
 						}
 					} catch (IOException e1) {
