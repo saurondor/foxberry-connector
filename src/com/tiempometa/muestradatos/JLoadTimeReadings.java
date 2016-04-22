@@ -285,9 +285,11 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 	}
 
 	private void clearListButtonActionPerformed(ActionEvent e) {
-		int response = JOptionPane.showConfirmDialog(this,
-				"Se borrará la lista de lecturas actuales. No se afectarán las lecturas en la caja ni las ya descargadas",
-				"Confirmar vaciado", JOptionPane.YES_NO_OPTION);
+		int response = JOptionPane
+				.showConfirmDialog(
+						this,
+						"Se borrará la lista de lecturas actuales. No se afectarán las lecturas en la caja ni las ya descargadas",
+						"Confirmar vaciado", JOptionPane.YES_NO_OPTION);
 		if (response == JOptionPane.YES_OPTION) {
 			tableModel.clearReadings();
 			clearReadingDisplay();
@@ -322,8 +324,7 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
-		ResourceBundle bundle = ResourceBundle
-				.getBundle("com.tiempometa.muestradatos.muestradatos");
+		ResourceBundle bundle = ResourceBundle.getBundle("com.tiempometa.muestradatos.muestradatos");
 		dialogPane = new JPanel();
 		contentPanel = new JPanel();
 		label10 = new JLabel();
@@ -343,6 +344,14 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 		totalReadingsLabel = new JLabel();
 		label6 = new JLabel();
 		lastReadingLabel = new JLabel();
+		label8 = new JLabel();
+		keepAliveLabel = new JLabel();
+		label9 = new JLabel();
+		tempOneSlider = new JSlider();
+		readerOneTemperatureLabel = new JLabel();
+		label12 = new JLabel();
+		tempTwoSlider = new JSlider();
+		readerTwoTemperatureLabel = new JLabel();
 		scrollPane1 = new JScrollPane();
 		readingsTable = new JTable();
 		labelReadingsButton = new JButton();
@@ -353,30 +362,31 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 		closeButton = new JButton();
 		CellConstraints cc = new CellConstraints();
 
-		// ======== this ========
-		setIconImage(new ImageIcon(getClass().getResource(
-				"/com/tiempometa/resources/tiempometa_icon_large_alpha.png"))
-				.getImage());
+		//======== this ========
+		setIconImage(new ImageIcon(getClass().getResource("/com/tiempometa/resources/tiempometa_icon_large_alpha.png")).getImage());
 		setTitle(bundle.getString("JLoadTimeReadings.this.title"));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 
-		// ======== dialogPane ========
+		//======== dialogPane ========
 		{
 			dialogPane.setBorder(Borders.DIALOG_BORDER);
 			dialogPane.setLayout(new BorderLayout());
 
-			// ======== contentPanel ========
+			//======== contentPanel ========
 			{
-				contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
+				contentPanel.setLayout(new FormLayout(
+					new ColumnSpec[] {
 						new ColumnSpec(Sizes.dluX(15)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(113)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 						new ColumnSpec(Sizes.dluX(52)),
 						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						new ColumnSpec(Sizes.dluX(124)) }, new RowSpec[] {
+						new ColumnSpec(Sizes.dluX(124))
+					},
+					new RowSpec[] {
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
@@ -399,22 +409,27 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 						FormFactory.LINE_GAP_ROWSPEC,
 						FormFactory.DEFAULT_ROWSPEC,
 						FormFactory.LINE_GAP_ROWSPEC,
-						FormFactory.DEFAULT_ROWSPEC }));
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC,
+						FormFactory.LINE_GAP_ROWSPEC,
+						FormFactory.DEFAULT_ROWSPEC
+					}));
 
-				// ---- label10 ----
-				label10.setText(bundle
-						.getString("JLoadTimeReadings.label10.text"));
+				//---- label10 ----
+				label10.setText(bundle.getString("JLoadTimeReadings.label10.text"));
 				label10.setFont(new Font("Tahoma", Font.BOLD, 16));
 				contentPanel.add(label10, cc.xy(3, 1));
 				contentPanel.add(separator1, cc.xywh(5, 1, 3, 1));
 
-				// ---- label1 ----
-				label1.setText(bundle
-						.getString("JLoadTimeReadings.label1.text"));
+				//---- label1 ----
+				label1.setText(bundle.getString("JLoadTimeReadings.label1.text"));
 				label1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label1, cc.xy(3, 3));
 
-				// ---- checkpointTextField ----
+				//---- checkpointTextField ----
 				checkpointTextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				checkpointTextField.setBackground(Color.yellow);
 				checkpointTextField.addKeyListener(new KeyAdapter() {
@@ -425,12 +440,9 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(checkpointTextField, cc.xywh(5, 3, 3, 1));
 
-				// ---- applyCheckpointButton ----
-				applyCheckpointButton
-						.setText(bundle
-								.getString("JLoadTimeReadings.applyCheckpointButton.text"));
-				applyCheckpointButton
-						.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				//---- applyCheckpointButton ----
+				applyCheckpointButton.setText(bundle.getString("JLoadTimeReadings.applyCheckpointButton.text"));
+				applyCheckpointButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				applyCheckpointButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -439,33 +451,29 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(applyCheckpointButton, cc.xywh(5, 5, 3, 1));
 
-				// ---- label7 ----
-				label7.setText(bundle
-						.getString("JLoadTimeReadings.label7.text"));
+				//---- label7 ----
+				label7.setText(bundle.getString("JLoadTimeReadings.label7.text"));
 				label7.setFont(new Font("Tahoma", Font.BOLD, 16));
 				contentPanel.add(label7, cc.xy(3, 7));
 				contentPanel.add(separator2, cc.xywh(5, 7, 3, 1));
 
-				// ---- label2 ----
-				label2.setText(bundle
-						.getString("JLoadTimeReadings.label2.text"));
+				//---- label2 ----
+				label2.setText(bundle.getString("JLoadTimeReadings.label2.text"));
 				label2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label2, cc.xy(3, 9));
 				contentPanel.add(filterWindowTextField, cc.xy(5, 9));
 
-				// ---- label3 ----
-				label3.setText(bundle
-						.getString("JLoadTimeReadings.label3.text"));
+				//---- label3 ----
+				label3.setText(bundle.getString("JLoadTimeReadings.label3.text"));
 				label3.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label3, cc.xy(7, 9));
 
-				// ---- label4 ----
-				label4.setText(bundle
-						.getString("JLoadTimeReadings.label4.text"));
+				//---- label4 ----
+				label4.setText(bundle.getString("JLoadTimeReadings.label4.text"));
 				label4.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label4, cc.xy(3, 11));
 
-				// ---- filterComboBox ----
+				//---- filterComboBox ----
 				filterComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				filterComboBox.addItemListener(new ItemListener() {
 					@Override
@@ -475,9 +483,8 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(filterComboBox, cc.xywh(5, 11, 3, 1));
 
-				// ---- downloadButton ----
-				downloadButton.setText(bundle
-						.getString("JLoadTimeReadings.downloadButton.text"));
+				//---- downloadButton ----
+				downloadButton.setText(bundle.getString("JLoadTimeReadings.downloadButton.text"));
 				downloadButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				downloadButton.setEnabled(false);
 				downloadButton.addActionListener(new ActionListener() {
@@ -488,30 +495,71 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 				});
 				contentPanel.add(downloadButton, cc.xywh(5, 13, 3, 1));
 
-				// ---- label5 ----
-				label5.setText(bundle
-						.getString("JLoadTimeReadings.label5.text"));
+				//---- label5 ----
+				label5.setText(bundle.getString("JLoadTimeReadings.label5.text"));
 				label5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label5, cc.xy(3, 15));
+
+				//---- totalReadingsLabel ----
+				totalReadingsLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(totalReadingsLabel, cc.xywh(5, 15, 3, 1));
 
-				// ---- label6 ----
-				label6.setText(bundle
-						.getString("JLoadTimeReadings.label6.text"));
+				//---- label6 ----
+				label6.setText(bundle.getString("JLoadTimeReadings.label6.text"));
 				label6.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(label6, cc.xy(3, 17));
+
+				//---- lastReadingLabel ----
+				lastReadingLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				contentPanel.add(lastReadingLabel, cc.xywh(5, 17, 3, 1));
 
-				// ======== scrollPane1 ========
+				//---- label8 ----
+				label8.setText(bundle.getString("JLoadTimeReadings.label8.text"));
+				label8.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(label8, cc.xy(3, 19));
+
+				//---- keepAliveLabel ----
+				keepAliveLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				contentPanel.add(keepAliveLabel, cc.xywh(5, 19, 3, 1));
+
+				//---- label9 ----
+				label9.setText(bundle.getString("JLoadTimeReadings.label9.text"));
+				label9.setHorizontalAlignment(SwingConstants.RIGHT);
+				contentPanel.add(label9, cc.xy(3, 21));
+
+				//---- tempOneSlider ----
+				tempOneSlider.setForeground(new Color(255, 0, 51));
+				tempOneSlider.setBackground(new Color(204, 204, 204));
+				tempOneSlider.setPaintTrack(false);
+				tempOneSlider.setEnabled(false);
+				tempOneSlider.setMaximum(80);
+				tempOneSlider.setMinimum(30);
+				contentPanel.add(tempOneSlider, cc.xy(5, 21));
+				contentPanel.add(readerOneTemperatureLabel, cc.xy(7, 21));
+
+				//---- label12 ----
+				label12.setText(bundle.getString("JLoadTimeReadings.label12.text"));
+				label12.setHorizontalAlignment(SwingConstants.RIGHT);
+				contentPanel.add(label12, cc.xy(3, 23));
+
+				//---- tempTwoSlider ----
+				tempTwoSlider.setForeground(new Color(255, 0, 51));
+				tempTwoSlider.setBackground(new Color(204, 204, 204));
+				tempTwoSlider.setPaintTrack(false);
+				tempTwoSlider.setEnabled(false);
+				tempTwoSlider.setMaximum(80);
+				tempTwoSlider.setMinimum(30);
+				contentPanel.add(tempTwoSlider, cc.xy(5, 23));
+				contentPanel.add(readerTwoTemperatureLabel, cc.xy(7, 23));
+
+				//======== scrollPane1 ========
 				{
 					scrollPane1.setViewportView(readingsTable);
 				}
-				contentPanel.add(scrollPane1, cc.xywh(3, 19, 5, 1));
+				contentPanel.add(scrollPane1, cc.xywh(3, 25, 5, 1));
 
-				// ---- labelReadingsButton ----
-				labelReadingsButton
-						.setText(bundle
-								.getString("JLoadTimeReadings.labelReadingsButton.text"));
+				//---- labelReadingsButton ----
+				labelReadingsButton.setText(bundle.getString("JLoadTimeReadings.labelReadingsButton.text"));
 				labelReadingsButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				labelReadingsButton.setEnabled(false);
 				labelReadingsButton.addActionListener(new ActionListener() {
@@ -520,11 +568,10 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 						labelReadingsButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(labelReadingsButton, cc.xy(3, 21));
+				contentPanel.add(labelReadingsButton, cc.xy(3, 27));
 
-				// ---- clearListButton ----
-				clearListButton.setText(bundle
-						.getString("JLoadTimeReadings.clearListButton.text"));
+				//---- clearListButton ----
+				clearListButton.setText(bundle.getString("JLoadTimeReadings.clearListButton.text"));
 				clearListButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				clearListButton.addActionListener(new ActionListener() {
 					@Override
@@ -532,12 +579,10 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 						clearListButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(clearListButton, cc.xy(7, 21));
+				contentPanel.add(clearListButton, cc.xy(7, 27));
 
-				// ---- clearReadingsButton ----
-				clearReadingsButton
-						.setText(bundle
-								.getString("JLoadTimeReadings.clearReadingsButton.text"));
+				//---- clearReadingsButton ----
+				clearReadingsButton.setText(bundle.getString("JLoadTimeReadings.clearReadingsButton.text"));
 				clearReadingsButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				clearReadingsButton.addActionListener(new ActionListener() {
 					@Override
@@ -545,11 +590,10 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 						clearReadingsButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(clearReadingsButton, cc.xy(3, 23));
+				contentPanel.add(clearReadingsButton, cc.xy(3, 29));
 
-				// ---- rewindButton ----
-				rewindButton.setText(bundle
-						.getString("JLoadTimeReadings.rewindButton.text"));
+				//---- rewindButton ----
+				rewindButton.setText(bundle.getString("JLoadTimeReadings.rewindButton.text"));
 				rewindButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				rewindButton.setEnabled(false);
 				rewindButton.addActionListener(new ActionListener() {
@@ -558,18 +602,21 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 						rewindButtonActionPerformed(e);
 					}
 				});
-				contentPanel.add(rewindButton, cc.xy(7, 23));
+				contentPanel.add(rewindButton, cc.xy(7, 29));
 			}
 			dialogPane.add(contentPanel, BorderLayout.CENTER);
 
-			// ======== buttonBar ========
+			//======== buttonBar ========
 			{
 				buttonBar.setBorder(Borders.BUTTON_BAR_GAP_BORDER);
-				buttonBar.setLayout(new FormLayout(new ColumnSpec[] {
-						FormFactory.GLUE_COLSPEC, FormFactory.BUTTON_COLSPEC },
-						RowSpec.decodeSpecs("pref")));
+				buttonBar.setLayout(new FormLayout(
+					new ColumnSpec[] {
+						FormFactory.GLUE_COLSPEC,
+						FormFactory.BUTTON_COLSPEC
+					},
+					RowSpec.decodeSpecs("pref")));
 
-				// ---- closeButton ----
+				//---- closeButton ----
 				closeButton.setText("Cerrar");
 				closeButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				closeButton.addActionListener(new ActionListener() {
@@ -583,7 +630,7 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
 		contentPane.add(dialogPane, BorderLayout.CENTER);
-		setSize(535, 520);
+		setSize(535, 610);
 		setLocationRelativeTo(getOwner());
 		// //GEN-END:initComponents
 	}
@@ -634,6 +681,14 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 	private JLabel totalReadingsLabel;
 	private JLabel label6;
 	private JLabel lastReadingLabel;
+	private JLabel label8;
+	private JLabel keepAliveLabel;
+	private JLabel label9;
+	private JSlider tempOneSlider;
+	private JLabel readerOneTemperatureLabel;
+	private JLabel label12;
+	private JSlider tempTwoSlider;
+	private JLabel readerTwoTemperatureLabel;
 	private JScrollPane scrollPane1;
 	private JTable readingsTable;
 	private JButton labelReadingsButton;
@@ -642,7 +697,6 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 	private JButton rewindButton;
 	private JPanel buttonBar;
 	private JButton closeButton;
-
 	// JFormDesigner - End of variables declaration //GEN-END:variables
 	@Override
 	public void handleReadings(List<TagReading> readings) {
@@ -652,6 +706,35 @@ public class JLoadTimeReadings extends JDialog implements TagReadListener {
 				final TagReading tagReading = (TagReading) iterator.next();
 				if (tagReading.isKeepAlive()) {
 					watchdog.resetCount();
+					keepAliveLabel.setText((new Date()).toLocaleString());
+					Integer temperature = 0;
+					if (tagReading.getReaderTemperature() != null) {
+						temperature = tagReading.getReaderTemperature()
+								.intValue();
+					}
+					Integer heat = (temperature - 35) * 6;
+					if (heat < 0) {
+						heat = 0;
+					}
+					if (heat > 255) {
+						heat = 255;
+					}
+					if (tagReading.getReader().equals("reader_1")) {
+						if (tagReading.getReaderTemperature() != null) {
+							readerOneTemperatureLabel.setText(temperature
+									.toString() + " °C");
+							tempOneSlider.setValue(temperature);
+							tempOneSlider.setBackground(new Color(heat, 0, 36));
+						}
+					}
+					if (tagReading.getReader().equals("reader_2")) {
+						if (tagReading.getReaderTemperature() != null) {
+							readerTwoTemperatureLabel.setText(temperature
+									.toString() + " °C");
+							tempTwoSlider.setValue(temperature);
+							tempTwoSlider.setBackground(new Color(heat, 0, 36));
+						}
+					}
 				} else {
 					// String loadName = null;
 					if (!(filter == null)) {

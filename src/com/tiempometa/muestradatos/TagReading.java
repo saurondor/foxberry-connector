@@ -40,6 +40,8 @@ public class TagReading {
 	private String middleName = null;
 	private String eventTitle = null;
 	private String categoryTitle = null;
+	private Float readerTemperature = null;
+	private Float cpuTemperature = null;
 
 	public TagReading() {
 		super();
@@ -98,7 +100,21 @@ public class TagReading {
 				valid = true;
 				// single field data packet is keep alive
 				readingType = TagReading.TYPE_KEEP_ALIVE;
+				reader = fields[0];
 				antenna = fields[1];
+				break;
+			case 4:
+				valid = true;
+				// single field data packet is keep alive
+				readingType = TagReading.TYPE_KEEP_ALIVE;
+				reader = fields[0];
+				antenna = fields[1];
+				try {
+					readerTemperature = Float.valueOf(fields[2]);
+					cpuTemperature = Float.valueOf(fields[3]);
+				} catch (NumberFormatException e) {
+					// TODO: handle exception
+				}
 				break;
 			case 7:
 				// six field data packet includes user data
@@ -418,6 +434,34 @@ public class TagReading {
 				+ readingType + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", middleName=" + middleName + ", eventTitle="
 				+ eventTitle + ", categoryTitle=" + categoryTitle + "]";
+	}
+
+	/**
+	 * @return the readerTemperature
+	 */
+	public Float getReaderTemperature() {
+		return readerTemperature;
+	}
+
+	/**
+	 * @param readerTemperature the readerTemperature to set
+	 */
+	public void setReaderTemperature(Float readerTemperature) {
+		this.readerTemperature = readerTemperature;
+	}
+
+	/**
+	 * @return the cpuTemperature
+	 */
+	public Float getCpuTemperature() {
+		return cpuTemperature;
+	}
+
+	/**
+	 * @param cpuTemperature the cpuTemperature to set
+	 */
+	public void setCpuTemperature(Float cpuTemperature) {
+		this.cpuTemperature = cpuTemperature;
 	}
 
 }

@@ -231,7 +231,7 @@ public class FoxberryReader implements Runnable {
 
 	public Long getTime() throws IOException {
 		// TODO Auto-generated method stub
-		dataOutputStream.write("time get".getBytes());
+		dataOutputStream.write("time get\n".getBytes());
 		dataOutputStream.flush();
 		return null;
 	}
@@ -240,7 +240,7 @@ public class FoxberryReader implements Runnable {
 		Date systemTime = new Date();
 		logger.info("SET time " + ((systemTime.getTime() + 1100) / 1000));
 		dataOutputStream
-				.write(("time set " + ((systemTime.getTime() + 1100) / 1000))
+				.write(("time set " + ((systemTime.getTime() + 1100) / 1000)+"\n")
 						.getBytes());
 		dataOutputStream.flush();
 	}
