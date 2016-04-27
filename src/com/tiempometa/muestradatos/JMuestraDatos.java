@@ -592,6 +592,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		label12 = new JLabel();
 		tiempoMetaApiKey = new JTextField();
 		downloadButton = new JButton();
+		separator4 = new JSeparator();
 		label22 = new JLabel();
 		lastRequestLabel = new JLabel();
 		label15 = new JLabel();
@@ -1121,12 +1122,14 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC,
 							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
 							FormFactory.DEFAULT_ROWSPEC
 						}));
 
 					//---- label18 ----
 					label18.setText(bundle.getString("JMuestraDatos.label18.text"));
-					label18.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					label18.setFont(new Font("Tahoma", Font.BOLD, 14));
 					panel9.add(label18, cc.xywh(3, 3, 3, 1));
 
 					//---- label12 ----
@@ -1144,33 +1147,34 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 						}
 					});
 					panel9.add(downloadButton, cc.xy(5, 7));
+					panel9.add(separator4, cc.xywh(3, 9, 3, 1));
 
 					//---- label22 ----
 					label22.setText(bundle.getString("JMuestraDatos.label22.text"));
-					panel9.add(label22, cc.xy(3, 9));
-					panel9.add(lastRequestLabel, cc.xy(5, 9));
+					panel9.add(label22, cc.xy(3, 11));
+					panel9.add(lastRequestLabel, cc.xy(5, 11));
 
 					//---- label15 ----
 					label15.setText(bundle.getString("JMuestraDatos.label15.text"));
-					panel9.add(label15, cc.xy(3, 11));
-					panel9.add(lastDownloadLabel, cc.xy(5, 11));
+					panel9.add(label15, cc.xy(3, 13));
+					panel9.add(lastDownloadLabel, cc.xy(5, 13));
 
 					//---- label17 ----
 					label17.setText(bundle.getString("JMuestraDatos.label17.text"));
-					panel9.add(label17, cc.xy(3, 13));
-					panel9.add(downloadCountLabel, cc.xy(5, 13));
-					panel9.add(separator3, cc.xy(5, 15));
+					panel9.add(label17, cc.xy(3, 15));
+					panel9.add(downloadCountLabel, cc.xy(5, 15));
+					panel9.add(separator3, cc.xywh(3, 17, 3, 1));
 
 					//---- label24 ----
 					label24.setText(bundle.getString("JMuestraDatos.label24.text"));
-					label24.setFont(new Font("Tahoma", Font.PLAIN, 14));
-					panel9.add(label24, cc.xy(5, 17));
+					label24.setFont(new Font("Tahoma", Font.BOLD, 14));
+					panel9.add(label24, cc.xywh(3, 19, 3, 1));
 
 					//======== scrollPane1 ========
 					{
 						scrollPane1.setViewportView(readingLogTable);
 					}
-					panel9.add(scrollPane1, cc.xy(5, 19));
+					panel9.add(scrollPane1, cc.xy(5, 21));
 				}
 				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel9.tab.title"), panel9);
 			}
@@ -1325,6 +1329,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JLabel label12;
 	private JTextField tiempoMetaApiKey;
 	private JButton downloadButton;
+	private JSeparator separator4;
 	private JLabel label22;
 	private JLabel lastRequestLabel;
 	private JLabel label15;
@@ -1505,7 +1510,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 			@Override
 			public void run() {
-				lastDownloadLabel.setText(latestDownload.toString());
+				lastDownloadLabel.setText(dateFormat.format(latestDownload));
 				downloadCountLabel.setText(downloadCount.toString());
 				downloadReadingsTableModel.setData(readingLog);
 				downloadReadingsTableModel.fireTableDataChanged();
@@ -1516,7 +1521,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 
 	@Override
 	public void notifyDataRequest(Date date) {
-		lastRequestLabel.setText(date.toString());
+		lastRequestLabel.setText(dateFormat.format(date));
 		
 	}
 }

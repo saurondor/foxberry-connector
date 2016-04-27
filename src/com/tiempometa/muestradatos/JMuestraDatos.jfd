@@ -366,13 +366,13 @@ new FormModel {
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
 						"$columnSpecs": "10dlu, labelcompgap, default, labelcompgap, 284dlu"
-						"$rowSpecs": "10dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+						"$rowSpecs": "10dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
 					} ) {
 						name: "panel9"
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label18"
 							"text": new FormMessage( null, "JMuestraDatos.label18.text" )
-							"font": new java.awt.Font( "Tahoma", 0, 14 )
+							"font": new java.awt.Font( "Tahoma", 1, 14 )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
 							"gridY": 3
@@ -400,58 +400,67 @@ new FormModel {
 							"gridX": 5
 							"gridY": 7
 						} )
+						add( new FormComponent( "javax.swing.JSeparator" ) {
+							name: "separator4"
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 9
+							"gridWidth": 3
+						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label22"
 							"text": new FormMessage( null, "JMuestraDatos.label22.text" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
-							"gridY": 9
+							"gridY": 11
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "lastRequestLabel"
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 5
-							"gridY": 9
+							"gridY": 11
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label15"
 							"text": new FormMessage( null, "JMuestraDatos.label15.text" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
-							"gridY": 11
+							"gridY": 13
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "lastDownloadLabel"
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 5
-							"gridY": 11
+							"gridY": 13
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label17"
 							"text": new FormMessage( null, "JMuestraDatos.label17.text" )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 3
-							"gridY": 13
+							"gridY": 15
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "downloadCountLabel"
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 5
-							"gridY": 13
+							"gridY": 15
 						} )
 						add( new FormComponent( "javax.swing.JSeparator" ) {
 							name: "separator3"
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 5
-							"gridY": 15
+							"gridX": 3
+							"gridY": 17
+							"gridWidth": 3
 						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label24"
 							"text": new FormMessage( null, "JMuestraDatos.label24.text" )
-							"font": new java.awt.Font( "Tahoma", 0, 14 )
+							"font": new java.awt.Font( "Tahoma", 1, 14 )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-							"gridX": 5
-							"gridY": 17
+							"gridX": 3
+							"gridY": 19
+							"gridWidth": 3
 						} )
 						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 							name: "scrollPane1"
@@ -460,7 +469,7 @@ new FormModel {
 							} )
 						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
 							"gridX": 5
-							"gridY": 19
+							"gridY": 21
 						} )
 					}, new FormLayoutConstraints( null ) {
 						"title": new FormMessage( null, "JMuestraDatos.panel9.tab.title" )

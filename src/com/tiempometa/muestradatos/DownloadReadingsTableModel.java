@@ -23,7 +23,7 @@ public class DownloadReadingsTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = -6938139840480950800L;
-	private static final String[] HEADERS = { "Punto", "Lecturas", "Última" };
+	private static final String[] HEADERS = { "Punto", "Lecturas", "Última lectura" };
 	private List<TagReadingLog> data = new ArrayList<TagReadingLog>();
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -65,7 +65,7 @@ public class DownloadReadingsTableModel extends AbstractTableModel {
 			if ((readingLog == null) || (readingLog.getLastDownload() == null)) {
 				return null;
 			}
-			return readingLog.getLastDownload().toLocaleString();
+			return dateFormat.format(readingLog.getLastDownload());
 		default:
 			return null;
 		}
