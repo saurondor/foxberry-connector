@@ -25,6 +25,7 @@ import jxl.write.biff.RowsExceededException;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.log4j.Logger;
 import org.llrp.ltk.generated.parameters.GPOWriteData;
 
@@ -60,7 +61,7 @@ import com.tiempometa.timing.models.Rfid;
  * 
  */
 public class JMuestraDatos extends JFrame implements TagReadListener,
-		ReaderStatusListener {
+		ReaderStatusListener, TagDownloadListener {
 	/**
 	 * 
 	 */
@@ -74,6 +75,9 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private Integer lastTagCount = 0;
 	private RfidDao rfidDao = new RfidDaoImpl();
 	private static SystemProperties systemProperties = new SystemProperties();
+	private DataDownloadWorker downloadWorker = null;
+	private Thread downloadThread = null;
+	private DownloadReadingsTableModel downloadReadingsTableModel = new DownloadReadingsTableModel();
 
 	class TimeRunner implements Runnable {
 
@@ -147,6 +151,7 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		ReaderContext.addReaderStatusListener(this);
 		Thread thread = new Thread(systemTime);
 		thread.start();
+		readingLogTable.setModel(downloadReadingsTableModel);
 	}
 
 	private void setDatabase(File database) {
@@ -505,6 +510,27 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		createTags.setVisible(true);
 	}
 
+	private void downloadButtonActionPerformed(ActionEvent e) {
+		if ((downloadWorker != null) && (downloadWorker.isRunMe())) {
+			logger.info("Stopping download worker!");
+			downloadWorker.setRunMe(false);
+			downloadButton.setText("Descargar");
+			downloadButton.setBackground(Color.RED);
+		} else {
+			downloadWorker = new DataDownloadWorker();
+			downloadThread = new Thread(downloadWorker);
+			TiempoMetaClient client = new TiempoMetaClient();
+			client.setPageSize(200);
+			client.setApiKey(tiempoMetaApiKey.getText());
+			downloadWorker.setClient(client);
+			downloadWorker.setDownloadListener(this);
+			logger.info("Starting download worker!");
+			downloadThread.start();
+			downloadButton.setText("Descargando datos...");
+			downloadButton.setBackground(Color.GREEN);
+		}
+	}
+
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY
 		// //GEN-BEGIN:initComponents
@@ -561,6 +587,21 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 		systemTimeLabel = new JLabel();
 		foxberryTimeLabel = new JLabel();
 		foxberryTimeDiffLabel = new JLabel();
+		panel9 = new JPanel();
+		label18 = new JLabel();
+		label12 = new JLabel();
+		tiempoMetaApiKey = new JTextField();
+		downloadButton = new JButton();
+		label22 = new JLabel();
+		lastRequestLabel = new JLabel();
+		label15 = new JLabel();
+		lastDownloadLabel = new JLabel();
+		label17 = new JLabel();
+		downloadCountLabel = new JLabel();
+		separator3 = new JSeparator();
+		label24 = new JLabel();
+		scrollPane1 = new JScrollPane();
+		readingLogTable = new JTable();
 		panel6 = new JPanel();
 		label21 = new JLabel();
 		label1 = new JLabel();
@@ -1050,6 +1091,88 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 					panel8.add(foxberryTimeDiffLabel, cc.xy(5, 9));
 				}
 				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel8.tab.title"), panel8);
+
+				//======== panel9 ========
+				{
+					panel9.setLayout(new FormLayout(
+						new ColumnSpec[] {
+							new ColumnSpec(Sizes.dluX(10)),
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							FormFactory.DEFAULT_COLSPEC,
+							FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+							new ColumnSpec(Sizes.dluX(284))
+						},
+						new RowSpec[] {
+							new RowSpec(Sizes.dluY(10)),
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC,
+							FormFactory.LINE_GAP_ROWSPEC,
+							FormFactory.DEFAULT_ROWSPEC
+						}));
+
+					//---- label18 ----
+					label18.setText(bundle.getString("JMuestraDatos.label18.text"));
+					label18.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					panel9.add(label18, cc.xywh(3, 3, 3, 1));
+
+					//---- label12 ----
+					label12.setText(bundle.getString("JMuestraDatos.label12.text"));
+					panel9.add(label12, cc.xy(3, 5));
+					panel9.add(tiempoMetaApiKey, cc.xy(5, 5));
+
+					//---- downloadButton ----
+					downloadButton.setText(bundle.getString("JMuestraDatos.downloadButton.text"));
+					downloadButton.setBackground(Color.red);
+					downloadButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							downloadButtonActionPerformed(e);
+						}
+					});
+					panel9.add(downloadButton, cc.xy(5, 7));
+
+					//---- label22 ----
+					label22.setText(bundle.getString("JMuestraDatos.label22.text"));
+					panel9.add(label22, cc.xy(3, 9));
+					panel9.add(lastRequestLabel, cc.xy(5, 9));
+
+					//---- label15 ----
+					label15.setText(bundle.getString("JMuestraDatos.label15.text"));
+					panel9.add(label15, cc.xy(3, 11));
+					panel9.add(lastDownloadLabel, cc.xy(5, 11));
+
+					//---- label17 ----
+					label17.setText(bundle.getString("JMuestraDatos.label17.text"));
+					panel9.add(label17, cc.xy(3, 13));
+					panel9.add(downloadCountLabel, cc.xy(5, 13));
+					panel9.add(separator3, cc.xy(5, 15));
+
+					//---- label24 ----
+					label24.setText(bundle.getString("JMuestraDatos.label24.text"));
+					label24.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					panel9.add(label24, cc.xy(5, 17));
+
+					//======== scrollPane1 ========
+					{
+						scrollPane1.setViewportView(readingLogTable);
+					}
+					panel9.add(scrollPane1, cc.xy(5, 19));
+				}
+				tabbedPane1.addTab(bundle.getString("JMuestraDatos.panel9.tab.title"), panel9);
 			}
 			panel4.add(tabbedPane1, cc.xy(1, 1));
 		}
@@ -1197,6 +1320,21 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	private JLabel systemTimeLabel;
 	private JLabel foxberryTimeLabel;
 	private JLabel foxberryTimeDiffLabel;
+	private JPanel panel9;
+	private JLabel label18;
+	private JLabel label12;
+	private JTextField tiempoMetaApiKey;
+	private JButton downloadButton;
+	private JLabel label22;
+	private JLabel lastRequestLabel;
+	private JLabel label15;
+	private JLabel lastDownloadLabel;
+	private JLabel label17;
+	private JLabel downloadCountLabel;
+	private JSeparator separator3;
+	private JLabel label24;
+	private JScrollPane scrollPane1;
+	private JTable readingLogTable;
 	private JPanel panel6;
 	private JLabel label21;
 	private JLabel label1;
@@ -1358,5 +1496,27 @@ public class JMuestraDatos extends JFrame implements TagReadListener,
 	public void dispose() {
 		systemTime.stop();
 		super.dispose();
+	}
+
+	@Override
+	public void notifyDownload(final Integer downloadCount,
+			final Date latestDownload, final List<TagReadingLog> readingLog) {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				lastDownloadLabel.setText(latestDownload.toString());
+				downloadCountLabel.setText(downloadCount.toString());
+				downloadReadingsTableModel.setData(readingLog);
+				downloadReadingsTableModel.fireTableDataChanged();
+			}
+		});
+
+	}
+
+	@Override
+	public void notifyDataRequest(Date date) {
+		lastRequestLabel.setText(date.toString());
+		
 	}
 }

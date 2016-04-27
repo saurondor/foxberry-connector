@@ -364,6 +364,107 @@ new FormModel {
 					}, new FormLayoutConstraints( null ) {
 						"title": new FormMessage( null, "JMuestraDatos.panel8.tab.title" )
 					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
+						"$columnSpecs": "10dlu, labelcompgap, default, labelcompgap, 284dlu"
+						"$rowSpecs": "10dlu, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default, linegap, default"
+					} ) {
+						name: "panel9"
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label18"
+							"text": new FormMessage( null, "JMuestraDatos.label18.text" )
+							"font": new java.awt.Font( "Tahoma", 0, 14 )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 3
+							"gridWidth": 3
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label12"
+							"text": new FormMessage( null, "JMuestraDatos.label12.text" )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 5
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "tiempoMetaApiKey"
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 5
+							"gridY": 5
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "downloadButton"
+							"text": new FormMessage( null, "JMuestraDatos.downloadButton.text" )
+							"background": new java.awt.Color( 255, 0, 0, 255 )
+							addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "downloadButtonActionPerformed", true ) )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 5
+							"gridY": 7
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label22"
+							"text": new FormMessage( null, "JMuestraDatos.label22.text" )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 9
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lastRequestLabel"
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 5
+							"gridY": 9
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label15"
+							"text": new FormMessage( null, "JMuestraDatos.label15.text" )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 11
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "lastDownloadLabel"
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 5
+							"gridY": 11
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label17"
+							"text": new FormMessage( null, "JMuestraDatos.label17.text" )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 3
+							"gridY": 13
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "downloadCountLabel"
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 5
+							"gridY": 13
+						} )
+						add( new FormComponent( "javax.swing.JSeparator" ) {
+							name: "separator3"
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 5
+							"gridY": 15
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label24"
+							"text": new FormMessage( null, "JMuestraDatos.label24.text" )
+							"font": new java.awt.Font( "Tahoma", 0, 14 )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 5
+							"gridY": 17
+						} )
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane1"
+							add( new FormComponent( "javax.swing.JTable" ) {
+								name: "readingLogTable"
+							} )
+						}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
+							"gridX": 5
+							"gridY": 19
+						} )
+					}, new FormLayoutConstraints( null ) {
+						"title": new FormMessage( null, "JMuestraDatos.panel9.tab.title" )
+					} )
 				}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "Center"
