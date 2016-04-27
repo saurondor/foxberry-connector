@@ -62,7 +62,7 @@ public class DataDownloadWorker implements Runnable {
 				logger.error("IO Exception " + e.getMessage());
 			}
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				logger.error(e.getMessage());
 			}
